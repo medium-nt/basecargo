@@ -18,7 +18,7 @@ echo -e "${YELLOW}→ Pulling latest changes...${RESET}"
 git pull origin main
 
 echo -e "${YELLOW}→ Installing composer dependencies...${RESET}"
-composer install --no-interaction --prefer-dist --optimize-autoloader
+php84 composer.phar install --no-interaction --prefer-dist --optimize-autoloader
 
 echo -e "${YELLOW}→ Clearing Laravel caches...${RESET}"
 php artisan cache:clear
