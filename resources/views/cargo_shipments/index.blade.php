@@ -9,7 +9,44 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <p>Тут будет таблица с грузами</p>
+
+            <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3">
+                <i class="fas fa-plus"></i>
+                Добавить груз
+            </a>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Номер</th>
+                            <th>Клиент</th>
+                            <th>Трек-номер по Китаю</th>
+                            <th>Статус груза</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($shipments as $shipment)
+                            <tr>
+                                <td>{{ $shipment->id }}</td>
+                                <td>{{ $shipment->client_name }}</td>
+                                <td>{{ $shipment->china_tracking_number }}</td>
+                                <td>{{ $shipment->cargo_status }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">
+                                    Нет грузов, соответствующих выбранным параметрам
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- Pagination --}}
+            <x-pagination-component :collection="$shipments" />
+
         </div>
     </div>
 @endsection

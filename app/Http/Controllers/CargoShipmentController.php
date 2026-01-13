@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CargoShipment;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CargoShipmentController extends Controller
@@ -15,6 +16,8 @@ class CargoShipmentController extends Controller
     {
         return view('cargo_shipments.index', [
             'title' => 'Грузы',
+            'shipments' => CargoShipment::query()
+                ->paginate(10),
         ]);
     }
 
@@ -23,7 +26,10 @@ class CargoShipmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('cargo_shipments.create', [
+            'title' => 'Создание груза',
+            'agents' => User::all(),
+        ]);
     }
 
     /**
@@ -31,7 +37,25 @@ class CargoShipmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'weight' => ['required', 'numeric'],
+            'width' => ['required', 'numeric'],
+            'height' => ['required', 'numeric'],
+            'length' => ['required', 'numeric'],
+        ]);
+
+        CargoShipment::query()->create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'weight' => $request->weight,
+            'width' => $request->width,
+            'height' => $request->height,
+            'length' => $request->length,
+        ]);
+
+        return redirect()->route('cargo_shipments.index');
     }
 
     /**
