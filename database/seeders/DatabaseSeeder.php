@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -43,6 +42,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Клиент 2',
             'email' => '33@33.ru',
             'password' => bcrypt('333333'),
+            RoleSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
