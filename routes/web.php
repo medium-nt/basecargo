@@ -1,10 +1,15 @@
 <?php
 
+use App\Models\CargoShipment;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('qr/1', [App\Http\Controllers\CargoShipmentController::class, 'qr'])
+    ->can('qr', CargoShipment::class)
+    ->name('cargo_shipments.qr');
 
 Auth::routes(['register' => false]);
 

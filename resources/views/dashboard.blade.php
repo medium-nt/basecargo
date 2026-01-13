@@ -12,4 +12,14 @@
             <p>Добро пожаловать в админку.</p>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-body">
+            <p>Тест QR-кода</p>
+
+            {!! QrCode::format('svg')->size(300)->generate(
+                route('cargo_shipments.qr')
+            ) !!}
+        </div>
+    </div>
 @endsection
