@@ -20,6 +20,9 @@
             {!! QrCode::format('svg')->size(300)->generate(
                 route('cargo_shipments.qr')
             ) !!}
+
+            <br>
+            {{ route('cargo_shipments.qr') }}
         </div>
     </div>
 @endsection
