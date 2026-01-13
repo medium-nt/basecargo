@@ -8,7 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('qr/1', [App\Http\Controllers\CargoShipmentController::class, 'qr'])
-    ->can('qr', CargoShipment::class)
+//    ->can('qr', CargoShipment::class)
     ->name('cargo_shipments.qr');
 
 Auth::routes(['register' => false]);
