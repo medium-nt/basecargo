@@ -8,8 +8,13 @@ Route::get('/', function () {
 
 Auth::routes(['register' => false]);
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::prefix('admin')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/', function () {
+            return view('dashboard');
+        })->name('dashboard');
 
-Route::get('/admin', function () {
-    return view('dashboard');
-})->name('admin.dashboard');
+        require base_path('routes/cargo_shipments.php');
+
+    });

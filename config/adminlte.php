@@ -302,8 +302,13 @@ return [
     'menu' => [
         [
             'text' => 'Панель',
-            'route' => 'admin.dashboard',
+            'route' => 'dashboard',
             'icon' => 'fas fa-fw fa-tachometer-alt',
+        ],
+        [
+            'text' => 'Грузы',
+            'route' => 'cargo_shipments.index',
+            'icon' => 'fas fa-fw fa-truck',
         ],
     ],
 
