@@ -7,7 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('qr/1', [App\Http\Controllers\CargoShipmentController::class, 'qr'])
+Route::get('qr/{uuid}', [App\Http\Controllers\CargoShipmentController::class, 'qr'])
 //    ->can('qr', CargoShipment::class)
     ->name('cargo_shipments.qr');
 
