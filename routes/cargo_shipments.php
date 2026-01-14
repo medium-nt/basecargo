@@ -18,4 +18,8 @@ Route::prefix('/cargo_shipments')->group(function () {
     Route::get('/{cargoShipment}', [App\Http\Controllers\CargoShipmentController::class, 'show'])
         ->can('view', CargoShipment::class)
         ->name('cargo_shipments.show');
+
+    Route::get('show_qr/{cargoShipment}', [App\Http\Controllers\CargoShipmentController::class, 'showQr'])
+        ->can('view', 'cargoShipment')
+        ->name('cargo_shipments.show_qr');
 });

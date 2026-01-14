@@ -21,7 +21,7 @@ class CargoShipmentPolicy
      */
     public function view(User $user, CargoShipment $cargoShipment): bool
     {
-        return false;
+        return true;
     }
 
     /**

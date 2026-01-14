@@ -23,6 +23,7 @@
                             <th>Клиент</th>
                             <th>Трек-номер по Китаю</th>
                             <th>Статус груза</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,6 +33,13 @@
                                 <td>{{ $shipment->client_name }}</td>
                                 <td>{{ $shipment->china_tracking_number }}</td>
                                 <td>{{ $shipment->cargo_status }}</td>
+                                <td>
+                                    <a href="{{ route('cargo_shipments.show_qr', ['cargoShipment' => $shipment->id]) }}"
+                                       class="btn btn-outline-secondary">
+                                        <i class="fas fa fa-qrcode"></i>
+                                    </a>
+
+                                </td>
                             </tr>
                         @empty
                             <tr>

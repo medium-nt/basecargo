@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CargoShipment;
-use App\Http\Controllers\Controller;
 use App\Models\User;
+use Endroid\QrCode\Builder\Builder;
 use Illuminate\Http\Request;
 
 class CargoShipmentController extends Controller
@@ -66,9 +66,14 @@ class CargoShipmentController extends Controller
         //
     }
 
-    public function qr(CargoShipment $cargoShipment)
+    public function qr($uuid)
     {
-        echo 'тут будут данные по грузу';
+        $cargoShipment = CargoShipment::query()->where('public_id', $uuid)->firstOrFail();
+
+        return view('cargo_shipments.qr', [
+            'title' => 'Детали груза',
+            'shipment' => $cargoShipment,
+        ]);
     }
 
     /**
@@ -93,5 +98,22 @@ class CargoShipmentController extends Controller
     public function destroy(CargoShipment $cargoShipment)
     {
         //
+    }
+
+    public function showQr(CargoShipment $cargoShipment)
+    {
+        $result = Builder::create()
+            ->data(route('cargo_shipments.qr', ['uuid' => $cargoShipment->public_id]))
+            ->size(300)
+            ->build();
+
+        $png = $result->getString();
+
+        return response()->streamDownload(function () use ($png) {
+            echo $png;
+        }, 'qr-code.png', [
+            'Content-Type' => 'image/png',
+        ]);
+
     }
 }
