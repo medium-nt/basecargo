@@ -24,25 +24,22 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('users')
                 ->nullOnDelete();
-            $table->string('client_name')->default('');
-            $table->string('client_messenger')->default(''); // TO_DO какой формат поля?
-            $table->string('client_messenger_number', 100)->default('');
-            $table->string('client_phone', 100)->default('');
-            $table->text('recipient_address')->nullable();
+
+            $table->text('delivery_address')->nullable();
+            $table->string('contact_phone', 100)->default('');
 
             $table->string('china_tracking_number')->default('');
             $table->decimal('china_cost')->default(0);
-            $table->string('cargo_status')->default(''); // TO_DO какой формат поля?
-            $table->string('payment_type')->default(''); // TO_DO какой формат поля?
-            $table->string('payment_status')->default(''); // TO_DO какой формат поля?
-            $table->string('crate')->default(''); // TO_DO какой формат поля?
+            $table->string('cargo_status')->default('');
+            $table->string('payment_type')->default('');
+            $table->string('payment_status')->default('');
+            $table->decimal('crate')->default(0);
 
             $table->string('photo_path')->default('');
             $table->string('cargo_number')->default('');
             $table->text('product_name')->nullable();
             $table->string('material')->default('');
-            $table->string('packaging_type')->default('');
-
+            $table->string('packaging')->default('');
 
             $table->unsignedSmallInteger('places_count')->default(0);
             $table->unsignedSmallInteger('items_per_place')->default(0);
@@ -69,7 +66,7 @@ return new class extends Migration
             $table->decimal('rate_rub')->default(0);
 
             $table->decimal('total_cost')->default(0);
-            $table->string('contact_phone', 100)->default('');
+            $table->string('payment_phone', 100)->default('');
             $table->string('bank_name')->default('');
             $table->string('bank_account_name')->default('');
 

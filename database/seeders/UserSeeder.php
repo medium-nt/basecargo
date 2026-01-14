@@ -38,6 +38,9 @@ class UserSeeder extends Seeder
             'email' => '3@3.ru',
             'password' => bcrypt('333333'),
             'role_id' => 1,
+            'phone' => '+1234567890',
+            'messenger' => 'telegram',
+            'messenger_number' => '@username',
         ]);
 
         User::factory()->create([
@@ -45,6 +48,9 @@ class UserSeeder extends Seeder
             'email' => '33@33.ru',
             'password' => bcrypt('333333'),
             'role_id' => 1,
+            'phone' => '+9876543210',
+            'messenger' => 'telegram',
+            'messenger_number' => '@client2',
         ]);
     }
 }
