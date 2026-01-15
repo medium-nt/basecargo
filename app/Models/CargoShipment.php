@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\CargoShipmentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class CargoShipment extends Model
@@ -41,5 +42,15 @@ class CargoShipment extends Model
         static::creating(function ($shipment) {
             $shipment->public_id = (string) Str::uuid();
         });
+    }
+
+    public function agent(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'responsible_user_id');
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'client_id');
     }
 }

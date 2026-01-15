@@ -19,25 +19,35 @@
                 <table class="table table-hover table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Номер</th>
+                            <th style="width: 50px;">Номер</th>
                             <th>Клиент</th>
+                            <th>Ответственный</th>
                             <th>Трек-номер по Китаю</th>
+                            <th>Номер груза</th>
                             <th>Статус груза</th>
-                            <th></th>
+                            <th style="width: 100px;"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($shipments as $shipment)
                             <tr>
                                 <td>{{ $shipment->id }}</td>
-                                <td>{{ $shipment->client_name }}</td>
+                                <td>{{ $shipment->client->name }}</td>
+                                <td>{{ $shipment->agent->name }}</td>
                                 <td>{{ $shipment->china_tracking_number }}</td>
+                                <td>{{ $shipment->cargo_number }}</td>
                                 <td>{{ $shipment->cargo_status }}</td>
                                 <td>
-                                    <a href="{{ route('cargo_shipments.show_qr', ['cargoShipment' => $shipment->id]) }}"
-                                       class="btn btn-outline-secondary">
-                                        <i class="fas fa fa-qrcode"></i>
-                                    </a>
+                                    <div class="row">
+                                        <a href="{{ route('cargo_shipments.show', ['cargoShipment' => $shipment->id]) }}"
+                                           class="btn btn-primary mr-1">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{{ route('cargo_shipments.show_qr', ['cargoShipment' => $shipment->id]) }}"
+                                           class="btn btn-secondary">
+                                            <i class="fas fa fa-qrcode"></i>
+                                        </a>
+                                    </div>
 
                                 </td>
                             </tr>
