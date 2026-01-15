@@ -21,6 +21,14 @@ class CargoShipmentPolicy
      */
     public function view(User $user, CargoShipment $cargoShipment): bool
     {
+        if($user->isAgent()) {
+            return $user->id === $cargoShipment->responsible_user_id;
+        }
+
+        if($user->isClient()) {
+            return $user->id === $cargoShipment->client_id;
+        }
+
         return true;
     }
 
@@ -37,7 +45,7 @@ class CargoShipmentPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->isAdmin() || $user->isAgent() || $user->isManager();
     }
 
     /**

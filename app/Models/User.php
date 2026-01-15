@@ -66,4 +66,24 @@ class User extends Authenticatable
             ->first()
             ->users;
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->role?->name === 'admin';
+    }
+
+    public function isClient(): bool
+    {
+        return $this->role?->name === 'client';
+    }
+
+    public function isAgent(): bool
+    {
+        return $this->role?->name === 'agent';
+    }
+
+    public function isManager(): bool
+    {
+        return $this->role?->name === 'manager';
+    }
 }

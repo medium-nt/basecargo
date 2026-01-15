@@ -14,9 +14,17 @@ class CargoShipmentController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+
         return view('cargo_shipments.index', [
             'title' => 'Грузы',
             'shipments' => CargoShipment::query()
+                ->when(auth()->user()->isAgent(), function ($query) use ($user) {
+                    $query->where('responsible_user_id', $user->id);
+                })
+                ->when(auth()->user()->isClient(), function ($query) use ($user) {
+                    $query->where('client_id', $user->id);
+                })
                 ->paginate(10),
         ]);
     }
@@ -132,7 +140,9 @@ class CargoShipmentController extends Controller
      */
     public function show(CargoShipment $cargoShipment)
     {
-        //
+        echo 'тут просмотр груза';
+
+        dd($cargoShipment->toArray());
     }
 
     public function qr($uuid)

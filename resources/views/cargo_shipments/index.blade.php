@@ -10,10 +10,12 @@
     <div class="card">
         <div class="card-body">
 
+            @if(auth()->user()->isAdmin() || auth()->user()->isAgent() || auth()->user()->isManager())
             <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3">
                 <i class="fas fa-plus"></i>
                 Добавить груз
             </a>
+            @endif
 
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">
