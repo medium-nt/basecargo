@@ -140,9 +140,10 @@ class CargoShipmentController extends Controller
      */
     public function show(CargoShipment $cargoShipment)
     {
-        echo 'тут просмотр груза';
-
-        dd($cargoShipment->toArray());
+        return view('cargo_shipments.show', [
+            'title' => 'Детали груза',
+            'shipment' => $cargoShipment,
+        ]);
     }
 
     public function qr($uuid)
