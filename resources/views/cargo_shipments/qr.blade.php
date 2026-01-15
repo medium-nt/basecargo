@@ -101,7 +101,7 @@
                         </div>
 
                         <!-- Оплата -->
-                        <div class="card">
+                        <div class="card mb-3">
                             <div class="card-header bg-light">
                                 <h5 class="card-title mb-0">
                                     <i class="fas fa-credit-card"></i> Оплата
@@ -128,6 +128,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        @auth
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <a href="{{ route('cargo_shipments.show', ['cargoShipment' => $shipment->id]) }}"
+                                           class="btn btn-primary">
+                                            Просмотр в системе
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endauth
                     </div>
                 </div>
             </div>

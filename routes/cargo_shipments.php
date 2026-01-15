@@ -16,7 +16,7 @@ Route::prefix('/cargo_shipments')->group(function () {
         ->name('cargo_shipments.store');
 
     Route::get('/{cargoShipment}', [App\Http\Controllers\CargoShipmentController::class, 'show'])
-        ->can('view', CargoShipment::class)
+        ->can('view', 'cargoShipment')
         ->name('cargo_shipments.show');
 
     Route::get('show_qr/{cargoShipment}', [App\Http\Controllers\CargoShipmentController::class, 'showQr'])
