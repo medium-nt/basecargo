@@ -26,49 +26,49 @@ return new class extends Migration
                 ->nullOnDelete();
 
             $table->text('delivery_address')->nullable();
-            $table->string('contact_phone', 100)->default('');
+            $table->string('contact_phone', 100)->nullable();
 
-            $table->string('china_tracking_number')->default('');
-            $table->decimal('china_cost')->default(0);
-            $table->string('cargo_status')->default('');
-            $table->string('payment_type')->default('');
-            $table->string('payment_status')->default('');
-            $table->decimal('crate')->default(0);
+            $table->string('china_tracking_number')->nullable();
+            $table->decimal('china_cost')->nullable();
+            $table->string('cargo_status')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->string('payment_status')->nullable();
+            $table->decimal('crate')->nullable();
 
-            $table->string('photo_path')->default('');
-            $table->string('cargo_number')->default('');
+            $table->string('photo_path')->nullable();
+            $table->string('cargo_number')->nullable();
             $table->text('product_name')->nullable();
-            $table->string('material')->default('');
-            $table->string('packaging')->default('');
+            $table->string('material')->nullable();
+            $table->string('packaging')->nullable();
 
-            $table->unsignedSmallInteger('places_count')->default(0);
-            $table->unsignedSmallInteger('items_per_place')->default(0);
-            $table->unsignedInteger('total_items_count')->default(0);
-            $table->decimal('gross_weight_per_place', 10, 3)->default(0);
-            $table->decimal('gross_weight_total', 10, 3)->default(0);
+            $table->unsignedSmallInteger('places_count')->nullable();
+            $table->unsignedSmallInteger('items_per_place')->nullable();
+            $table->unsignedInteger('total_items_count')->nullable();
+            $table->decimal('gross_weight_per_place', 10, 3)->nullable();
+            $table->decimal('gross_weight_total', 10, 3)->nullable();
 
-            $table->decimal('length')->default(0);
-            $table->decimal('width')->default(0);
-            $table->decimal('height')->default(0);
+            $table->decimal('length')->nullable();
+            $table->decimal('width')->nullable();
+            $table->decimal('height')->nullable();
 
-            $table->decimal('volume_per_item', 10, 3)->default(0);
-            $table->decimal('volume_total', 10, 3)->default(0);
+            $table->decimal('volume_per_item', 10, 3)->nullable();
+            $table->decimal('volume_total', 10, 3)->nullable();
 
-            $table->decimal('tare_weight_per_box', 10, 3)->default(0);
-            $table->decimal('tare_weight_total', 10, 3)->default(0);
+            $table->decimal('tare_weight_per_box', 10, 3)->nullable();
+            $table->decimal('tare_weight_total', 10, 3)->nullable();
 
-            $table->decimal('net_weight_per_box', 10, 3)->default(0);
-            $table->decimal('net_weight_total', 10, 3)->default(0);
+            $table->decimal('net_weight_per_box', 10, 3)->nullable();
+            $table->decimal('net_weight_total', 10, 3)->nullable();
 
 
-            $table->decimal('insurance_amount')->default(0);
-            $table->decimal('insurance_cost')->default(0);
-            $table->decimal('rate_rub')->default(0);
+            $table->decimal('insurance_amount')->nullable();
+            $table->decimal('insurance_cost')->nullable();
+            $table->decimal('rate_rub')->nullable();
 
-            $table->decimal('total_cost')->default(0);
-            $table->string('payment_phone', 100)->default('');
-            $table->string('bank_name')->default('');
-            $table->string('bank_account_name')->default('');
+            $table->decimal('total_cost')->nullable();
+            $table->string('payment_phone', 100)->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_account_name')->nullable();
 
             $table->date('factory_shipping_date')->nullable();
             $table->date('sunfuihe_warehouse_received_date')->nullable();

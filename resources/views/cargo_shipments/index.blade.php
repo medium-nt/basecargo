@@ -32,8 +32,8 @@
                         @forelse ($shipments as $shipment)
                             <tr>
                                 <td>{{ $shipment->id }}</td>
-                                <td>{{ $shipment->client->name }}</td>
-                                <td>{{ $shipment->agent->name }}</td>
+                                <td>{{ $shipment->client?->name ?? '' }}</td>
+                                <td>{{ $shipment->agent?->name ?? '' }}</td>
                                 <td>{{ $shipment->china_tracking_number }}</td>
                                 <td>{{ $shipment->cargo_number }}</td>
                                 <td>{{ $shipment->cargo_status }}</td>
