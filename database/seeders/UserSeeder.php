@@ -52,5 +52,12 @@ class UserSeeder extends Seeder
             'messenger' => 'telegram',
             'messenger_number' => '@client2',
         ]);
+
+        User::factory()->create([
+            'name' => 'Менеджер',
+            'email' => '4@4.ru',
+            'password' => bcrypt('444444'),
+            'role_id' => 4,
+        ]);
     }
 }
