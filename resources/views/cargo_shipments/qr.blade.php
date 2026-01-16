@@ -410,48 +410,6 @@
                             </div>
                         </div>
 
-                        <!-- Оплата -->
-                        <div class="card mb-3">
-                            <div class="card-header bg-light">
-                                <h5 class="card-title mb-0 section-title">
-                                    <i class="fas fa-credit-card"></i> Оплата / 付款
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    @if($shipment->payment_type)
-                                    <div class="col-md-6">
-                                        <div class="field-label">Тип оплаты</div>
-                                        <div class="field-label-cn">付款方式</div>
-                                        <div class="field-value">{{ $shipment->payment_type }}</div>
-                                    </div>
-                                    @else
-                                    <div class="col-md-6">
-                                        <div class="field-label">Тип оплаты</div>
-                                        <div class="field-label-cn">付款方式</div>
-                                        <div class="field-value text-muted">—</div>
-                                    </div>
-                                    @endif
-
-                                    @if($shipment->china_cost)
-                                    <div class="col-md-6">
-                                        <div class="field-label">Стоимость</div>
-                                        <div class="field-label-cn">费用</div>
-                                        <div class="field-value fs-5 text-primary">
-                                            {{ number_format($shipment->china_cost, 2) }}
-                                        </div>
-                                    </div>
-                                    @else
-                                    <div class="col-md-6">
-                                        <div class="field-label">Стоимость</div>
-                                        <div class="field-label-cn">费用</div>
-                                        <div class="field-value text-muted">—</div>
-                                    </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
                         @auth
                         <div class="card">
                             <div class="card-body">
