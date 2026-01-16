@@ -185,6 +185,7 @@ class CargoShipmentController extends Controller
         $result = Builder::create()
             ->data(route('cargo_shipments.qr', ['uuid' => $cargoShipment->public_id]))
             ->size(300)
+            ->labelText($cargoShipment->cargo_number)
             ->build();
 
         $png = $result->getString();
