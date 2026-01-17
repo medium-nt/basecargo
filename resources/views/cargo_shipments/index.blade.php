@@ -45,17 +45,19 @@
                                            class="btn btn-primary mr-1">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        @isset($shipment->cargo_number)
                                         <a href="{{ route('cargo_shipments.show_qr', ['cargoShipment' => $shipment->id]) }}"
                                            class="btn btn-secondary">
                                             <i class="fas fa fa-qrcode"></i>
                                         </a>
+                                        @endisset
                                     </div>
 
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center text-muted">
+                                <td colspan="7" class="text-center text-muted">
                                     Нет грузов, соответствующих выбранным параметрам
                                 </td>
                             </tr>
