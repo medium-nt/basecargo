@@ -116,19 +116,19 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="places_count">количество мест</label>
                             <input type="number" min="1" step="1" name="places_count" id="places_count" class="form-control @error('places_count') is-invalid @enderror" value="{{ old('places_count') }}">
                         </div>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="items_per_place">количество товары/мест</label>
                             <input type="number" min="1" step="1" name="items_per_place" id="items_per_place" class="form-control @error('items_per_place') is-invalid @enderror" value="{{ old('items_per_place') }}">
                         </div>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="total_items_count">общее количество штук</label>
                             <input type="number" min="1" step="1" name="total_items_count" id="total_items_count" class="form-control @error('total_items_count') is-invalid @enderror" value="{{ old('total_items_count') }}">
@@ -139,49 +139,37 @@
                 <div class="row">
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="length">длина</label>
-                            <input type="number" name="length" id="length" class="form-control @error('length') is-invalid @enderror" value="{{ old('length') }}">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="width">ширина</label>
-                            <input type="number" name="width" id="width" class="form-control @error('width') is-invalid @enderror" value="{{ old('width') }}">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="height">высота</label>
-                            <input type="number" name="height" id="height" class="form-control @error('height') is-invalid @enderror" value="{{ old('height') }}">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="volume_per_item">обьем 1 места</label>
-                            <input type="number" name="volume_per_item" id="volume_per_item" class="form-control @error('volume_per_item') is-invalid @enderror" value="{{ old('volume_per_item') }}">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="volume_total">общий обьем кубов</label>
+                            <label for="volume_total">Общий обьем кубов</label>
                             <input type="number" name="volume_total" id="volume_total" class="form-control @error('volume_total') is-invalid @enderror" value="{{ old('volume_total') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="weight">вес</label>
-                            <input type="number" name="weight" id="weight" class="form-control @error('weight') is-invalid @enderror" value="{{ old('weight') }}">
+                            <label for="volume_per_item">Обьем 1 места</label>
+                            <input type="number" name="volume_per_item" id="volume_per_item" class="form-control @error('volume_per_item') is-invalid @enderror" value="{{ old('volume_per_item') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="length">длина</label>
+                            <input type="number" name="length" id="length" class="form-control @error('length') is-invalid @enderror" value="{{ old('length') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="width">ширина</label>
+                            <input type="number" name="width" id="width" class="form-control @error('width') is-invalid @enderror" value="{{ old('width') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="height">высота</label>
+                            <input type="number" name="height" id="height" class="form-control @error('height') is-invalid @enderror" value="{{ old('height') }}">
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="gross_weight_per_place">вес брутто 1 места</label>
-                            <input type="number" name="gross_weight_per_place" id="gross_weight_per_place" class="form-control @error('gross_weight_per_place') is-invalid @enderror" value="{{ old('gross_weight_per_place') }}">
-                        </div>
-                    </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="gross_weight_total">Общий вес брутто</label>
@@ -190,26 +178,33 @@
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="tare_weight_per_box">вес 1 тары</label>
-                            <input type="number" name="tare_weight_per_box" id="tare_weight_per_box" class="form-control @error('tare_weight_per_box') is-invalid @enderror" value="{{ old('tare_weight_per_box') }}">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="tare_weight_total">вес всех коробок</label>
-                            <input type="number" name="tare_weight_total" id="tare_weight_total" class="form-control @error('tare_weight_total') is-invalid @enderror" value="{{ old('tare_weight_total') }}">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="net_weight_per_box">Вес нетто 1 коробки</label>
-                            <input type="number" name="net_weight_per_box" id="net_weight_per_box" class="form-control @error('net_weight_per_box') is-invalid @enderror" value="{{ old('net_weight_per_box') }}">
+                            <label for="gross_weight_per_place">Вес брутто 1 места</label>
+                            <input type="number" name="gross_weight_per_place" id="gross_weight_per_place" class="form-control @error('gross_weight_per_place') is-invalid @enderror" value="{{ old('gross_weight_per_place') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="net_weight_total">Общий вес нетто</label>
                             <input type="number" name="net_weight_total" id="net_weight_total" class="form-control @error('net_weight_total') is-invalid @enderror" value="{{ old('net_weight_total') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="net_weight_per_box">Вес нетто 1 коробки</label>
+                            <input type="number" name="net_weight_per_box" id="net_weight_per_box" class="form-control @error('net_weight_per_box') is-invalid @enderror" value="{{ old('net_weight_per_box') }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="tare_weight_total">Вес всех коробок</label>
+                            <input type="number" name="tare_weight_total" id="tare_weight_total" class="form-control @error('tare_weight_total') is-invalid @enderror" value="{{ old('tare_weight_total') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="tare_weight_per_box">Вес 1 тары</label>
+                            <input type="number" name="tare_weight_per_box" id="tare_weight_per_box" class="form-control @error('tare_weight_per_box') is-invalid @enderror" value="{{ old('tare_weight_per_box') }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -370,3 +365,84 @@
         </div>
     </form>
 @endsection
+
+@push('js')
+<script>
+    function calculateGrossWeightPerPlace() {
+        console.log('calc...');
+        const grossWeightTotal = parseFloat(document.getElementById('gross_weight_total').value) || 0;
+        const placesCount = parseInt(document.getElementById('places_count').value) || 0;
+
+        if (placesCount > 0 && grossWeightTotal > 0) {
+            const result = grossWeightTotal / placesCount;
+            document.getElementById('gross_weight_per_place').value = result.toFixed(2);
+        } else {
+            document.getElementById('gross_weight_per_place').value = '';
+        }
+
+        calculateTareWeightPerBox();
+    }
+
+    function calculateVolumePerItem() {
+        const volumeTotal = parseFloat(document.getElementById('volume_total').value) || 0;
+        const placesCount = parseInt(document.getElementById('places_count').value) || 0;
+
+        if (placesCount > 0 && volumeTotal > 0) {
+            const result = volumeTotal / placesCount;
+            document.getElementById('volume_per_item').value = result.toFixed(2);
+        } else {
+            document.getElementById('volume_per_item').value = '';
+        }
+    }
+
+    function calculateTareWeightTotal() {
+        const grossWeightTotal = parseFloat(document.getElementById('gross_weight_total').value) || 0;
+        const netWeightTotal = parseFloat(document.getElementById('net_weight_total').value) || 0;
+
+        if (grossWeightTotal > 0 && netWeightTotal > 0) {
+            const result = grossWeightTotal - netWeightTotal;
+            document.getElementById('tare_weight_total').value = result.toFixed(2);
+        } else {
+            document.getElementById('tare_weight_total').value = '';
+        }
+    }
+
+    function calculateNetWeightPerBox() {
+        const netWeightTotal = parseFloat(document.getElementById('net_weight_total').value) || 0;
+        const placesCount = parseInt(document.getElementById('places_count').value) || 0;
+
+        if (placesCount > 0 && netWeightTotal > 0) {
+            const result = netWeightTotal / placesCount;
+            document.getElementById('net_weight_per_box').value = result.toFixed(2);
+        } else {
+            document.getElementById('net_weight_per_box').value = '';
+        }
+
+        calculateTareWeightPerBox();
+    }
+
+    function calculateTareWeightPerBox() {
+        const grossWeightPerPlace = parseFloat(document.getElementById('gross_weight_per_place').value) || 0;
+        const netWeightPerBox = parseFloat(document.getElementById('net_weight_per_box').value) || 0;
+
+        if (grossWeightPerPlace > 0 && netWeightPerBox > 0) {
+            const result = grossWeightPerPlace - netWeightPerBox;
+            document.getElementById('tare_weight_per_box').value = result.toFixed(2);
+        } else {
+            document.getElementById('tare_weight_per_box').value = '';
+        }
+    }
+
+    document.getElementById('gross_weight_total').addEventListener('input', calculateGrossWeightPerPlace);
+    document.getElementById('places_count').addEventListener('input', calculateGrossWeightPerPlace);
+
+    document.getElementById('volume_total').addEventListener('input', calculateVolumePerItem);
+    document.getElementById('places_count').addEventListener('input', calculateVolumePerItem);
+
+    document.getElementById('gross_weight_total').addEventListener('input', calculateTareWeightTotal);
+    document.getElementById('net_weight_total').addEventListener('input', calculateTareWeightTotal);
+
+    document.getElementById('net_weight_total').addEventListener('input', calculateNetWeightPerBox);
+    document.getElementById('places_count').addEventListener('input', calculateNetWeightPerBox);
+</script>
+@endpush
