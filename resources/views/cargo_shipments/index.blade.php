@@ -21,12 +21,12 @@
                 <table class="table table-hover table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            <th style="width: 50px;">Номер</th>
-                            <th>Клиент</th>
-                            <th>Ответственный</th>
-                            <th>Трек-номер по Китаю</th>
-                            <th>Номер груза</th>
-                            <th>Статус груза</th>
+                            <th style="width: 50px;">#</th>
+                            <th>Клиент 客户群</th>
+                            <th>Ответственный 负责</th>
+                            <th>Трек-номер по Китаю 中国的轨道号码</th>
+                            <th>Номер груза 货物编号</th>
+                            <th>Статус груза 货物状况</th>
                             <th style="width: 100px;"></th>
                         </tr>
                     </thead>

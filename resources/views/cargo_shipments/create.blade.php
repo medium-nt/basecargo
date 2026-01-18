@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="client_id">Клиент</label>
+                            <label for="client_id">Клиент <small>客户群</small></label>
                             <select name="client_id" id="client_id" class="form-control @error('client_id') is-invalid @enderror">
                                 <option value="" {{ old('client_id') ? '' : 'selected' }}>---</option>
                                 @foreach($clients as $client)
@@ -29,7 +29,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="responsible_user_id">Ответственный</label>
+                            <label for="responsible_user_id">Ответственный <small>负责</small></label>
                             <select name="responsible_user_id" id="responsible_user_id" class="form-control @error('responsible_user_id') is-invalid @enderror">
                                 <option value="" {{ old('responsible_user_id') ? '' : 'selected' }}>---</option>
                                 @foreach($agents as $agent)
@@ -51,13 +51,13 @@
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="contact_phone">телефон получателя</label>
+                            <label for="contact_phone">телефон получателя <small>电话号码</small></label>
                             <input type="text" name="contact_phone" id="contact_phone" class="form-control @error('contact_phone') is-invalid @enderror" value="{{ old('contact_phone') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-8">
                         <div class="form-group">
-                            <label for="delivery_address">Адрес</label>
+                            <label for="delivery_address">Адрес <small>收件人地址</small></label>
                             <textarea name="delivery_address" id="delivery_address" rows="2" class="form-control @error('delivery_address') is-invalid @enderror">{{ old('delivery_address') }}</textarea>
                         </div>
                     </div>
@@ -68,19 +68,19 @@
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="china_tracking_number">трек-номер по Китаю</label>
+                            <label for="china_tracking_number">трек-номер по Китаю <small>中国的轨道号码</small></label>
                             <input type="text" name="china_tracking_number" id="china_tracking_number" class="form-control @error('china_tracking_number') is-invalid @enderror" value="{{ old('china_tracking_number') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="china_cost">стоимость по Китаю</label>
+                            <label for="china_cost">стоимость по Китаю <small>中国的成本</small></label>
                             <input type="number" name="china_cost" id="china_cost" class="form-control @error('china_cost') is-invalid @enderror" value="{{ old('china_cost') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="crate">Обрешетка</label>
+                            <label for="crate">Обрешетка <small>箱子</small></label>
                             <input type="text" name="crate" id="crate" class="form-control @error('crate') is-invalid @enderror" value="{{ old('crate') }}">
                         </div>
                     </div>
@@ -91,25 +91,25 @@
                 <div class="row">
                     <div class="col-12 col-md-3">
                         <div class="form-group">
-                            <label for="cargo_number">номер груза</label>
+                            <label for="cargo_number">номер груза <small>货物编号</small></label>
                             <input type="text" name="cargo_number" id="cargo_number" class="form-control @error('cargo_number') is-invalid @enderror" value="{{ old('cargo_number') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
-                            <label for="product_name">наименование товара</label>
+                            <label for="product_name">наименование товара <small>产品名称</small></label>
                             <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" value="{{ old('product_name') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
-                            <label for="material">материал</label>
+                            <label for="material">материал <small>材料</small></label>
                             <input type="text" name="material" id="material" class="form-control @error('material') is-invalid @enderror" value="{{ old('material') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
-                            <label for="packaging">упаковка</label>
+                            <label for="packaging">упаковка <small>包装</small></label>
                             <input type="text" name="packaging" id="packaging" class="form-control @error('packaging') is-invalid @enderror" value="{{ old('packaging') }}">
                         </div>
                     </div>
@@ -118,19 +118,19 @@
                 <div class="row">
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="places_count">количество мест</label>
+                            <label for="places_count">количество мест <small>座位数目</small></label>
                             <input type="number" min="1" step="1" name="places_count" id="places_count" class="form-control @error('places_count') is-invalid @enderror" value="{{ old('places_count') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="items_per_place">количество товары/мест</label>
+                            <label for="items_per_place">количество товары/мест <small>产品/地点数目</small></label>
                             <input type="number" min="1" step="1" name="items_per_place" id="items_per_place" class="form-control @error('items_per_place') is-invalid @enderror" value="{{ old('items_per_place') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="total_items_count">общее количество штук</label>
+                            <label for="total_items_count">общее количество штук <small>件总数</small></label>
                             <input type="number" min="1" step="1" name="total_items_count" id="total_items_count" class="form-control @error('total_items_count') is-invalid @enderror" value="{{ old('total_items_count') }}">
                         </div>
                     </div>
@@ -139,31 +139,31 @@
                 <div class="row">
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="volume_total">Общий обьем кубов</label>
+                            <label for="volume_total">общий обьем кубов <small>立方体的总体积</small></label>
                             <input type="number" name="volume_total" id="volume_total" class="form-control @error('volume_total') is-invalid @enderror" value="{{ old('volume_total') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="volume_per_item">Обьем 1 места</label>
+                            <label for="volume_per_item">обьем 1 места <small>1个座位的体积</small></label>
                             <input type="number" name="volume_per_item" id="volume_per_item" class="form-control @error('volume_per_item') is-invalid @enderror" value="{{ old('volume_per_item') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
-                            <label for="length">длина</label>
+                            <label for="length">длина <small>长度</small></label>
                             <input type="number" name="length" id="length" class="form-control @error('length') is-invalid @enderror" value="{{ old('length') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
-                            <label for="width">ширина</label>
+                            <label for="width">ширина <small>阔度</small></label>
                             <input type="number" name="width" id="width" class="form-control @error('width') is-invalid @enderror" value="{{ old('width') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
-                            <label for="height">высота</label>
+                            <label for="height">высота <small>身高</small></label>
                             <input type="number" name="height" id="height" class="form-control @error('height') is-invalid @enderror" value="{{ old('height') }}">
                         </div>
                     </div>
@@ -172,38 +172,38 @@
                 <div class="row">
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="gross_weight_total">Общий вес брутто</label>
+                            <label for="gross_weight_total">Общий вес брутто <small>总毛重</small></label>
                             <input type="number" name="gross_weight_total" id="gross_weight_total" class="form-control @error('gross_weight_total') is-invalid @enderror" value="{{ old('gross_weight_total') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="gross_weight_per_place">Вес брутто 1 места</label>
+                            <label for="gross_weight_per_place">вес брутто 1 места <small>1个座位的毛重</small></label>
                             <input type="number" name="gross_weight_per_place" id="gross_weight_per_place" class="form-control @error('gross_weight_per_place') is-invalid @enderror" value="{{ old('gross_weight_per_place') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="net_weight_total">Общий вес нетто</label>
+                            <label for="net_weight_total">Общий вес нетто <small>总净重</small></label>
                             <input type="number" name="net_weight_total" id="net_weight_total" class="form-control @error('net_weight_total') is-invalid @enderror" value="{{ old('net_weight_total') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="net_weight_per_box">Вес нетто 1 коробки</label>
+                            <label for="net_weight_per_box">Вес нетто 1 коробки <small>净重1箱</small></label>
                             <input type="number" name="net_weight_per_box" id="net_weight_per_box" class="form-control @error('net_weight_per_box') is-invalid @enderror" value="{{ old('net_weight_per_box') }}" readonly>
                         </div>
                     </div>
 
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="tare_weight_total">Вес всех коробок</label>
+                            <label for="tare_weight_total">вес всех коробок <small>所有箱子的重量</small></label>
                             <input type="number" name="tare_weight_total" id="tare_weight_total" class="form-control @error('tare_weight_total') is-invalid @enderror" value="{{ old('tare_weight_total') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="tare_weight_per_box">Вес 1 тары</label>
+                            <label for="tare_weight_per_box">вес 1 тары <small>1皮重</small></label>
                             <input type="number" name="tare_weight_per_box" id="tare_weight_per_box" class="form-control @error('tare_weight_per_box') is-invalid @enderror" value="{{ old('tare_weight_per_box') }}" readonly>
                         </div>
                     </div>
@@ -321,37 +321,37 @@
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="factory_shipping_date">дата отправки с завода</label>
+                            <label for="factory_shipping_date">дата отправки с завода <small>从工厂装运日期</small></label>
                             <input type="date" name="factory_shipping_date" id="factory_shipping_date" class="form-control @error('factory_shipping_date') is-invalid @enderror" value="{{ old('factory_shipping_date') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="sunfuihe_warehouse_received_date">дата получения склад Суньфуйхэ</label>
+                            <label for="sunfuihe_warehouse_received_date">дата получения склад Суньфуйхэ <small>收货日期孙福河仓库</small></label>
                             <input type="date" name="sunfuihe_warehouse_received_date" id="sunfuihe_warehouse_received_date" class="form-control @error('sunfuihe_warehouse_received_date') is-invalid @enderror" value="{{ old('sunfuihe_warehouse_received_date') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="china_shipping_date">дата отправки с Китая</label>
+                            <label for="china_shipping_date">дата отправки с Китая <small>从中国发货日期</small></label>
                             <input type="date" name="china_shipping_date" id="china_shipping_date" class="form-control @error('china_shipping_date') is-invalid @enderror" value="{{ old('china_shipping_date') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="ussuriysk_arrival_date">дата прибытия в Уссурийск</label>
+                            <label for="ussuriysk_arrival_date">дата прибытия в Уссурийск <small>到达乌苏里斯克的日期</small></label>
                             <input type="date" name="ussuriysk_arrival_date" id="ussuriysk_arrival_date" class="form-control @error('ussuriysk_arrival_date') is-invalid @enderror" value="{{ old('ussuriysk_arrival_date') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="ussuriysk_shipping_date">дата отправки с Уссурийска</label>
+                            <label for="ussuriysk_shipping_date">дата отправки с Уссурийска <small>从乌苏里斯克发货日期</small></label>
                             <input type="date" name="ussuriysk_shipping_date" id="ussuriysk_shipping_date" class="form-control @error('ussuriysk_shipping_date') is-invalid @enderror" value="{{ old('ussuriysk_shipping_date') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
-                            <label for="client_received_date">дата получения клиентом</label>
+                            <label for="client_received_date">дата получения клиентом <small>客户收到日期</small></label>
                             <input type="date" name="client_received_date" id="client_received_date" class="form-control @error('client_received_date') is-invalid @enderror" value="{{ old('client_received_date') }}">
                         </div>
                     </div>
