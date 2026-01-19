@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CargoShipment;
 use App\Models\User;
 use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Label\Font\NotoSans;
 use Illuminate\Http\Request;
 
 class CargoShipmentController extends Controller
@@ -186,6 +187,7 @@ class CargoShipmentController extends Controller
             ->data(route('cargo_shipments.qr', ['uuid' => $cargoShipment->public_id]))
             ->size(300)
             ->labelText($cargoShipment->cargo_number ?? '')
+            ->labelFont(new NotoSans(30))
             ->build();
 
         $png = $result->getString();
