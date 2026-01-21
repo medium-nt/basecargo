@@ -7,6 +7,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+if (App::environment(['local'])) {
+    Route::prefix('autologin')->group(function () {
+        Route::get('/{email}', [App\Http\Controllers\UsersController::class, 'autologin'])
+            ->name('users.autologin');
+    });
+}
+
 Route::get('qr/{uuid}', [App\Http\Controllers\CargoShipmentController::class, 'qr'])
 //    ->can('qr', CargoShipment::class)
     ->name('cargo_shipments.qr');
