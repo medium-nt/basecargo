@@ -43,7 +43,7 @@
                                     <div class="row">
                                         <a href="{{ route('cargo_shipments.show', ['cargoShipment' => $shipment->id]) }}"
                                            class="btn btn-primary mr-1">
-                                            <i class="fas fa-edit"></i>
+                                            <i class="fas fa-eye"></i>
                                         </a>
                                         @isset($shipment->cargo_number)
                                         <a href="{{ route('cargo_shipments.show_qr', ['cargoShipment' => $shipment->id]) }}"

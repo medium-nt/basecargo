@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,6 +59,13 @@ class User extends Authenticatable
         return Role::where('name', 'client')
             ->first()
             ->users;
+    }
+
+    public static function agents_and_managers(): Collection
+    {
+        return User::whereHas('role', function ($q) {
+            $q->whereIn('name', ['agent', 'manager']);
+        })->get();
     }
 
     public static function agents()

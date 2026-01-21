@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="client_id">Клиент <small>客户群</small></label>
-                            <select name="client_id" id="client_id" class="form-control @error('client_id') is-invalid @enderror">
+                            <select name="client_id" id="client_id" class="form-control select2 @error('client_id') is-invalid @enderror">
                                 <option value="" {{ old('client_id') ? '' : 'selected' }}>---</option>
                                 @foreach($clients as $client)
                                     <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
@@ -30,7 +30,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="responsible_user_id">Ответственный <small>负责</small></label>
-                            <select name="responsible_user_id" id="responsible_user_id" class="form-control @error('responsible_user_id') is-invalid @enderror">
+                            <select name="responsible_user_id" id="responsible_user_id" class="form-control select2 @error('responsible_user_id') is-invalid @enderror">
                                 <option value="" {{ old('responsible_user_id') ? '' : 'selected' }}>---</option>
                                 @foreach($agents as $agent)
                                     <option value="{{ $agent->id }}" {{ old('responsible_user_id') == $agent->id ? 'selected' : '' }}>{{ $agent->name }}</option>
@@ -366,8 +366,32 @@
     </form>
 @endsection
 
+@push('css')
+    <style>
+        .select2-container .select2-selection--single {
+            height: calc(2.25rem + 2px) !important;
+            padding: 0.375rem 0.75rem;
+        }
+        .select2-container .select2-selection--single {
+            height: calc(2.25rem + 2px) !important;
+            padding: 0.375rem 0.75rem;
+        }
+        .select2-container .select2-selection--single .select2-selection__arrow {
+            height: 100% !important;
+            top: 0 !important;
+        }
+
+    </style>
+@endpush
+
 @push('js')
 <script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            width: '100%',
+        });
+    });
+
     function calculateGrossWeightPerPlace() {
         console.log('calc...');
         const grossWeightTotal = parseFloat(document.getElementById('gross_weight_total').value) || 0;

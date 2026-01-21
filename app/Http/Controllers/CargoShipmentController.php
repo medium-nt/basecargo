@@ -37,7 +37,7 @@ class CargoShipmentController extends Controller
     {
         return view('cargo_shipments.create', [
             'title' => 'Создание груза',
-            'agents' => User::agents(),
+            'agents' => User::agents_and_managers(),
             'clients' => User::clients(),
         ]);
     }
