@@ -133,7 +133,9 @@ class CargoShipmentController extends Controller
             'client_received_date' => $request->client_received_date,
         ]);
 
-        return redirect()->route('cargo_shipments.index');
+        return redirect()
+            ->route('cargo_shipments.index')
+            ->with('success', 'Груз успешно создан');
     }
 
     /**
