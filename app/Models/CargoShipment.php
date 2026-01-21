@@ -48,6 +48,7 @@ class CargoShipment extends Model
         'insurance_amount',
         'insurance_cost',
         'rate_rub',
+        'payment_phone',
         'total_cost',
         'bank_name',
         'bank_account_name',

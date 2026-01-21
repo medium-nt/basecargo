@@ -53,7 +53,7 @@ class CargoShipmentPolicy
      */
     public function update(User $user, CargoShipment $cargoShipment): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isManager();
     }
 
     /**

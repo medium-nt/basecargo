@@ -23,7 +23,11 @@ Route::prefix('/cargo_shipments')->group(function () {
         ->can('view', 'cargoShipment')
         ->name('cargo_shipments.show_qr');
 
-    Route::get('edit/{uuid}', [App\Http\Controllers\CargoShipmentController::class, 'edit'])
+//    Route::get('edit/{uuid}', [App\Http\Controllers\CargoShipmentController::class, 'edit'])
+//        ->can('update', 'cargoShipment')
+//        ->name('cargo_shipments.edit');
+
+    Route::get('edit/{cargoShipment}', [App\Http\Controllers\CargoShipmentController::class, 'edit'])
         ->can('update', 'cargoShipment')
         ->name('cargo_shipments.edit');
 

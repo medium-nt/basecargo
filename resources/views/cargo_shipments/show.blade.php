@@ -282,8 +282,8 @@
                 </div>
                 <div class="col-12 col-md-3">
                     <div class="form-group">
-                        <label for="contact_phone_payment">Телефон</label>
-                        <input type="text" id="contact_phone_payment" class="form-control" value="{{ $shipment->contact_phone_payment ?? '' }}" readonly>
+                        <label for="payment_phone">Телефон</label>
+                        <input type="text" id="payment_phone" class="form-control" value="{{ $shipment->payment_phone ?? '' }}" readonly>
                     </div>
                 </div>
                 <div class="col-12 col-md-3">

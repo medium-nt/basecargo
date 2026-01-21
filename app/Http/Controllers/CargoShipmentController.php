@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CargoShipmentRequest;
 use App\Models\CargoShipment;
 use App\Models\User;
 use Endroid\QrCode\Builder\Builder;
@@ -45,93 +46,9 @@ class CargoShipmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CargoShipmentRequest $request)
     {
-        $request->validate([
-            'client_id' => ['nullable', 'integer', 'exists:users,id'],
-            'responsible_user_id' => ['nullable', 'integer', 'exists:users,id'],
-            'delivery_address' => [],
-            'contact_phone' => [],
-            'china_tracking_number' => [],
-            'china_cost' => [],
-            'cargo_status' => [],
-            'payment_type' => [],
-            'payment_status' => [],
-            'crate' => [],
-            'cargo_number' => [],
-            'product_name' => [],
-            'material' => [],
-            'packaging' => [],
-            'places_count' => [],
-            'items_per_place' => [],
-            'total_items_count' => [],
-            'gross_weight_per_place' => [],
-            'gross_weight_total' => [],
-            'length' => [],
-            'width' => [],
-            'height' => [],
-            'volume_per_item' => [],
-            'volume_total' => [],
-            'tare_weight_per_box' => [],
-            'tare_weight_total' => [],
-            'net_weight_per_box' => [],
-            'net_weight_total' => [],
-            'insurance_amount' => [],
-            'insurance_cost' => [],
-            'rate_rub' => [],
-            'total_cost' => [],
-            'bank_name' => [],
-            'bank_account_name' => [],
-            'factory_shipping_date' => [],
-            'sunfuihe_warehouse_received_date' => [],
-            'china_shipping_date' => [],
-            'ussuriysk_arrival_date' => [],
-            'ussuriysk_shipping_date' => [],
-            'client_received_date' => [],
-        ]);
-
-        CargoShipment::query()->create([
-            'client_id' => $request->client_id,
-            'responsible_user_id' => $request->responsible_user_id,
-            'delivery_address' => $request->delivery_address,
-            'contact_phone' => $request->contact_phone,
-            'china_tracking_number' => $request->china_tracking_number,
-            'china_cost' => $request->china_cost,
-            'cargo_status' => $request->cargo_status,
-            'payment_type' => $request->payment_type,
-            'payment_status' => $request->payment_status,
-            'crate' => $request->crate,
-            'cargo_number' => $request->cargo_number,
-            'product_name' => $request->product_name,
-            'material' => $request->material,
-            'packaging' => $request->packaging,
-            'places_count' => $request->places_count,
-            'items_per_place' => $request->items_per_place,
-            'total_items_count' => $request->total_items_count,
-            'gross_weight_per_place' => $request->gross_weight_per_place,
-            'gross_weight_total' => $request->gross_weight_total,
-            'length' => $request->length,
-            'width' => $request->width,
-            'height' => $request->height,
-            'volume_per_item' => $request->volume_per_item,
-            'volume_total' => $request->volume_total,
-            'tare_weight_per_box' => $request->tare_weight_per_box,
-            'tare_weight_total' => $request->tare_weight_total,
-            'net_weight_per_box' => $request->net_weight_per_box,
-            'net_weight_total' => $request->net_weight_total,
-            'insurance_amount' => $request->insurance_amount,
-            'insurance_cost' => $request->insurance_cost,
-            'rate_rub' => $request->rate_rub,
-            'total_cost' => $request->total_cost,
-            'bank_name' => $request->bank_name,
-            'bank_account_name' => $request->bank_account_name,
-            'factory_shipping_date' => $request->factory_shipping_date,
-            'sunfuihe_warehouse_received_date' => $request->sunfuihe_warehouse_received_date,
-            'china_shipping_date' => $request->china_shipping_date,
-            'ussuriysk_arrival_date' => $request->ussuriysk_arrival_date,
-            'ussuriysk_shipping_date' => $request->ussuriysk_shipping_date,
-            'client_received_date' => $request->client_received_date,
-        ]);
+        CargoShipment::query()->create($request->all());
 
         return redirect()
             ->route('cargo_shipments.index')
@@ -164,15 +81,24 @@ class CargoShipmentController extends Controller
      */
     public function edit(CargoShipment $cargoShipment)
     {
-        //
+        return view('cargo_shipments.edit', [
+            'title' => 'Редактирование груза',
+            'shipment' => $cargoShipment,
+            'clients' => User::clients(),
+            'agents' => User::agents_and_managers(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CargoShipment $cargoShipment)
+    public function update(CargoShipmentRequest $request, CargoShipment $cargoShipment)
     {
-        //
+        $cargoShipment->update($request->all());
+
+        return redirect()
+            ->route('cargo_shipments.show', $cargoShipment)
+            ->with('success', 'Груз успешно обновлен');
     }
 
     /**

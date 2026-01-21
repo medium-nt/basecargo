@@ -7,6 +7,16 @@
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('cargo_shipments.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
@@ -91,13 +101,13 @@
                 <div class="row">
                     <div class="col-12 col-md-3">
                         <div class="form-group">
-                            <label for="cargo_number">номер груза <small>货物编号</small></label>
+                            <label for="cargo_number">номер груза <small>货物编号</small> <span class="text-danger">*</span></label>
                             <input type="text" name="cargo_number" id="cargo_number" class="form-control @error('cargo_number') is-invalid @enderror" value="{{ old('cargo_number') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
-                            <label for="product_name">наименование товара <small>产品名称</small></label>
+                            <label for="product_name">наименование товара <small>产品名称</small> <span class="text-danger">*</span></label>
                             <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" value="{{ old('product_name') }}">
                         </div>
                     </div>
@@ -109,7 +119,7 @@
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
-                            <label for="packaging">упаковка <small>包装</small></label>
+                            <label for="packaging">упаковка <small>包装</small> <span class="text-danger">*</span></label>
                             <input type="text" name="packaging" id="packaging" class="form-control @error('packaging') is-invalid @enderror" value="{{ old('packaging') }}">
                         </div>
                     </div>
@@ -118,7 +128,7 @@
                 <div class="row">
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="places_count">количество мест <small>座位数目</small></label>
+                            <label for="places_count">количество мест <small>座位数目</small> <span class="text-danger">*</span></label>
                             <input type="number" min="1" step="1" name="places_count" id="places_count" class="form-control @error('places_count') is-invalid @enderror" value="{{ old('places_count') }}">
                         </div>
                     </div>
@@ -139,7 +149,7 @@
                 <div class="row">
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="volume_total">общий обьем кубов <small>立方体的总体积</small></label>
+                            <label for="volume_total">общий обьем кубов <small>立方体的总体积</small> <span class="text-danger">*</span></label>
                             <input type="number" name="volume_total" id="volume_total" class="form-control @error('volume_total') is-invalid @enderror" value="{{ old('volume_total') }}">
                         </div>
                     </div>
@@ -172,7 +182,7 @@
                 <div class="row">
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="gross_weight_total">Общий вес брутто <small>总毛重</small></label>
+                            <label for="gross_weight_total">Общий вес брутто <small>总毛重</small> <span class="text-danger">*</span></label>
                             <input type="number" name="gross_weight_total" id="gross_weight_total" class="form-control @error('gross_weight_total') is-invalid @enderror" value="{{ old('gross_weight_total') }}">
                         </div>
                     </div>
@@ -294,8 +304,8 @@
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
-                            <label for="contact_phone_payment">Телефон</label>
-                            <input type="text" name="contact_phone_payment" id="contact_phone_payment" class="form-control @error('contact_phone_payment') is-invalid @enderror" value="{{ old('contact_phone_payment') }}">
+                            <label for="payment_phone">Телефон</label>
+                            <input type="text" name="payment_phone" id="payment_phone" class="form-control @error('contact_phone_payment') is-invalid @enderror" value="{{ old('contact_phone_payment') }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">

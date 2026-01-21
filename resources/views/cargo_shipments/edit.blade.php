@@ -7,7 +7,17 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('cargo_shipments.update', $cargo_shipment) }}" method="POST">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('cargo_shipments.update', $shipment) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="row">
@@ -19,7 +29,7 @@
                             <select name="client_id" id="client_id" class="form-control @error('client_id') is-invalid @enderror">
                                 <option value="">---</option>
                                 @foreach($clients as $client)
-                                    <option value="{{ $client->id }}" {{ old('client_id', $cargo_shipment->client_id) == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                                    <option value="{{ $client->id }}" {{ old('client_id', $shipment->client_id) == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -34,7 +44,7 @@
                             <select name="responsible_user_id" id="responsible_user_id" class="form-control @error('responsible_user_id') is-invalid @enderror">
                                 <option value="">---</option>
                                 @foreach($agents as $agent)
-                                    <option value="{{ $agent->id }}" {{ old('responsible_user_id', $cargo_shipment->responsible_user_id) == $agent->id ? 'selected' : '' }}>{{ $agent->name }}</option>
+                                    <option value="{{ $agent->id }}" {{ old('responsible_user_id', $shipment->responsible_user_id) == $agent->id ? 'selected' : '' }}>{{ $agent->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -53,13 +63,13 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="contact_phone">телефон получателя <small>电话号码</small></label>
-                            <input type="text" name="contact_phone" id="contact_phone" class="form-control @error('contact_phone') is-invalid @enderror" value="{{ old('contact_phone', $cargo_shipment->contact_phone) }}">
+                            <input type="text" name="contact_phone" id="contact_phone" class="form-control @error('contact_phone') is-invalid @enderror" value="{{ old('contact_phone', $shipment->contact_phone) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-8">
                         <div class="form-group">
                             <label for="delivery_address">Адрес <small>收件人地址</small></label>
-                            <textarea name="delivery_address" id="delivery_address" rows="2" class="form-control @error('delivery_address') is-invalid @enderror">{{ old('delivery_address', $cargo_shipment->delivery_address) }}</textarea>
+                            <textarea name="delivery_address" id="delivery_address" rows="2" class="form-control @error('delivery_address') is-invalid @enderror">{{ old('delivery_address', $shipment->delivery_address) }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -70,19 +80,19 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="china_tracking_number">трек-номер по Китаю <small>中国的轨道号码</small></label>
-                            <input type="text" name="china_tracking_number" id="china_tracking_number" class="form-control @error('china_tracking_number') is-invalid @enderror" value="{{ old('china_tracking_number', $cargo_shipment->china_tracking_number) }}">
+                            <input type="text" name="china_tracking_number" id="china_tracking_number" class="form-control @error('china_tracking_number') is-invalid @enderror" value="{{ old('china_tracking_number', $shipment->china_tracking_number) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="china_cost">стоимость по Китаю <small>中国的成本</small></label>
-                            <input type="number" name="china_cost" id="china_cost" class="form-control @error('china_cost') is-invalid @enderror" value="{{ old('china_cost', $cargo_shipment->china_cost) }}">
+                            <input type="number" name="china_cost" id="china_cost" class="form-control @error('china_cost') is-invalid @enderror" value="{{ old('china_cost', $shipment->china_cost) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="crate">Обрешетка <small>箱子</small></label>
-                            <input type="text" name="crate" id="crate" class="form-control @error('crate') is-invalid @enderror" value="{{ old('crate', $cargo_shipment->crate) }}">
+                            <input type="text" name="crate" id="crate" class="form-control @error('crate') is-invalid @enderror" value="{{ old('crate', $shipment->crate) }}">
                         </div>
                     </div>
                 </div>
@@ -93,25 +103,25 @@
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="cargo_number">номер груза <small>货物编号</small></label>
-                            <input type="text" name="cargo_number" id="cargo_number" class="form-control @error('cargo_number') is-invalid @enderror" value="{{ old('cargo_number', $cargo_shipment->cargo_number) }}">
+                            <input type="text" name="cargo_number" id="cargo_number" class="form-control @error('cargo_number') is-invalid @enderror" value="{{ old('cargo_number', $shipment->cargo_number) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="product_name">наименование товара <small>产品名称</small></label>
-                            <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" value="{{ old('product_name', $cargo_shipment->product_name) }}">
+                            <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" value="{{ old('product_name', $shipment->product_name) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="material">материал <small>材料</small></label>
-                            <input type="text" name="material" id="material" class="form-control @error('material') is-invalid @enderror" value="{{ old('material', $cargo_shipment->material) }}">
+                            <input type="text" name="material" id="material" class="form-control @error('material') is-invalid @enderror" value="{{ old('material', $shipment->material) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="packaging">упаковка <small>包装</small></label>
-                            <input type="text" name="packaging" id="packaging" class="form-control @error('packaging') is-invalid @enderror" value="{{ old('packaging', $cargo_shipment->packaging) }}">
+                            <input type="text" name="packaging" id="packaging" class="form-control @error('packaging') is-invalid @enderror" value="{{ old('packaging', $shipment->packaging) }}">
                         </div>
                     </div>
                 </div>
@@ -120,19 +130,19 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="places_count">количество мест <small>座位数目</small></label>
-                            <input type="number" min="1" step="1" name="places_count" id="places_count" class="form-control @error('places_count') is-invalid @enderror" value="{{ old('places_count', $cargo_shipment->places_count) }}">
+                            <input type="number" min="1" step="1" name="places_count" id="places_count" class="form-control @error('places_count') is-invalid @enderror" value="{{ old('places_count', $shipment->places_count) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="items_per_place">количество товары/мест <small>产品/地点数目</small></label>
-                            <input type="number" min="1" step="1" name="items_per_place" id="items_per_place" class="form-control @error('items_per_place') is-invalid @enderror" value="{{ old('items_per_place', $cargo_shipment->items_per_place) }}">
+                            <input type="number" min="1" step="1" name="items_per_place" id="items_per_place" class="form-control @error('items_per_place') is-invalid @enderror" value="{{ old('items_per_place', $shipment->items_per_place) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="total_items_count">общее количество штук <small>件总数</small></label>
-                            <input type="number" min="1" step="1" name="total_items_count" id="total_items_count" class="form-control @error('total_items_count') is-invalid @enderror" value="{{ old('total_items_count', $cargo_shipment->total_items_count) }}">
+                            <input type="number" min="1" step="1" name="total_items_count" id="total_items_count" class="form-control @error('total_items_count') is-invalid @enderror" value="{{ old('total_items_count', $shipment->total_items_count) }}">
                         </div>
                     </div>
                 </div>
@@ -141,31 +151,31 @@
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="volume_total">общий обьем кубов <small>立方体的总体积</small></label>
-                            <input type="number" name="volume_total" id="volume_total" class="form-control @error('volume_total') is-invalid @enderror" value="{{ old('volume_total', $cargo_shipment->volume_total) }}">
+                            <input type="number" name="volume_total" id="volume_total" class="form-control @error('volume_total') is-invalid @enderror" value="{{ old('volume_total', $shipment->volume_total) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="volume_per_item">обьем 1 места <small>1个座位的体积</small></label>
-                            <input type="number" name="volume_per_item" id="volume_per_item" class="form-control @error('volume_per_item') is-invalid @enderror" value="{{ old('volume_per_item', $cargo_shipment->volume_per_item) }}" readonly>
+                            <input type="number" name="volume_per_item" id="volume_per_item" class="form-control @error('volume_per_item') is-invalid @enderror" value="{{ old('volume_per_item', $shipment->volume_per_item) }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="length">длина <small>长度</small></label>
-                            <input type="number" name="length" id="length" class="form-control @error('length') is-invalid @enderror" value="{{ old('length', $cargo_shipment->length) }}">
+                            <input type="number" name="length" id="length" class="form-control @error('length') is-invalid @enderror" value="{{ old('length', $shipment->length) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="width">ширина <small>阔度</small></label>
-                            <input type="number" name="width" id="width" class="form-control @error('width') is-invalid @enderror" value="{{ old('width', $cargo_shipment->width) }}">
+                            <input type="number" name="width" id="width" class="form-control @error('width') is-invalid @enderror" value="{{ old('width', $shipment->width) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="height">высота <small>身高</small></label>
-                            <input type="number" name="height" id="height" class="form-control @error('height') is-invalid @enderror" value="{{ old('height', $cargo_shipment->height) }}">
+                            <input type="number" name="height" id="height" class="form-control @error('height') is-invalid @enderror" value="{{ old('height', $shipment->height) }}">
                         </div>
                     </div>
                 </div>
@@ -174,37 +184,37 @@
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="gross_weight_total">Общий вес брутто <small>总毛重</small></label>
-                            <input type="number" name="gross_weight_total" id="gross_weight_total" class="form-control @error('gross_weight_total') is-invalid @enderror" value="{{ old('gross_weight_total', $cargo_shipment->gross_weight_total) }}">
+                            <input type="number" name="gross_weight_total" id="gross_weight_total" class="form-control @error('gross_weight_total') is-invalid @enderror" value="{{ old('gross_weight_total', $shipment->gross_weight_total) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="gross_weight_per_place">вес брутто 1 места <small>1个座位的毛重</small></label>
-                            <input type="number" name="gross_weight_per_place" id="gross_weight_per_place" class="form-control @error('gross_weight_per_place') is-invalid @enderror" value="{{ old('gross_weight_per_place', $cargo_shipment->gross_weight_per_place) }}" readonly>
+                            <input type="number" name="gross_weight_per_place" id="gross_weight_per_place" class="form-control @error('gross_weight_per_place') is-invalid @enderror" value="{{ old('gross_weight_per_place', $shipment->gross_weight_per_place) }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="net_weight_total">Общий вес нетто <small>总净重</small></label>
-                            <input type="number" name="net_weight_total" id="net_weight_total" class="form-control @error('net_weight_total') is-invalid @enderror" value="{{ old('net_weight_total', $cargo_shipment->net_weight_total) }}">
+                            <input type="number" name="net_weight_total" id="net_weight_total" class="form-control @error('net_weight_total') is-invalid @enderror" value="{{ old('net_weight_total', $shipment->net_weight_total) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="net_weight_per_box">Вес нетто 1 коробки <small>净重1箱</small></label>
-                            <input type="number" name="net_weight_per_box" id="net_weight_per_box" class="form-control @error('net_weight_per_box') is-invalid @enderror" value="{{ old('net_weight_per_box', $cargo_shipment->net_weight_per_box) }}" readonly>
+                            <input type="number" name="net_weight_per_box" id="net_weight_per_box" class="form-control @error('net_weight_per_box') is-invalid @enderror" value="{{ old('net_weight_per_box', $shipment->net_weight_per_box) }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="tare_weight_total">вес всех коробок <small>所有箱子的重量</small></label>
-                            <input type="number" name="tare_weight_total" id="tare_weight_total" class="form-control @error('tare_weight_total') is-invalid @enderror" value="{{ old('tare_weight_total', $cargo_shipment->tare_weight_total) }}" readonly>
+                            <input type="number" name="tare_weight_total" id="tare_weight_total" class="form-control @error('tare_weight_total') is-invalid @enderror" value="{{ old('tare_weight_total', $shipment->tare_weight_total) }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="tare_weight_per_box">вес 1 тары <small>1皮重</small></label>
-                            <input type="number" name="tare_weight_per_box" id="tare_weight_per_box" class="form-control @error('tare_weight_per_box') is-invalid @enderror" value="{{ old('tare_weight_per_box', $cargo_shipment->tare_weight_per_box) }}" readonly>
+                            <input type="number" name="tare_weight_per_box" id="tare_weight_per_box" class="form-control @error('tare_weight_per_box') is-invalid @enderror" value="{{ old('tare_weight_per_box', $shipment->tare_weight_per_box) }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -217,14 +227,14 @@
                             <label for="cargo_status">статус груза</label>
                             <select name="cargo_status" id="cargo_status" class="form-control @error('cargo_status') is-invalid @enderror">
                                 <option value="">---</option>
-                                <option value="wait_payment" {{ old('cargo_status', $cargo_shipment->cargo_status) == 'wait_payment' ? 'selected' : '' }}>Ожидает оплаты</option>
-                                <option value="shipping_supplier" {{ old('cargo_status', $cargo_shipment->cargo_status) == 'shipping_supplier' ? 'selected' : '' }}>Отправка поставщиком</option>
-                                <option value="china_transit" {{ old('cargo_status', $cargo_shipment->cargo_status) == 'china_transit' ? 'selected' : '' }}>В пути по Китаю</option>
-                                <option value="china_warehouse" {{ old('cargo_status', $cargo_shipment->cargo_status) == 'china_warehouse' ? 'selected' : '' }}>На складе в Китае</option>
-                                <option value="china_russia_transit" {{ old('cargo_status', $cargo_shipment->cargo_status) == 'china_russia_transit' ? 'selected' : '' }}>В пути Китай–Россия</option>
-                                <option value="russia_warehouse" {{ old('cargo_status', $cargo_shipment->cargo_status) == 'russia_warehouse' ? 'selected' : '' }}>На складе в России</option>
-                                <option value="russia_transit" {{ old('cargo_status', $cargo_shipment->cargo_status) == 'russia_transit' ? 'selected' : '' }}>В пути по России</option>
-                                <option value="received" {{ old('cargo_status', $cargo_shipment->cargo_status) == 'received' ? 'selected' : '' }}>Получен</option>
+                                <option value="wait_payment" {{ old('cargo_status', $shipment->cargo_status) == 'wait_payment' ? 'selected' : '' }}>Ожидает оплаты</option>
+                                <option value="shipping_supplier" {{ old('cargo_status', $shipment->cargo_status) == 'shipping_supplier' ? 'selected' : '' }}>Отправка поставщиком</option>
+                                <option value="china_transit" {{ old('cargo_status', $shipment->cargo_status) == 'china_transit' ? 'selected' : '' }}>В пути по Китаю</option>
+                                <option value="china_warehouse" {{ old('cargo_status', $shipment->cargo_status) == 'china_warehouse' ? 'selected' : '' }}>На складе в Китае</option>
+                                <option value="china_russia_transit" {{ old('cargo_status', $shipment->cargo_status) == 'china_russia_transit' ? 'selected' : '' }}>В пути Китай–Россия</option>
+                                <option value="russia_warehouse" {{ old('cargo_status', $shipment->cargo_status) == 'russia_warehouse' ? 'selected' : '' }}>На складе в России</option>
+                                <option value="russia_transit" {{ old('cargo_status', $shipment->cargo_status) == 'russia_transit' ? 'selected' : '' }}>В пути по России</option>
+                                <option value="received" {{ old('cargo_status', $shipment->cargo_status) == 'received' ? 'selected' : '' }}>Получен</option>
                             </select>
                         </div>
                     </div>
@@ -233,9 +243,9 @@
                             <label for="payment_type">Оплата</label>
                             <select name="payment_type" id="payment_type" class="form-control @error('payment_type') is-invalid @enderror">
                                 <option value="">---</option>
-                                <option value="cash" {{ old('payment_type', $cargo_shipment->payment_type) == 'cash' ? 'selected' : '' }}>Наличные</option>
-                                <option value="card" {{ old('payment_type', $cargo_shipment->payment_type) == 'card' ? 'selected' : '' }}>Карта</option>
-                                <option value="rs" {{ old('payment_type', $cargo_shipment->payment_type) == 'rs' ? 'selected' : '' }}>Р/с</option>
+                                <option value="cash" {{ old('payment_type', $shipment->payment_type) == 'cash' ? 'selected' : '' }}>Наличные</option>
+                                <option value="card" {{ old('payment_type', $shipment->payment_type) == 'card' ? 'selected' : '' }}>Карта</option>
+                                <option value="rs" {{ old('payment_type', $shipment->payment_type) == 'rs' ? 'selected' : '' }}>Р/с</option>
                             </select>
                         </div>
                     </div>
@@ -244,8 +254,8 @@
                             <label for="payment_status">статус оплаты</label>
                             <select name="payment_status" id="payment_status" class="form-control @error('payment_status') is-invalid @enderror">
                                 <option value="">---</option>
-                                <option value="not_paid" {{ old('payment_status', $cargo_shipment->payment_status) == 'not_paid' ? 'selected' : '' }}>Не оплачен</option>
-                                <option value="paid" {{ old('payment_status', $cargo_shipment->payment_status) == 'paid' ? 'selected' : '' }}>Оплачен</option>
+                                <option value="not_paid" {{ old('payment_status', $shipment->payment_status) == 'not_paid' ? 'selected' : '' }}>Не оплачен</option>
+                                <option value="paid" {{ old('payment_status', $shipment->payment_status) == 'paid' ? 'selected' : '' }}>Оплачен</option>
                             </select>
                         </div>
                     </div>
@@ -261,19 +271,19 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="insurance_amount">Страховая сумма</label>
-                            <input type="number" name="insurance_amount" id="insurance_amount" class="form-control @error('insurance_amount') is-invalid @enderror" value="{{ old('insurance_amount', $cargo_shipment->insurance_amount) }}">
+                            <input type="number" name="insurance_amount" id="insurance_amount" class="form-control @error('insurance_amount') is-invalid @enderror" value="{{ old('insurance_amount', $shipment->insurance_amount) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="insurance_cost">Страховка</label>
-                            <input type="number" name="insurance_cost" id="insurance_cost" class="form-control @error('insurance_cost') is-invalid @enderror" value="{{ old('insurance_cost', $cargo_shipment->insurance_cost) }}">
+                            <input type="number" name="insurance_cost" id="insurance_cost" class="form-control @error('insurance_cost') is-invalid @enderror" value="{{ old('insurance_cost', $shipment->insurance_cost) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="rate_rub">посчитанная ставка в рублях</label>
-                            <input type="number" name="rate_rub" id="rate_rub" class="form-control @error('rate_rub') is-invalid @enderror" value="{{ old('rate_rub', $cargo_shipment->rate_rub) }}">
+                            <input type="number" name="rate_rub" id="rate_rub" class="form-control @error('rate_rub') is-invalid @enderror" value="{{ old('rate_rub', $shipment->rate_rub) }}">
                         </div>
                     </div>
                 </div>
@@ -289,25 +299,25 @@
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="total_cost">Сумма</label>
-                            <input type="number" name="total_cost" id="total_cost" class="form-control @error('total_cost') is-invalid @enderror" value="{{ old('total_cost', $cargo_shipment->total_cost) }}">
+                            <input type="number" name="total_cost" id="total_cost" class="form-control @error('total_cost') is-invalid @enderror" value="{{ old('total_cost', $shipment->total_cost) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
-                            <label for="contact_phone_payment">Телефон</label>
-                            <input type="text" name="contact_phone_payment" id="contact_phone_payment" class="form-control @error('contact_phone_payment') is-invalid @enderror" value="{{ old('contact_phone_payment', $cargo_shipment->contact_phone_payment) }}">
+                            <label for="payment_phone">Телефон</label>
+                            <input type="text" name="payment_phone" id="payment_phone" class="form-control @error('payment_phone') is-invalid @enderror" value="{{ old('payment_phone', $shipment->payment_phone) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="bank_name">Банк</label>
-                            <input type="text" name="bank_name" id="bank_name" class="form-control @error('bank_name') is-invalid @enderror" value="{{ old('bank_name', $cargo_shipment->bank_name) }}">
+                            <input type="text" name="bank_name" id="bank_name" class="form-control @error('bank_name') is-invalid @enderror" value="{{ old('bank_name', $shipment->bank_name) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="bank_account_name">Имя</label>
-                            <input type="text" name="bank_account_name" id="bank_account_name" class="form-control @error('bank_account_name') is-invalid @enderror" value="{{ old('bank_account_name', $cargo_shipment->bank_account_name) }}">
+                            <input type="text" name="bank_account_name" id="bank_account_name" class="form-control @error('bank_account_name') is-invalid @enderror" value="{{ old('bank_account_name', $shipment->bank_account_name) }}">
                         </div>
                     </div>
                 </div>
@@ -322,37 +332,37 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="factory_shipping_date">дата отправки с завода <small>从工厂装运日期</small></label>
-                            <input type="date" name="factory_shipping_date" id="factory_shipping_date" class="form-control @error('factory_shipping_date') is-invalid @enderror" value="{{ old('factory_shipping_date', $cargo_shipment->factory_shipping_date) }}">
+                            <input type="date" name="factory_shipping_date" id="factory_shipping_date" class="form-control @error('factory_shipping_date') is-invalid @enderror" value="{{ old('factory_shipping_date', $shipment->factory_shipping_date) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="sunfuihe_warehouse_received_date">дата получения склад Суньфуйхэ <small>收货日期孙福河仓库</small></label>
-                            <input type="date" name="sunfuihe_warehouse_received_date" id="sunfuihe_warehouse_received_date" class="form-control @error('sunfuihe_warehouse_received_date') is-invalid @enderror" value="{{ old('sunfuihe_warehouse_received_date', $cargo_shipment->sunfuihe_warehouse_received_date) }}">
+                            <input type="date" name="sunfuihe_warehouse_received_date" id="sunfuihe_warehouse_received_date" class="form-control @error('sunfuihe_warehouse_received_date') is-invalid @enderror" value="{{ old('sunfuihe_warehouse_received_date', $shipment->sunfuihe_warehouse_received_date) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="china_shipping_date">дата отправки с Китая <small>从中国发货日期</small></label>
-                            <input type="date" name="china_shipping_date" id="china_shipping_date" class="form-control @error('china_shipping_date') is-invalid @enderror" value="{{ old('china_shipping_date', $cargo_shipment->china_shipping_date) }}">
+                            <input type="date" name="china_shipping_date" id="china_shipping_date" class="form-control @error('china_shipping_date') is-invalid @enderror" value="{{ old('china_shipping_date', $shipment->china_shipping_date) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="ussuriysk_arrival_date">дата прибытия в Уссурийск <small>到达乌苏里斯克的日期</small></label>
-                            <input type="date" name="ussuriysk_arrival_date" id="ussuriysk_arrival_date" class="form-control @error('ussuriysk_arrival_date') is-invalid @enderror" value="{{ old('ussuriysk_arrival_date', $cargo_shipment->ussuriysk_arrival_date) }}">
+                            <input type="date" name="ussuriysk_arrival_date" id="ussuriysk_arrival_date" class="form-control @error('ussuriysk_arrival_date') is-invalid @enderror" value="{{ old('ussuriysk_arrival_date', $shipment->ussuriysk_arrival_date) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="ussuriysk_shipping_date">дата отправки с Уссурийска <small>从乌苏里斯克发货日期</small></label>
-                            <input type="date" name="ussuriysk_shipping_date" id="ussuriysk_shipping_date" class="form-control @error('ussuriysk_shipping_date') is-invalid @enderror" value="{{ old('ussuriysk_shipping_date', $cargo_shipment->ussuriysk_shipping_date) }}">
+                            <input type="date" name="ussuriysk_shipping_date" id="ussuriysk_shipping_date" class="form-control @error('ussuriysk_shipping_date') is-invalid @enderror" value="{{ old('ussuriysk_shipping_date', $shipment->ussuriysk_shipping_date) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="client_received_date">дата получения клиентом <small>客户收到日期</small></label>
-                            <input type="date" name="client_received_date" id="client_received_date" class="form-control @error('client_received_date') is-invalid @enderror" value="{{ old('client_received_date', $cargo_shipment->client_received_date) }}">
+                            <input type="date" name="client_received_date" id="client_received_date" class="form-control @error('client_received_date') is-invalid @enderror" value="{{ old('client_received_date', $shipment->client_received_date) }}">
                         </div>
                     </div>
                 </div>
