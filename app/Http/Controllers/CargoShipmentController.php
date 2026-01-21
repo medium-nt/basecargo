@@ -48,7 +48,7 @@ class CargoShipmentController extends Controller
      */
     public function store(CargoShipmentRequest $request)
     {
-        CargoShipment::query()->create($request->all());
+        CargoShipment::query()->create($request->validated());
 
         return redirect()
             ->route('cargo_shipments.index')
@@ -94,7 +94,7 @@ class CargoShipmentController extends Controller
      */
     public function update(CargoShipmentRequest $request, CargoShipment $cargoShipment)
     {
-        $cargoShipment->update($request->all());
+        $cargoShipment->update($request->validated());
 
         return redirect()
             ->route('cargo_shipments.show', $cargoShipment)
