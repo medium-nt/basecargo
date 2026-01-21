@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone', 100)->default('');
-            $table->string('messenger')->default('');
-            $table->string('messenger_number', 100)->default('');
+            $table->string('phone', 100)->nullable();
+            $table->string('messenger')->nullable();
+            $table->string('messenger_number', 100)->nullable();
             $table->unsignedBigInteger('role_id');
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();

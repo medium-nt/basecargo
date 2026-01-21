@@ -301,14 +301,33 @@ return [
 
     'menu' => [
         [
-            'text' => 'Панель',
+            'text' => 'dashboard',
             'route' => 'dashboard',
             'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
         [
-            'text' => 'Грузы',
+            'text' => 'cargo_shipments',
             'route' => 'cargo_shipments.index',
             'icon' => 'fas fa-fw fa-truck',
+        ],
+        [
+            'text' => 'settings',
+            'icon' => 'fas fa-fw fa-cog',
+            'can' => 'is-admin',
+            'submenu' => [
+                [
+                    'text' => 'system_settings',
+                    'url' => 'admin/setting',
+                    'icon' => 'fas fa-fw fa-tools',
+                    'can' => 'is-admin',
+                ],
+                [
+                    'text' => 'users',
+                    'url' => 'admin/users',
+                    'icon' => 'fas fa-fw fa-user',
+                    'can' => 'is-admin',
+                ],
+            ],
         ],
     ],
 

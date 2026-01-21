@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +25,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'messenger',
+        'messenger_number',
+        'role_id',
     ];
 
     /**
@@ -93,5 +98,18 @@ class User extends Authenticatable
     public function isManager(): bool
     {
         return $this->role?->name === 'manager';
+    }
+
+    public function roleName(): Attribute
+    {
+        return Attribute::get(function () {
+            return match ($this->role?->name) {
+                'client' => 'Клиент',
+                'agent' => 'Агент',
+                'admin' => 'Админ',
+                'manager' => 'Менеджер',
+                default => '---',
+            };
+        });
     }
 }

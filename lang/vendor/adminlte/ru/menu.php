@@ -16,4 +16,9 @@ return [
     'important' => 'Важно',
     'warning' => 'Внимание',
     'information' => 'Информация',
+    'dashboard' => 'Панель',
+    'cargo_shipments' => 'Грузы',
+    'settings' => 'Настройки',
+    'system_settings' => 'Настройки системы',
+    'users' => 'Пользователи',
 ];
