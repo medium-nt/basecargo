@@ -86,13 +86,13 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="china_cost">стоимость по Китаю <small>中国的成本</small></label>
-                            <input type="number" name="china_cost" id="china_cost" class="form-control @error('china_cost') is-invalid @enderror" value="{{ old('china_cost', $shipment->china_cost) }}">
+                            <input type="number" step="0.01" name="china_cost" id="china_cost" class="form-control @error('china_cost') is-invalid @enderror" value="{{ old('china_cost', $shipment->china_cost) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="crate">Обрешетка <small>箱子</small></label>
-                            <input type="text" name="crate" id="crate" class="form-control @error('crate') is-invalid @enderror" value="{{ old('crate', $shipment->crate) }}">
+                            <input type="number" step="0.01" name="crate" id="crate" class="form-control @error('crate') is-invalid @enderror" value="{{ old('crate', $shipment->crate) }}">
                         </div>
                     </div>
                 </div>
@@ -151,31 +151,31 @@
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="volume_total">общий обьем кубов <small>立方体的总体积</small></label>
-                            <input type="number" name="volume_total" id="volume_total" class="form-control @error('volume_total') is-invalid @enderror" value="{{ old('volume_total', $shipment->volume_total) }}">
+                            <input type="number" step="0.01" name="volume_total" id="volume_total" class="form-control @error('volume_total') is-invalid @enderror" value="{{ old('volume_total', $shipment->volume_total) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="volume_per_item">обьем 1 места <small>1个座位的体积</small></label>
-                            <input type="number" name="volume_per_item" id="volume_per_item" class="form-control @error('volume_per_item') is-invalid @enderror" value="{{ old('volume_per_item', $shipment->volume_per_item) }}" readonly>
+                            <input type="number" step="0.01" name="volume_per_item" id="volume_per_item" class="form-control @error('volume_per_item') is-invalid @enderror" value="{{ old('volume_per_item', $shipment->volume_per_item) }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="length">длина <small>长度</small></label>
-                            <input type="number" name="length" id="length" class="form-control @error('length') is-invalid @enderror" value="{{ old('length', $shipment->length) }}">
+                            <input type="number" step="0.01" name="length" id="length" class="form-control @error('length') is-invalid @enderror" value="{{ old('length', $shipment->length) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="width">ширина <small>阔度</small></label>
-                            <input type="number" name="width" id="width" class="form-control @error('width') is-invalid @enderror" value="{{ old('width', $shipment->width) }}">
+                            <input type="number" step="0.01" name="width" id="width" class="form-control @error('width') is-invalid @enderror" value="{{ old('width', $shipment->width) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="height">высота <small>身高</small></label>
-                            <input type="number" name="height" id="height" class="form-control @error('height') is-invalid @enderror" value="{{ old('height', $shipment->height) }}">
+                            <input type="number" step="0.01" name="height" id="height" class="form-control @error('height') is-invalid @enderror" value="{{ old('height', $shipment->height) }}">
                         </div>
                     </div>
                 </div>
@@ -184,37 +184,37 @@
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="gross_weight_total">Общий вес брутто <small>总毛重</small></label>
-                            <input type="number" name="gross_weight_total" id="gross_weight_total" class="form-control @error('gross_weight_total') is-invalid @enderror" value="{{ old('gross_weight_total', $shipment->gross_weight_total) }}">
+                            <input type="number" step="0.01" name="gross_weight_total" id="gross_weight_total" class="form-control @error('gross_weight_total') is-invalid @enderror" value="{{ old('gross_weight_total', $shipment->gross_weight_total) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="gross_weight_per_place">вес брутто 1 места <small>1个座位的毛重</small></label>
-                            <input type="number" name="gross_weight_per_place" id="gross_weight_per_place" class="form-control @error('gross_weight_per_place') is-invalid @enderror" value="{{ old('gross_weight_per_place', $shipment->gross_weight_per_place) }}" readonly>
+                            <input type="number" step="0.01" name="gross_weight_per_place" id="gross_weight_per_place" class="form-control @error('gross_weight_per_place') is-invalid @enderror" value="{{ old('gross_weight_per_place', $shipment->gross_weight_per_place) }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="net_weight_total">Общий вес нетто <small>总净重</small></label>
-                            <input type="number" name="net_weight_total" id="net_weight_total" class="form-control @error('net_weight_total') is-invalid @enderror" value="{{ old('net_weight_total', $shipment->net_weight_total) }}">
+                            <input type="number" step="0.01" name="net_weight_total" id="net_weight_total" class="form-control @error('net_weight_total') is-invalid @enderror" value="{{ old('net_weight_total', $shipment->net_weight_total) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="net_weight_per_box">Вес нетто 1 коробки <small>净重1箱</small></label>
-                            <input type="number" name="net_weight_per_box" id="net_weight_per_box" class="form-control @error('net_weight_per_box') is-invalid @enderror" value="{{ old('net_weight_per_box', $shipment->net_weight_per_box) }}" readonly>
+                            <input type="number" step="0.01" name="net_weight_per_box" id="net_weight_per_box" class="form-control @error('net_weight_per_box') is-invalid @enderror" value="{{ old('net_weight_per_box', $shipment->net_weight_per_box) }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="tare_weight_total">вес всех коробок <small>所有箱子的重量</small></label>
-                            <input type="number" name="tare_weight_total" id="tare_weight_total" class="form-control @error('tare_weight_total') is-invalid @enderror" value="{{ old('tare_weight_total', $shipment->tare_weight_total) }}" readonly>
+                            <input type="number" step="0.01" name="tare_weight_total" id="tare_weight_total" class="form-control @error('tare_weight_total') is-invalid @enderror" value="{{ old('tare_weight_total', $shipment->tare_weight_total) }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="tare_weight_per_box">вес 1 тары <small>1皮重</small></label>
-                            <input type="number" name="tare_weight_per_box" id="tare_weight_per_box" class="form-control @error('tare_weight_per_box') is-invalid @enderror" value="{{ old('tare_weight_per_box', $shipment->tare_weight_per_box) }}" readonly>
+                            <input type="number" step="0.01" name="tare_weight_per_box" id="tare_weight_per_box" class="form-control @error('tare_weight_per_box') is-invalid @enderror" value="{{ old('tare_weight_per_box', $shipment->tare_weight_per_box) }}" readonly>
                         </div>
                     </div>
                 </div>
@@ -271,19 +271,19 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="insurance_amount">Страховая сумма</label>
-                            <input type="number" name="insurance_amount" id="insurance_amount" class="form-control @error('insurance_amount') is-invalid @enderror" value="{{ old('insurance_amount', $shipment->insurance_amount) }}">
+                            <input type="number" step="0.01" name="insurance_amount" id="insurance_amount" class="form-control @error('insurance_amount') is-invalid @enderror" value="{{ old('insurance_amount', $shipment->insurance_amount) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="insurance_cost">Страховка</label>
-                            <input type="number" name="insurance_cost" id="insurance_cost" class="form-control @error('insurance_cost') is-invalid @enderror" value="{{ old('insurance_cost', $shipment->insurance_cost) }}">
+                            <input type="number" step="0.01" name="insurance_cost" id="insurance_cost" class="form-control @error('insurance_cost') is-invalid @enderror" value="{{ old('insurance_cost', $shipment->insurance_cost) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="rate_rub">посчитанная ставка в рублях</label>
-                            <input type="number" name="rate_rub" id="rate_rub" class="form-control @error('rate_rub') is-invalid @enderror" value="{{ old('rate_rub', $shipment->rate_rub) }}">
+                            <input type="number" step="0.01" name="rate_rub" id="rate_rub" class="form-control @error('rate_rub') is-invalid @enderror" value="{{ old('rate_rub', $shipment->rate_rub) }}">
                         </div>
                     </div>
                 </div>
@@ -299,7 +299,7 @@
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="total_cost">Сумма</label>
-                            <input type="number" name="total_cost" id="total_cost" class="form-control @error('total_cost') is-invalid @enderror" value="{{ old('total_cost', $shipment->total_cost) }}">
+                            <input type="number" step="0.01" name="total_cost" id="total_cost" class="form-control @error('total_cost') is-invalid @enderror" value="{{ old('total_cost', $shipment->total_cost) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
