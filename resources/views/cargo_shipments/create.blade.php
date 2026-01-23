@@ -374,7 +374,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 col-md-2">
+                    <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="explanations">поясниния <small></small></label>
                             <input type="text" name="explanations" id="explanations" class="form-control @error('explanations') is-invalid @enderror" value="{{ old('explanations') }}">
@@ -386,33 +386,13 @@
                             <input type="text" name="TN_VED_code" id="TN_VED_code" class="form-control @error('TN_VED_code') is-invalid @enderror" value="{{ old('TN_VED_code') }}">
                         </div>
                     </div>
-
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="ITS">ИТС <small></small></label>
-                            <input type="number" step="0.01" name="ITS" id="ITS" class="form-control @error('ITS') is-invalid @enderror" value="{{ old('ITS') }}">
-                        </div>
-                    </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="payment">платеж <small></small></label>
                             <input type="number" step="0.01" name="payment" id="payment" class="form-control @error('payment') is-invalid @enderror" value="{{ old('payment') }}">
                         </div>
                     </div>
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="duty">пошлина <small></small></label>
-                            <input type="number" step="0.01" name="duty" id="duty" class="form-control @error('duty') is-invalid @enderror" value="{{ old('duty') }}">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <div class="form-group">
-                            <label for="VAT">НДС <small></small></label>
-                            <input type="number" step="0.01" name="VAT" id="VAT" class="form-control @error('VAT') is-invalid @enderror" value="{{ old('VAT') }}">
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-2">
+                    <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="label_name">НАИМЕНОВАНИЕ ДЛЯ БИРКИ <small></small></label>
                             <input type="text" name="label_name" id="label_name" class="form-control @error('label_name') is-invalid @enderror" value="{{ old('label_name') }}">
@@ -430,7 +410,7 @@
                             <input type="text" name="marking" id="marking" class="form-control @error('marking') is-invalid @enderror" value="{{ old('marking') }}">
                         </div>
                     </div>
-                    <div class="col-12 col-md-2">
+                    <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="manufacturer">Изготовитель <small></small></label>
                             <input type="text" name="manufacturer" id="manufacturer" class="form-control @error('manufacturer') is-invalid @enderror" value="{{ old('manufacturer') }}">
@@ -448,7 +428,29 @@
                             <input type="text" name="bet" id="bet" class="form-control @error('bet') is-invalid @enderror" value="{{ old('bet') }}">
                         </div>
                     </div>
+                </div>
 
+                <hr>
+
+                <div class="row">
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="ITS">ИТС <small></small></label>
+                            <input type="number" step="0.01" name="ITS" id="ITS" class="form-control @error('ITS') is-invalid @enderror" value="{{ old('ITS') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="duty">пошлина % <small></small></label>
+                            <input type="number" step="0.01" name="duty" id="duty" class="form-control @error('duty') is-invalid @enderror" value="{{ old('duty') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="VAT">НДС % <small></small></label>
+                            <input type="number" step="0.01" name="VAT" id="VAT" class="form-control @error('VAT') is-invalid @enderror" value="{{ old('VAT') }}">
+                        </div>
+                    </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="volume_weight">Коэффициент объёмного веса <small></small></label>
@@ -467,21 +469,21 @@
                             <input type="number" step="0.01" name="cost_truck" id="cost_truck" class="form-control @error('cost_truck') is-invalid @enderror" value="{{ old('cost_truck') }}">
                         </div>
                     </div>
-                    <div class="col-12 col-md-2">
+                    <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="revenue_per_kg">выручка за кг. <small></small></label>
                             <input type="number" step="0.01" name="revenue_per_kg" id="revenue_per_kg" class="form-control @error('revenue_per_kg') is-invalid @enderror" value="{{ old('revenue_per_kg') }}">
                         </div>
                     </div>
-                    <div class="col-12 col-md-2">
+                    <div class="col-12 col-md-1">
                         <div class="form-group">
-                            <label for="dollar_rate">курс доллара <small></small></label>
+                            <label for="dollar_rate">курс $ <small></small></label>
                             <input type="number" step="0.01" name="dollar_rate" id="dollar_rate" class="form-control @error('dollar_rate') is-invalid @enderror" value="{{ old('dollar_rate') }}">
                         </div>
                     </div>
-                    <div class="col-12 col-md-2">
+                    <div class="col-12 col-md-1">
                         <div class="form-group">
-                            <label for="yuan_rate">курс юаня <small></small></label>
+                            <label for="yuan_rate">курс ¥ <small></small></label>
                             <input type="number" step="0.01" name="yuan_rate" id="yuan_rate" class="form-control @error('yuan_rate') is-invalid @enderror" value="{{ old('yuan_rate') }}">
                         </div>
                     </div>
@@ -492,44 +494,44 @@
                 <div class="row">
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="estimated_value_cargo_ITS">ориентировочная стоимость груза по ИТС <small></small></label>
-                            <input type="number" step="0.01" name="estimated_value_cargo_ITS" id="estimated_value_cargo_ITS" class="form-control @error('estimated_value_cargo_ITS') is-invalid @enderror" value="{{ old('estimated_value_cargo_ITS') }}" readonly>
+                            <label for="estimated_value_cargo_ITS">стоимость груза по ИТС $ <small></small></label>
+                            <input type="number" step="0.01" id="estimated_value_cargo_ITS" class="form-control @error('estimated_value_cargo_ITS') is-invalid @enderror" value="{{ old('estimated_value_cargo_ITS') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="total_payment">Общий платеж <small></small></label>
-                            <input type="number" step="0.01" name="total_payment" id="total_payment" class="form-control @error('total_payment') is-invalid @enderror" value="{{ old('total_payment') }}" readonly>
+                            <label for="total_payment">Общий платеж $ <small></small></label>
+                            <input type="number" step="0.01" id="total_payment" class="form-control @error('total_payment') is-invalid @enderror" value="{{ old('total_payment') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="importer_services">услуги импортера <small></small></label>
-                            <input type="number" step="0.01" name="importer_services" id="importer_services" class="form-control @error('importer_services') is-invalid @enderror" value="{{ old('importer_services') }}" readonly>
+                            <label for="importer_services">услуги импортера $ <small></small></label>
+                            <input type="number" step="0.01" id="importer_services" class="form-control @error('importer_services') is-invalid @enderror" value="{{ old('importer_services') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="delivery_to_Ussuriysk">доставка общая до Уссурийска <small></small></label>
-                            <input type="number" step="0.01" name="delivery_to_Ussuriysk" id="delivery_to_Ussuriysk" class="form-control @error('delivery_to_Ussuriysk') is-invalid @enderror" value="{{ old('delivery_to_Ussuriysk') }}" readonly>
+                            <label for="delivery_to_Ussuriysk">доставка общая до Уссурийска ₽ <small></small></label>
+                            <input type="number" step="0.01" id="delivery_to_Ussuriysk" class="form-control @error('delivery_to_Ussuriysk') is-invalid @enderror" value="{{ old('delivery_to_Ussuriysk') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="revenue">выручка <small></small></label>
-                            <input type="number" step="0.01" name="revenue" id="revenue" class="form-control @error('revenue') is-invalid @enderror" value="{{ old('revenue') }}" readonly>
+                            <label for="revenue">выручка ₽ <small></small></label>
+                            <input type="number" step="0.01" id="revenue" class="form-control @error('revenue') is-invalid @enderror" value="{{ old('revenue') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="total">Итого <small></small></label>
-                            <input type="number" step="0.01" name="total" id="total" class="form-control @error('total') is-invalid @enderror" value="{{ old('total') }}" readonly>
+                            <label for="total">Итого ₽ <small></small></label>
+                            <input type="number" step="0.01" id="total" class="form-control @error('total') is-invalid @enderror" value="{{ old('total') }}" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="total_per_kg">Итого за КГ <small></small></label>
-                            <input type="number" step="0.01" name="total_per_kg" id="total_per_kg" class="form-control @error('total_per_kg') is-invalid @enderror" value="{{ old('total_per_kg') }}" readonly>
+                            <label for="total_per_kg">Итого за КГ ¥ <small></small></label>
+                            <input type="number" step="0.01" id="total_per_kg" class="form-control @error('total_per_kg') is-invalid @enderror" value="{{ old('total_per_kg') }}" readonly>
                         </div>
                     </div>
 
@@ -647,5 +649,102 @@
 
     document.getElementById('net_weight_total').addEventListener('input', calculateNetWeightPerBox);
     document.getElementById('places_count').addEventListener('input', calculateNetWeightPerBox);
+
+    // ========== Автоматический расчёт вычисляемых полей ==========
+
+    function calculateEstimatedValue() {
+        const netWeight = parseFloat(document.getElementById('net_weight_total').value) || 0;
+        const its = parseFloat(document.getElementById('ITS').value) || 0;
+        const result = netWeight * its;
+        document.getElementById('estimated_value_cargo_ITS').value = result.toFixed(2);
+        calculateTotalPayment();
+    }
+
+    function calculateTotalPayment() {
+        const A = parseFloat(document.getElementById('estimated_value_cargo_ITS').value) || 0;
+        const duty = parseFloat(document.getElementById('duty').value) / 100 || 0;
+        const vat = parseFloat(document.getElementById('VAT').value) / 100 || 0;
+        const result = (A * duty) + (A + (A * duty)) * vat;
+        document.getElementById('total_payment').value = result.toFixed(2);
+        calculateImporterServices();
+    }
+
+    function calculateImporterServices() {
+        const volume = parseFloat(document.getElementById('volume_total').value) || 0;
+        const volumeWeight = parseFloat(document.getElementById('volume_weight').value) || 0;
+        const service = parseFloat(document.getElementById('customs_clearance_service').value) || 0;
+
+        if (volumeWeight > 0) {
+            const result = (volume / volumeWeight) * service;
+            document.getElementById('importer_services').value = result.toFixed(2);
+        } else {
+            document.getElementById('importer_services').value = '0.00';
+        }
+        calculateDeliveryToUssuriysk();
+    }
+
+    function calculateDeliveryToUssuriysk() {
+        const costTruck = parseFloat(document.getElementById('cost_truck').value) || 0;
+        const volumeWeight = parseFloat(document.getElementById('volume_weight').value) || 0;
+        const volume = parseFloat(document.getElementById('volume_total').value) || 0;
+
+        if (volumeWeight > 0) {
+            const result = (costTruck / volumeWeight) * volume;
+            document.getElementById('delivery_to_Ussuriysk').value = result.toFixed(2);
+        } else {
+            document.getElementById('delivery_to_Ussuriysk').value = '0.00';
+        }
+        calculateRevenue();
+    }
+
+    function calculateRevenue() {
+        const revenuePerKg = parseFloat(document.getElementById('revenue_per_kg').value) || 0;
+        const grossWeight = parseFloat(document.getElementById('gross_weight_total').value) || 0;
+        const result = revenuePerKg * grossWeight;
+        document.getElementById('revenue').value = result.toFixed(2);
+        calculateTotal();
+    }
+
+    function calculateTotal() {
+        const B = parseFloat(document.getElementById('total_payment').value) || 0;
+        const C = parseFloat(document.getElementById('importer_services').value) || 0;
+        const D = parseFloat(document.getElementById('delivery_to_Ussuriysk').value) || 0;
+        const E = parseFloat(document.getElementById('revenue').value) || 0;
+        const dollarRate = parseFloat(document.getElementById('dollar_rate').value) || 0;
+        const result = ((B + C) * dollarRate) + D + E;
+        document.getElementById('total').value = result.toFixed(2);
+        calculateTotalPerKg();
+    }
+
+    function calculateTotalPerKg() {
+        const G = parseFloat(document.getElementById('total').value) || 0;
+        const grossWeight = parseFloat(document.getElementById('gross_weight_total').value) || 0;
+        const yuanRate = parseFloat(document.getElementById('yuan_rate').value) || 0;
+
+        if (grossWeight > 0 && yuanRate > 0) {
+            const result = G / grossWeight / yuanRate;
+            document.getElementById('total_per_kg').value = result.toFixed(2);
+        } else {
+            document.getElementById('total_per_kg').value = '0.00';
+        }
+    }
+
+    // Event listeners для вычисляемых полей
+    document.getElementById('net_weight_total').addEventListener('input', calculateEstimatedValue);
+    document.getElementById('ITS').addEventListener('input', calculateEstimatedValue);
+    document.getElementById('duty').addEventListener('input', calculateEstimatedValue);
+    document.getElementById('VAT').addEventListener('input', calculateEstimatedValue);
+
+    document.getElementById('volume_total').addEventListener('input', calculateEstimatedValue);
+    document.getElementById('volume_weight').addEventListener('input', calculateEstimatedValue);
+    document.getElementById('customs_clearance_service').addEventListener('input', calculateEstimatedValue);
+
+    document.getElementById('cost_truck').addEventListener('input', calculateEstimatedValue);
+
+    document.getElementById('revenue_per_kg').addEventListener('input', calculateEstimatedValue);
+    document.getElementById('gross_weight_total').addEventListener('input', calculateEstimatedValue);
+
+    document.getElementById('dollar_rate').addEventListener('input', calculateEstimatedValue);
+    document.getElementById('yuan_rate').addEventListener('input', calculateEstimatedValue);
 </script>
 @endpush
