@@ -77,6 +77,36 @@ return new class extends Migration
             $table->date('ussuriysk_shipping_date')->nullable();
             $table->date('client_received_date')->nullable();
 
+            $table->string('explanations')->nullable();
+            $table->string('TN_VED_code')->nullable();
+            $table->decimal('ITS')->nullable();
+            $table->decimal('payment')->nullable();
+            $table->decimal('VAT')->nullable();
+            $table->decimal('label_name')->nullable();
+            $table->decimal('label_number')->nullable();
+            $table->decimal('marking')->nullable();
+            $table->decimal('manufacturer')->nullable();
+            $table->decimal('SS/DS')->nullable();
+            $table->decimal('bet')->nullable();
+
+            $table->decimal('duty')->nullable();
+            $table->decimal('volume_weight')->nullable();
+
+            $table->decimal('customs_clearance_service')->nullable();
+            $table->decimal('cost_truck')->nullable();
+
+            $table->decimal('revenue_per_kg')->nullable();
+            $table->decimal('dollar_rate')->nullable();
+            $table->decimal('yuan_rate')->nullable();
+
+//            $table->decimal('estimated_value_cargo_ITS')->nullable();
+//            $table->decimal('total_payment')->nullable();
+//            $table->decimal('importer_services')->nullable();
+//            $table->decimal('delivery_to_Ussuriysk')->nullable();
+//            $table->decimal('revenue')->nullable();
+//            $table->decimal('total')->nullable();
+//            $table->decimal('total_per_kg')->nullable();
+
             $table->timestamps();
         });
     }

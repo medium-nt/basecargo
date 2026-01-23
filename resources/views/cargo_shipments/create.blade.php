@@ -369,6 +369,175 @@
             </div>
         </div>
         <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Калькулятор</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="explanations">поясниния <small></small></label>
+                            <input type="text" name="explanations" id="explanations" class="form-control @error('explanations') is-invalid @enderror" value="{{ old('explanations') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="TN_VED_code">код ТНВЭД <small></small></label>
+                            <input type="text" name="TN_VED_code" id="TN_VED_code" class="form-control @error('TN_VED_code') is-invalid @enderror" value="{{ old('TN_VED_code') }}">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="ITS">ИТС <small></small></label>
+                            <input type="number" step="0.01" name="ITS" id="ITS" class="form-control @error('ITS') is-invalid @enderror" value="{{ old('ITS') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="payment">платеж <small></small></label>
+                            <input type="number" step="0.01" name="payment" id="payment" class="form-control @error('payment') is-invalid @enderror" value="{{ old('payment') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="duty">пошлина <small></small></label>
+                            <input type="number" step="0.01" name="duty" id="duty" class="form-control @error('duty') is-invalid @enderror" value="{{ old('duty') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="VAT">НДС <small></small></label>
+                            <input type="number" step="0.01" name="VAT" id="VAT" class="form-control @error('VAT') is-invalid @enderror" value="{{ old('VAT') }}">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="label_name">НАИМЕНОВАНИЕ ДЛЯ БИРКИ <small></small></label>
+                            <input type="text" name="label_name" id="label_name" class="form-control @error('label_name') is-invalid @enderror" value="{{ old('label_name') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="label_number">номер бирки <small></small></label>
+                            <input type="text" name="label_number" id="label_number" class="form-control @error('label_number') is-invalid @enderror" value="{{ old('label_number') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="marking">Маркировка <small></small></label>
+                            <input type="text" name="marking" id="marking" class="form-control @error('marking') is-invalid @enderror" value="{{ old('marking') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="manufacturer">Изготовитель <small></small></label>
+                            <input type="text" name="manufacturer" id="manufacturer" class="form-control @error('manufacturer') is-invalid @enderror" value="{{ old('manufacturer') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="SS/DS">СС/ДС <small></small></label>
+                            <input type="text" name="SS/DS" id="SS/DS" class="form-control @error('SS/DS') is-invalid @enderror" value="{{ old('SS/DS') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="bet">Ставка <small></small></label>
+                            <input type="text" name="bet" id="bet" class="form-control @error('bet') is-invalid @enderror" value="{{ old('bet') }}">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="volume_weight">Коэффициент объёмного веса <small></small></label>
+                            <input type="number" step="0.01" name="volume_weight" id="volume_weight" class="form-control @error('volume_weight') is-invalid @enderror" value="{{ old('volume_weight') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="customs_clearance_service">Услуга таможенных оформлений <small></small></label>
+                            <input type="number" step="0.01" name="customs_clearance_service" id="customs_clearance_service" class="form-control @error('customs_clearance_service') is-invalid @enderror" value="{{ old('customs_clearance_service') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="cost_truck">стоимость фуры <small></small></label>
+                            <input type="number" step="0.01" name="cost_truck" id="cost_truck" class="form-control @error('cost_truck') is-invalid @enderror" value="{{ old('cost_truck') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="revenue_per_kg">выручка за кг. <small></small></label>
+                            <input type="number" step="0.01" name="revenue_per_kg" id="revenue_per_kg" class="form-control @error('revenue_per_kg') is-invalid @enderror" value="{{ old('revenue_per_kg') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="dollar_rate">курс доллара <small></small></label>
+                            <input type="number" step="0.01" name="dollar_rate" id="dollar_rate" class="form-control @error('dollar_rate') is-invalid @enderror" value="{{ old('dollar_rate') }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="yuan_rate">курс юаня <small></small></label>
+                            <input type="number" step="0.01" name="yuan_rate" id="yuan_rate" class="form-control @error('yuan_rate') is-invalid @enderror" value="{{ old('yuan_rate') }}">
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="estimated_value_cargo_ITS">ориентировочная стоимость груза по ИТС <small></small></label>
+                            <input type="number" step="0.01" name="estimated_value_cargo_ITS" id="estimated_value_cargo_ITS" class="form-control @error('estimated_value_cargo_ITS') is-invalid @enderror" value="{{ old('estimated_value_cargo_ITS') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="total_payment">Общий платеж <small></small></label>
+                            <input type="number" step="0.01" name="total_payment" id="total_payment" class="form-control @error('total_payment') is-invalid @enderror" value="{{ old('total_payment') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="importer_services">услуги импортера <small></small></label>
+                            <input type="number" step="0.01" name="importer_services" id="importer_services" class="form-control @error('importer_services') is-invalid @enderror" value="{{ old('importer_services') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="delivery_to_Ussuriysk">доставка общая до Уссурийска <small></small></label>
+                            <input type="number" step="0.01" name="delivery_to_Ussuriysk" id="delivery_to_Ussuriysk" class="form-control @error('delivery_to_Ussuriysk') is-invalid @enderror" value="{{ old('delivery_to_Ussuriysk') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="revenue">выручка <small></small></label>
+                            <input type="number" step="0.01" name="revenue" id="revenue" class="form-control @error('revenue') is-invalid @enderror" value="{{ old('revenue') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="total">Итого <small></small></label>
+                            <input type="number" step="0.01" name="total" id="total" class="form-control @error('total') is-invalid @enderror" value="{{ old('total') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="total_per_kg">Итого за КГ <small></small></label>
+                            <input type="number" step="0.01" name="total_per_kg" id="total_per_kg" class="form-control @error('total_per_kg') is-invalid @enderror" value="{{ old('total_per_kg') }}" readonly>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
             <div class="card-body">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
             </div>
