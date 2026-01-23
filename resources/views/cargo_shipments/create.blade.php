@@ -522,13 +522,13 @@
                             <input type="number" step="0.01" id="revenue" class="form-control @error('revenue') is-invalid @enderror" value="{{ old('revenue') }}" readonly>
                         </div>
                     </div>
-                    <div class="col-12 col-md-2">
+                    <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="total">Итого ₽ <small></small></label>
                             <input type="number" step="0.01" id="total" class="form-control @error('total') is-invalid @enderror" value="{{ old('total') }}" readonly>
                         </div>
                     </div>
-                    <div class="col-12 col-md-2">
+                    <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="total_per_kg">Итого за КГ ¥ <small></small></label>
                             <input type="number" step="0.01" id="total_per_kg" class="form-control @error('total_per_kg') is-invalid @enderror" value="{{ old('total_per_kg') }}" readonly>
