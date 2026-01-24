@@ -26,7 +26,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="client_id">Клиент <small>客户群</small></label>
-                            <select name="client_id" id="client_id" class="form-control @error('client_id') is-invalid @enderror">
+                            <select name="client_id" id="client_id" class="form-control select2 @error('client_id') is-invalid @enderror">
                                 <option value="">---</option>
                                 @foreach($clients as $client)
                                     <option value="{{ $client->id }}" {{ old('client_id', $shipment->client_id) == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
@@ -41,7 +41,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="responsible_user_id">Ответственный <small>负责</small></label>
-                            <select name="responsible_user_id" id="responsible_user_id" class="form-control @error('responsible_user_id') is-invalid @enderror">
+                            <select name="responsible_user_id" id="responsible_user_id" class="form-control select2 @error('responsible_user_id') is-invalid @enderror">
                                 <option value="">---</option>
                                 @foreach($agents as $agent)
                                     <option value="{{ $agent->id }}" {{ old('responsible_user_id', $shipment->responsible_user_id) == $agent->id ? 'selected' : '' }}>{{ $agent->name }}</option>
@@ -368,6 +368,178 @@
                 </div>
             </div>
         </div>
+        @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Калькулятор</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label for="explanations">поясниния <small></small></label>
+                            <input type="text" name="explanations" id="explanations" class="form-control @error('explanations') is-invalid @enderror" value="{{ old('explanations', $shipment->explanations) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="TN_VED_code">код ТНВЭД <small></small></label>
+                            <input type="text" name="TN_VED_code" id="TN_VED_code" class="form-control @error('TN_VED_code') is-invalid @enderror" value="{{ old('TN_VED_code', $shipment->TN_VED_code) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="payment">платеж <small></small></label>
+                            <input type="number" step="0.01" name="payment" id="payment" class="form-control @error('payment') is-invalid @enderror" value="{{ old('payment', $shipment->payment) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="form-group">
+                            <label for="label_name">НАИМЕНОВАНИЕ ДЛЯ БИРКИ <small></small></label>
+                            <input type="text" name="label_name" id="label_name" class="form-control @error('label_name') is-invalid @enderror" value="{{ old('label_name', $shipment->label_name) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="label_number">номер бирки <small></small></label>
+                            <input type="text" name="label_number" id="label_number" class="form-control @error('label_number') is-invalid @enderror" value="{{ old('label_number', $shipment->label_number) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="marking">Маркировка <small></small></label>
+                            <input type="text" name="marking" id="marking" class="form-control @error('marking') is-invalid @enderror" value="{{ old('marking', $shipment->marking) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label for="manufacturer">Изготовитель <small></small></label>
+                            <input type="text" name="manufacturer" id="manufacturer" class="form-control @error('manufacturer') is-invalid @enderror" value="{{ old('manufacturer', $shipment->manufacturer) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="SS/DS">СС/ДС <small></small></label>
+                            <input type="text" name="SS/DS" id="SS/DS" class="form-control @error('SS/DS') is-invalid @enderror" value="{{ old('SS/DS', $shipment->SS_DS) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="bet">Ставка <small></small></label>
+                            <input type="text" name="bet" id="bet" class="form-control @error('bet') is-invalid @enderror" value="{{ old('bet', $shipment->bet) }}">
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="ITS">ИТС <small></small></label>
+                            <input type="number" step="0.01" name="ITS" id="ITS" class="form-control @error('ITS') is-invalid @enderror" value="{{ old('ITS', $shipment->ITS) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="duty">пошлина % <small></small></label>
+                            <input type="number" step="0.01" name="duty" id="duty" class="form-control @error('duty') is-invalid @enderror" value="{{ old('duty', $shipment->duty) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="VAT">НДС % <small></small></label>
+                            <input type="number" step="0.01" name="VAT" id="VAT" class="form-control @error('VAT') is-invalid @enderror" value="{{ old('VAT', $shipment->VAT) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="volume_weight">Коэффициент объёмного веса <small></small></label>
+                            <input type="number" step="0.01" name="volume_weight" id="volume_weight" class="form-control @error('volume_weight') is-invalid @enderror" value="{{ old('volume_weight', $shipment->volume_weight) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="customs_clearance_service">Услуга таможенных оформлений <small></small></label>
+                            <input type="number" step="0.01" name="customs_clearance_service" id="customs_clearance_service" class="form-control @error('customs_clearance_service') is-invalid @enderror" value="{{ old('customs_clearance_service', $shipment->customs_clearance_service) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="cost_truck">стоимость фуры <small></small></label>
+                            <input type="number" step="0.01" name="cost_truck" id="cost_truck" class="form-control @error('cost_truck') is-invalid @enderror" value="{{ old('cost_truck', $shipment->cost_truck) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="revenue_per_kg">выручка за кг. <small></small></label>
+                            <input type="number" step="0.01" name="revenue_per_kg" id="revenue_per_kg" class="form-control @error('revenue_per_kg') is-invalid @enderror" value="{{ old('revenue_per_kg', $shipment->revenue_per_kg) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="dollar_rate">курс $ <small></small></label>
+                            <input type="number" step="0.01" name="dollar_rate" id="dollar_rate" class="form-control @error('dollar_rate') is-invalid @enderror" value="{{ old('dollar_rate', $shipment->dollar_rate) }}">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="yuan_rate">курс ¥ <small></small></label>
+                            <input type="number" step="0.01" name="yuan_rate" id="yuan_rate" class="form-control @error('yuan_rate') is-invalid @enderror" value="{{ old('yuan_rate', $shipment->yuan_rate) }}">
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="estimated_value_cargo_ITS">стоимость груза по ИТС $ <small></small></label>
+                            <input type="number" step="0.01" id="estimated_value_cargo_ITS" class="form-control @error('estimated_value_cargo_ITS') is-invalid @enderror" value="{{ old('estimated_value_cargo_ITS', $shipment->estimated_value_cargo_ITS) }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="total_payment">Общий платеж $ <small></small></label>
+                            <input type="number" step="0.01" id="total_payment" class="form-control @error('total_payment') is-invalid @enderror" value="{{ old('total_payment', $shipment->total_payment) }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="importer_services">услуги импортера $ <small></small></label>
+                            <input type="number" step="0.01" id="importer_services" class="form-control @error('importer_services') is-invalid @enderror" value="{{ old('importer_services', $shipment->importer_services) }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="delivery_to_Ussuriysk">доставка общая до Уссурийска ₽ <small></small></label>
+                            <input type="number" step="0.01" id="delivery_to_Ussuriysk" class="form-control @error('delivery_to_Ussuriysk') is-invalid @enderror" value="{{ old('delivery_to_Ussuriysk', $shipment->delivery_to_Ussuriysk) }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <div class="form-group">
+                            <label for="revenue">выручка ₽ <small></small></label>
+                            <input type="number" step="0.01" id="revenue" class="form-control @error('revenue') is-invalid @enderror" value="{{ old('revenue', $shipment->revenue) }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="total">Итого ₽ <small></small></label>
+                            <input type="number" step="0.01" id="total" class="form-control @error('total') is-invalid @enderror" value="{{ old('total', $shipment->total) }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-1">
+                        <div class="form-group">
+                            <label for="total_per_kg">Итого за КГ ¥ <small></small></label>
+                            <input type="number" step="0.01" id="total_per_kg" class="form-control @error('total_per_kg') is-invalid @enderror" value="{{ old('total_per_kg', $shipment->total_per_kg) }}" readonly>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        @endif
         <div class="card">
             <div class="card-body">
                 <button type="submit" class="btn btn-primary">Сохранить</button>

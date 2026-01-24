@@ -368,6 +368,7 @@
                 </div>
             </div>
         </div>
+        @if(auth()->user()->isAdmin() || auth()->user()->isManager())
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Калькулятор</h3>
@@ -538,7 +539,7 @@
                 </div>
             </div>
         </div>
-
+        @endif
         <div class="card">
             <div class="card-body">
                 <button type="submit" class="btn btn-primary">Сохранить</button>

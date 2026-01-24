@@ -347,6 +347,161 @@
             </div>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Калькулятор</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                @if(auth()->user()->isStaff())
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label for="explanations">поясниния</label>
+                        <input type="text" id="explanations" class="form-control" value="{{ $shipment->explanations ?? '' }}" readonly>
+                    </div>
+                </div>
+                @endif
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label for="TN_VED_code">код ТНВЭД</label>
+                        <input type="text" id="TN_VED_code" class="form-control" value="{{ $shipment->TN_VED_code ?? '' }}" readonly>
+                    </div>
+                </div>
+                @if(auth()->user()->isStaff())
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label for="payment">платеж</label>
+                        <input type="number" step="0.01" id="payment" class="form-control" value="{{ $shipment->payment ?? '' }}" readonly>
+                    </div>
+                </div>
+                @endif
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="label_name">НАИМЕНОВАНИЕ ДЛЯ БИРКИ</label>
+                        <input type="text" id="label_name" class="form-control" value="{{ $shipment->label_name ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label for="label_number">номер бирки</label>
+                        <input type="text" id="label_number" class="form-control" value="{{ $shipment->label_number ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label for="marking">Маркировка</label>
+                        <input type="text" id="marking" class="form-control" value="{{ $shipment->marking ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label for="manufacturer">Изготовитель</label>
+                        <input type="text" id="manufacturer" class="form-control" value="{{ $shipment->manufacturer ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label for="SS_DS">СС/ДС</label>
+                        <input type="text" id="SS_DS" class="form-control" value="{{ $shipment->SS_DS ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label for="bet">Ставка</label>
+                        <input type="text" id="bet" class="form-control" value="{{ $shipment->bet ?? '' }}" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            @if(auth()->user()->isStaff())
+            <div class="row">
+                <div class="col-12 col-md-1">
+                    <div class="form-group">
+                        <label for="ITS">ИТС</label>
+                        <input type="number" step="0.01" id="ITS" class="form-control" value="{{ $shipment->ITS ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-1">
+                    <div class="form-group">
+                        <label for="duty">пошлина %</label>
+                        <input type="number" step="0.01" id="duty" class="form-control" value="{{ $shipment->duty ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-1">
+                    <div class="form-group">
+                        <label for="VAT">НДС %</label>
+                        <input type="number" step="0.01" id="VAT" class="form-control" value="{{ $shipment->VAT ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label for="volume_weight">Коэффициент объёмного веса</label>
+                        <input type="number" step="0.01" id="volume_weight" class="form-control" value="{{ $shipment->volume_weight ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label for="customs_clearance_service">Услуга таможенных оформлений</label>
+                        <input type="number" step="0.01" id="customs_clearance_service" class="form-control" value="{{ $shipment->customs_clearance_service ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label for="cost_truck">стоимость фуры</label>
+                        <input type="number" step="0.01" id="cost_truck" class="form-control" value="{{ $shipment->cost_truck ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-1">
+                    <div class="form-group">
+                        <label for="revenue_per_kg">выручка за кг.</label>
+                        <input type="number" step="0.01" id="revenue_per_kg" class="form-control" value="{{ $shipment->revenue_per_kg ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-1">
+                    <div class="form-group">
+                        <label for="dollar_rate">курс $</label>
+                        <input type="number" step="0.01" id="dollar_rate" class="form-control" value="{{ $shipment->dollar_rate ?? '' }}" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-md-1">
+                    <div class="form-group">
+                        <label for="yuan_rate">курс ¥</label>
+                        <input type="number" step="0.01" id="yuan_rate" class="form-control" value="{{ $shipment->yuan_rate ?? '' }}" readonly>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
+    </div>
+
+    <table class="table table-bordered" style="border-collapse: collapse; border: 2px solid #000;">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">стоимость груза по ИТС</th>
+                <th class="text-center">Общий платеж</th>
+                <th class="text-center">услуги импортера</th>
+                <th class="text-center">доставка до Уссурийска</th>
+                <th class="text-center">выручка</th>
+                <th class="text-center">Итого</th>
+                <th class="text-center">Итого за КГ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center">{{ $shipment->estimated_value_cargo_ITS ?? '0.00' }} $</td>
+                <td class="text-center">{{ $shipment->total_payment ?? '0.00' }} $</td>
+                <td class="text-center">{{ $shipment->importer_services ?? '0.00' }} $</td>
+                <td class="text-center">{{ $shipment->delivery_to_Ussuriysk ?? '0.00' }} ₽</td>
+                <td class="text-center">{{ $shipment->revenue ?? '0.00' }} ₽</td>
+                <td class="text-center">{{ $shipment->total ?? '0.00' }} ₽</td>
+                <td class="text-center">{{ $shipment->total_per_kg ?? '0.00' }} ¥</td>
+            </tr>
+        </tbody>
+    </table>
+
     <div class="card">
         <div class="card-body">
             <a href="{{ route('cargo_shipments.edit', $shipment) }}" class="btn btn-primary">Редактировать</a>
