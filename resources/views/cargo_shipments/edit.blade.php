@@ -375,3 +375,11 @@
         </div>
     </form>
 @endsection
+
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/cargo-shipment.css') }}">
+@endpush
+
+@push('js')
+    <script src="{{ asset('js/cargo-shipment-calculator.js') }}"></script>
+@endpush
