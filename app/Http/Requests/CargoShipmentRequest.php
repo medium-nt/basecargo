@@ -88,6 +88,11 @@ class CargoShipmentRequest extends FormRequest
             'revenue_per_kg' => ['nullable', 'numeric'],
             'dollar_rate' => ['nullable', 'numeric'],
             'yuan_rate' => ['nullable', 'numeric'],
+
+            // Файлы
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'files' => ['nullable', 'array', 'max:10'],
+            'files.*' => ['file', 'mimes:jpeg,png,jpg,pdf,doc,docx,xls,xlsx', 'max:10240'],
         ];
     }
 
@@ -176,6 +181,16 @@ class CargoShipmentRequest extends FormRequest
             'ussuriysk_arrival_date.date' => 'Неверный формат даты прибытия в Уссурийск',
             'ussuriysk_shipping_date.date' => 'Неверный формат даты отправки из Уссурийска',
             'client_received_date.date' => 'Неверный формат даты получения клиентом',
+
+            // Файлы
+            'photo.image' => 'Файл должен быть изображением',
+            'photo.mimes' => 'Фотография должна быть в формате: JPEG, PNG, JPG, WebP',
+            'photo.max' => 'Размер фотографии не должен превышать 5MB',
+
+            'files.max' => 'Максимум 10 файлов за одну загрузку',
+            'files.*.file' => 'Загруженный файл не является валидным файлом',
+            'files.*.mimes' => 'Файл должен быть в формате: JPEG, PNG, JPG, PDF, DOC, DOCX, XLS, XLSX',
+            'files.*.max' => 'Размер файла не должен превышать 10MB',
         ];
     }
 }

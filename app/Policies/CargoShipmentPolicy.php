@@ -79,4 +79,28 @@ class CargoShipmentPolicy
     {
         return false;
     }
+
+    /**
+     * Загрузка файлов к грузу
+     */
+    public function uploadFiles(User $user, CargoShipment $cargoShipment): bool
+    {
+        if ($user->isAdmin() || $user->isManager()) {
+            return true;
+        }
+
+        if ($user->isAgent()) {
+            return $user->id === $cargoShipment->responsible_user_id;
+        }
+
+        return false;
+    }
+
+    /**
+     * Удаление файлов из груза
+     */
+    public function deleteFile(User $user, CargoShipment $cargoShipment): bool
+    {
+        return $user->isAdmin() || $user->isManager();
+    }
 }

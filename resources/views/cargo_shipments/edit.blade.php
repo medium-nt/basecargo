@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <form action="{{ route('cargo_shipments.update', $shipment) }}" method="POST">
+    <form action="{{ route('cargo_shipments.update', $shipment) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -49,6 +49,43 @@
                             </select>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Главная фотография <small>照片</small></h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="photo">Загрузить основную фотографию</label>
+                    <input type="file"
+                           name="photo"
+                           id="photo"
+                           class="form-control-file @error('photo') is-invalid @enderror"
+                           accept="image/jpeg,image/png,image/webp">
+                    <small class="form-text text-muted">
+                        Форматы: JPG, PNG, WebP. Макс. 5MB
+                    </small>
+                    @error('photo')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+                @if($shipment->photo_path)
+                    <div style="margin-top: 15px;">
+                        <label>Текущая фотография:</label>
+                        <div>
+                            <img src="{{ \Illuminate\Support\Facades\Storage::url($shipment->photo_path) }}"
+                                 alt="Фото груза"
+                                 class="img-thumbnail"
+                                 style="max-height: 300px;">
+                        </div>
+                    </div>
+                @endif
+                <div id="photo-preview-container" style="display: none; margin-top: 15px;">
+                    <label>Новый предпросмотр:</label>
+                    <img id="photo-preview" src="" alt="Предпросмотр" class="img-thumbnail" style="max-height: 300px;">
                 </div>
             </div>
         </div>
@@ -262,6 +299,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Страховка</h3>
@@ -540,6 +578,72 @@
             </div>
         </div>
         @endif
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Файлы груза <small>文件</small></h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="files">Загрузить файлы (фото, документы)</label>
+                    <input type="file"
+                           name="files[]"
+                           id="files"
+                           class="form-control-file @error('files') is-invalid @enderror"
+                           multiple
+                           accept="image/jpeg,image/png,image/webp,application/pdf,.doc,.docx,.xls,.xlsx">
+                    <small class="form-text text-muted">
+                        Форматы: JPG, PNG, PDF, DOC, DOCX, XLS, XLSX. Макс. 10MB каждый, до 10 файлов
+                    </small>
+                    @error('files')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+                @if($shipment->files && $shipment->files->isNotEmpty())
+                    <div style="margin-top: 15px;">
+                        <label>Загруженные файлы ({{ $shipment->files->count() }}):</label>
+                        <div class="list-group">
+                            @foreach($shipment->files as $file)
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        @if($file->file_category === 'photo')
+                                            <i class="fas fa-image"></i>
+                                        @elseif($file->file_category === 'document')
+                                            <i class="fas fa-file-pdf"></i>
+                                        @else
+                                            <i class="fas fa-file"></i>
+                                        @endif
+                                        {{ $file->file_name }}
+                                        <small class="text-muted d-block">
+                                            {{ $file->file_category }} • {{ $file->human_readable_size }}
+                                        </small>
+                                    </div>
+                                    <div>
+                                        <a href="{{ $file->url }}" target="_blank" class="btn btn-sm btn-info mr-1">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                                            <button type="button"
+                                                    class="btn btn-sm btn-danger btn-delete-file"
+                                                    data-file-id="{{ $file->id }}"
+                                                    data-file-name="{{ $file->file_name }}"
+                                                    data-delete-url="{{ route('cargo_shipments.files.destroy', ['cargoShipment' => $shipment->id, 'fileId' => $file->id]) }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+                <div id="files-preview-container" style="display: none; margin-top: 15px;">
+                    <label>Новые файлы:</label>
+                    <div id="files-preview" class="row"></div>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
             <div class="card-body">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
@@ -554,4 +658,39 @@
 
 @push('js')
     <script src="{{ asset('js/cargo-shipment-calculator.js') }}"></script>
+    <script src="{{ asset('js/cargo-file-upload.js') }}"></script>
+    <script>
+        document.querySelectorAll('.btn-delete-file').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const fileName = this.getAttribute('data-file-name');
+                const deleteUrl = this.getAttribute('data-delete-url');
+
+                if (!confirm('Удалить файл "' + fileName + '"?')) {
+                    return;
+                }
+
+                fetch(deleteUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        _method: 'DELETE'
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Ошибка при удалении файла');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Ошибка при удалении файла');
+                });
+            });
+        });
+    </script>
 @endpush

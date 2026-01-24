@@ -54,6 +54,32 @@
 
         <div class="card">
             <div class="card-header">
+                <h3 class="card-title">Главная фотография <small>照片</small></h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="photo">Загрузить основную фотографию</label>
+                    <input type="file"
+                           name="photo"
+                           id="photo"
+                           class="form-control-file @error('photo') is-invalid @enderror"
+                           accept="image/jpeg,image/png,image/webp">
+                    <small class="form-text text-muted">
+                        Форматы: JPG, PNG, WebP. Макс. 5MB
+                    </small>
+                    @error('photo')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div id="photo-preview-container" style="display: none;">
+                    <label>Предпросмотр:</label>
+                    <img id="photo-preview" src="" alt="Предпросмотр" class="img-thumbnail" style="max-height: 300px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
                 <h3 class="card-title">Информация о товаре</h3>
             </div>
 
@@ -262,6 +288,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Страховка</h3>
@@ -540,6 +567,34 @@
             </div>
         </div>
         @endif
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Файлы груза <small>文件</small></h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="files">Загрузить файлы (фото, документы)</label>
+                    <input type="file"
+                           name="files[]"
+                           id="files"
+                           class="form-control-file @error('files') is-invalid @enderror"
+                           multiple
+                           accept="image/jpeg,image/png,image/webp,application/pdf,.doc,.docx,.xls,.xlsx">
+                    <small class="form-text text-muted">
+                        Форматы: JPG, PNG, PDF, DOC, DOCX, XLS, XLSX. Макс. 10MB каждый, до 10 файлов
+                    </small>
+                    @error('files')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div id="files-preview-container" style="display: none; margin-top: 15px;">
+                    <label>Выбранные файлы:</label>
+                    <div id="files-preview" class="row"></div>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
             <div class="card-body">
                 <button type="submit" class="btn btn-primary">Сохранить</button>
@@ -554,4 +609,5 @@
 
 @push('js')
     <script src="{{ asset('js/cargo-shipment-calculator.js') }}"></script>
+    <script src="{{ asset('js/cargo-file-upload.js') }}"></script>
 @endpush

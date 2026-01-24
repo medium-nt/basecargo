@@ -30,6 +30,20 @@
         </div>
     </div>
 
+    @if($shipment->photo_path)
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Главная фотография <small>照片</small></h3>
+        </div>
+        <div class="card-body text-center">
+            <img src="{{ \Illuminate\Support\Facades\Storage::url($shipment->photo_path) }}"
+                 alt="Фото груза"
+                 class="img-fluid rounded"
+                 style="max-height: 400px;">
+        </div>
+    </div>
+    @endif
+
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Информация о товаре</h3>
@@ -501,6 +515,64 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Дополнительные файлы <small>文件</small></h3>
+        </div>
+        <div class="card-body">
+            @if(isset($shipment->files) && $shipment->files->isNotEmpty())
+                <div class="row">
+                    @foreach($shipment->files as $file)
+                        <div class="col-md-3 mb-3">
+                            @if($file->file_category === 'photo')
+                                <div class="card h-100">
+                                    <img src="{{ $file->url }}"
+                                         alt="{{ $file->file_name }}"
+                                         class="card-img-top"
+                                         style="height: 200px; object-fit: cover; cursor: pointer;"
+                                         onclick="window.open('{{ $file->url }}', '_blank')">
+                                    <div class="card-body p-2">
+                                        <small class="text-truncate d-block" title="{{ $file->file_name }}">{{ $file->file_name }}</small>
+                                        <small class="text-muted">{{ $file->human_readable_size }}</small>
+                                        <a href="{{ $file->url }}"
+                                           download="{{ $file->file_name }}"
+                                           class="btn btn-sm btn-primary btn-block mt-2">
+                                            <i class="fas fa-download"></i> Скачать
+                                        </a>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        @if($file->file_category === 'document')
+                                            <i class="fas fa-file-pdf fa-3x text-danger"></i>
+                                        @else
+                                            <i class="fas fa-file fa-3x text-muted"></i>
+                                        @endif
+                                        <p class="mt-2 mb-0 small text-truncate" title="{{ $file->file_name }}">{{ $file->file_name }}</p>
+                                        <small class="text-muted d-block">{{ $file->human_readable_size }}</small>
+                                        <a href="{{ $file->url }}"
+                                           target="_blank"
+                                           class="btn btn-sm btn-info btn-block mt-2">
+                                            <i class="fas fa-eye"></i> Открыть
+                                        </a>
+                                        <a href="{{ $file->url }}"
+                                           download="{{ $file->file_name }}"
+                                           class="btn btn-sm btn-primary btn-block mt-1">
+                                            <i class="fas fa-download"></i> Скачать
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p class="text-muted">Дополнительные файлы не загружены</p>
+            @endif
+        </div>
+    </div>
 
     <div class="card">
         <div class="card-body">

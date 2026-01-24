@@ -6,6 +6,8 @@ use Database\Factories\CargoShipmentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CargoShipment extends Model
@@ -27,6 +29,7 @@ class CargoShipment extends Model
         'payment_type',
         'payment_status',
         'crate',
+        'photo_path',
         'cargo_number',
         'product_name',
         'material',
@@ -177,5 +180,19 @@ class CargoShipment extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(User::class, 'client_id');
+    }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(CargoShipmentFile::class);
+    }
+
+    public function getPhotoUrlAttribute(): ?string
+    {
+        if ($this->photo_path) {
+            return Storage::url($this->photo_path);
+        }
+
+        return null;
     }
 }
