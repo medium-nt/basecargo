@@ -419,8 +419,8 @@
                     </div>
                     <div class="col-12 col-md-2">
                         <div class="form-group">
-                            <label for="SS/DS">СС/ДС <small></small></label>
-                            <input type="text" name="SS/DS" id="SS/DS" class="form-control @error('SS/DS') is-invalid @enderror" value="{{ old('SS/DS', $shipment->SS_DS) }}">
+                            <label for="SS_DS">СС/ДС <small></small></label>
+                            <input type="text" name="SS_DS" id="SS_DS" class="form-control @error('SS_DS') is-invalid @enderror" value="{{ old('SS_DS', $shipment->SS_DS) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">

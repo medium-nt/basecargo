@@ -81,11 +81,11 @@ return new class extends Migration
             $table->decimal('ITS')->nullable();
             $table->decimal('payment')->nullable();
             $table->decimal('VAT')->nullable();
-            $table->decimal('label_name')->nullable();
-            $table->decimal('label_number')->nullable();
-            $table->decimal('marking')->nullable();
-            $table->decimal('manufacturer')->nullable();
-            $table->decimal('SS/DS')->nullable();
+            $table->string('label_name')->nullable();
+            $table->string('label_number')->nullable();
+            $table->string('marking')->nullable();
+            $table->string('manufacturer')->nullable();
+            $table->decimal('SS_DS')->nullable();
             $table->decimal('bet')->nullable();
 
             $table->decimal('duty')->nullable();

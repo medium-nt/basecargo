@@ -66,6 +66,28 @@ class CargoShipmentRequest extends FormRequest
             'ussuriysk_arrival_date' => ['nullable', 'date'],
             'ussuriysk_shipping_date' => ['nullable', 'date'],
             'client_received_date' => ['nullable', 'date'],
+
+            // Калькулятор - string поля
+            'explanations' => ['nullable', 'string', 'max:500'],
+            'TN_VED_code' => ['nullable', 'string', 'max:50'],
+            'label_name' => ['nullable', 'string', 'max:500'],
+            'label_number' => ['nullable', 'string', 'max:100'],
+            'marking' => ['nullable', 'string', 'max:255'],
+            'manufacturer' => ['nullable', 'string', 'max:255'],
+            'SS_DS' => ['nullable', 'string', 'max:50'],
+            'bet' => ['nullable', 'string', 'max:50'],
+
+            // Калькулятор - numeric поля
+            'payment' => ['nullable', 'numeric'],
+            'ITS' => ['nullable', 'numeric'],
+            'duty' => ['nullable', 'numeric'],
+            'VAT' => ['nullable', 'numeric'],
+            'volume_weight' => ['nullable', 'numeric'],
+            'customs_clearance_service' => ['nullable', 'numeric'],
+            'cost_truck' => ['nullable', 'numeric'],
+            'revenue_per_kg' => ['nullable', 'numeric'],
+            'dollar_rate' => ['nullable', 'numeric'],
+            'yuan_rate' => ['nullable', 'numeric'],
         ];
     }
 

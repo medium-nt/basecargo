@@ -176,3 +176,8 @@ document.getElementById('gross_weight_total').addEventListener('input', calculat
 
 document.getElementById('dollar_rate').addEventListener('input', calculateEstimatedValue);
 document.getElementById('yuan_rate').addEventListener('input', calculateEstimatedValue);
+
+// Вычислить readonly поля при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    calculateEstimatedValue();
+});
