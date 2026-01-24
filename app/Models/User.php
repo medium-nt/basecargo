@@ -100,6 +100,11 @@ class User extends Authenticatable
         return $this->role?->name === 'manager';
     }
 
+    public function isStaff(): bool
+    {
+        return in_array($this->role?->name, ['admin', 'manager'], true);
+    }
+
     public function roleName(): Attribute
     {
         return Attribute::get(function () {
