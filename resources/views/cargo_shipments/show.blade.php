@@ -35,11 +35,12 @@
         <div class="card-header">
             <h3 class="card-title">Главная фотография <small>照片</small></h3>
         </div>
-        <div class="card-body text-center">
-            <img src="{{ \Illuminate\Support\Facades\Storage::url($shipment->photo_path) }}"
-                 alt="Фото груза"
-                 class="img-fluid rounded"
-                 style="max-height: 400px;">
+        <div class="card-body p-0">
+            <div class="d-flex align-items-center justify-content-center bg-light" style="min-height: 400px;">
+                <img src="{{ \Illuminate\Support\Facades\Storage::url($shipment->photo_path) }}"
+                     alt="Фото груза"
+                     style="max-width: 100%; max-height: 400px; object-fit: contain;">
+            </div>
         </div>
     </div>
     @endif

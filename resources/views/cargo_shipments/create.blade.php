@@ -57,23 +57,31 @@
                 <h3 class="card-title">Главная фотография <small>照片</small></h3>
             </div>
             <div class="card-body">
-                <div class="form-group">
-                    <label for="photo">Загрузить основную фотографию</label>
-                    <input type="file"
-                           name="photo"
-                           id="photo"
-                           class="form-control-file @error('photo') is-invalid @enderror"
-                           accept="image/jpeg,image/png,image/webp">
-                    <small class="form-text text-muted">
-                        Форматы: JPG, PNG, WebP. Макс. 5MB
-                    </small>
-                    @error('photo')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div id="photo-preview-container" style="display: none;">
-                    <label>Предпросмотр:</label>
-                    <img id="photo-preview" src="" alt="Предпросмотр" class="img-thumbnail" style="max-height: 300px;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="photo">Загрузить основную фотографию</label>
+                            <input type="file"
+                                   name="photo"
+                                   id="photo"
+                                   class="form-control-file @error('photo') is-invalid @enderror"
+                                   accept="image/jpeg,image/png,image/webp">
+                            <small class="form-text text-muted">
+                                Форматы: JPG, PNG, WebP. Макс. 5MB
+                            </small>
+                            @error('photo')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="photo-preview-container" style="display: none;">
+                            <label>Предпросмотр:</label>
+                            <div class="border rounded p-2 bg-light" style="min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                                <img id="photo-preview" src="" alt="Предпросмотр" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

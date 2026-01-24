@@ -58,34 +58,35 @@
                 <h3 class="card-title">Главная фотография <small>照片</small></h3>
             </div>
             <div class="card-body">
-                <div class="form-group">
-                    <label for="photo">Загрузить основную фотографию</label>
-                    <input type="file"
-                           name="photo"
-                           id="photo"
-                           class="form-control-file @error('photo') is-invalid @enderror"
-                           accept="image/jpeg,image/png,image/webp">
-                    <small class="form-text text-muted">
-                        Форматы: JPG, PNG, WebP. Макс. 5MB
-                    </small>
-                    @error('photo')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-                @if($shipment->photo_path)
-                    <div style="margin-top: 15px;">
-                        <label>Текущая фотография:</label>
-                        <div>
-                            <img src="{{ \Illuminate\Support\Facades\Storage::url($shipment->photo_path) }}"
-                                 alt="Фото груза"
-                                 class="img-thumbnail"
-                                 style="max-height: 300px;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="photo">Загрузить основную фотографию</label>
+                            <input type="file"
+                                   name="photo"
+                                   id="photo"
+                                   class="form-control-file @error('photo') is-invalid @enderror"
+                                   accept="image/jpeg,image/png,image/webp">
+                            <small class="form-text text-muted">
+                                Форматы: JPG, PNG, WebP. Макс. 5MB
+                            </small>
+                            @error('photo')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
-                @endif
-                <div id="photo-preview-container" style="display: none; margin-top: 15px;">
-                    <label>Новый предпросмотр:</label>
-                    <img id="photo-preview" src="" alt="Предпросмотр" class="img-thumbnail" style="max-height: 300px;">
+                    <div class="col-md-6">
+                        <div>
+                            <label>Предпросмотр:</label>
+                            <div id="photo-preview-container" class="border rounded p-2 bg-light" style="min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                                @if($shipment->photo_path)
+                                    <img id="photo-preview" src="{{ \Illuminate\Support\Facades\Storage::url($shipment->photo_path) }}" alt="Фото груза" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                                @else
+                                    <span class="text-muted">Фото не загружено</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
