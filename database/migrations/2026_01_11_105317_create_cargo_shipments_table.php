@@ -60,7 +60,6 @@ return new class extends Migration
             $table->decimal('net_weight_per_box', 10, 3)->nullable();
             $table->decimal('net_weight_total', 10, 3)->nullable();
 
-
             $table->decimal('insurance_amount')->nullable();
             $table->decimal('insurance_cost')->nullable();
             $table->decimal('rate_rub')->nullable();
@@ -98,14 +97,6 @@ return new class extends Migration
             $table->decimal('revenue_per_kg')->nullable();
             $table->decimal('dollar_rate')->nullable();
             $table->decimal('yuan_rate')->nullable();
-
-//            $table->decimal('estimated_value_cargo_ITS')->nullable();
-//            $table->decimal('total_payment')->nullable();
-//            $table->decimal('importer_services')->nullable();
-//            $table->decimal('delivery_to_Ussuriysk')->nullable();
-//            $table->decimal('revenue')->nullable();
-//            $table->decimal('total')->nullable();
-//            $table->decimal('total_per_kg')->nullable();
 
             $table->timestamps();
         });
