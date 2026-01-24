@@ -35,9 +35,13 @@
         .cargo-photo {
             width: 100%;
             height: auto;
-            max-height: 300px;
-            object-fit: cover;
+            max-height: 400px;
+            object-fit: contain;
             border-radius: 0.375rem;
+        }
+        .photo-section {
+            text-align: center;
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
@@ -59,6 +63,26 @@
                             </h5>
                             <p class="mb-0 fs-4">{{ $shipment->china_tracking_number }}</p>
                         </div>
+
+                        <!-- Главная фотография -->
+                        @if($shipment->photo_path)
+                        <div class="card mb-3">
+                            <div class="card-body p-2 photo-section">
+                                <img src="{{ Storage::url($shipment->photo_path) }}" alt="Фото груза" class="cargo-photo">
+                            </div>
+                        </div>
+                        @else
+                        <div class="card mb-3">
+                            <div class="card-body p-2 photo-section">
+                                <div class="alert alert-secondary mb-0" style="min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                                    <div class="text-center">
+                                        <i class="fas fa-image fa-3x text-muted mb-2"></i>
+                                        <div class="text-muted">Фото не загружено</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
 
                         <!-- Основная информация -->
                         <div class="card mb-3">
@@ -143,19 +167,6 @@
                                     </div>
                                     @endif
 
-                                    @if($shipment->photo_path)
-                                    <div class="col-12">
-                                        <div class="field-label">Фотография</div>
-                                        <div class="field-label-cn">照片</div>
-                                        <img src="{{ Storage::url($shipment->photo_path) }}" alt="Фото груза" class="cargo-photo">
-                                    </div>
-                                    @else
-                                    <div class="col-12">
-                                        <div class="field-label">Фотография</div>
-                                        <div class="field-label-cn">照片</div>
-                                        <div class="field-value text-muted">—</div>
-                                    </div>
-                                    @endif
                                 </div>
                             </div>
                         </div>

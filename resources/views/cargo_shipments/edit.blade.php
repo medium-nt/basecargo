@@ -76,15 +76,22 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div>
+                        <div class="d-flex justify-content-between align-items-center">
                             <label>Предпросмотр:</label>
-                            <div id="photo-preview-container" class="border rounded p-2 bg-light" style="min-height: 200px; display: flex; align-items: center; justify-content: center;">
-                                @if($shipment->photo_path)
-                                    <img id="photo-preview" src="{{ \Illuminate\Support\Facades\Storage::url($shipment->photo_path) }}" alt="Фото груза" style="max-width: 100%; max-height: 200px; object-fit: contain;">
-                                @else
-                                    <span class="text-muted">Фото не загружено</span>
-                                @endif
-                            </div>
+                            @if($shipment->photo_path && (auth()->user()->isAdmin() || auth()->user()->isManager()))
+                                <button type="button"
+                                        class="btn btn-sm btn-danger btn-delete-photo"
+                                        data-delete-url="{{ route('cargo_shipments.photo.destroy', $shipment) }}">
+                                    <i class="fas fa-trash"></i> Удалить фото
+                                </button>
+                            @endif
+                        </div>
+                        <div id="photo-preview-container" class="border rounded p-2 bg-light" style="min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                            @if($shipment->photo_path)
+                                <img id="photo-preview" src="{{ \Illuminate\Support\Facades\Storage::url($shipment->photo_path) }}" alt="Фото груза" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                            @else
+                                <span class="text-muted">Фото не загружено</span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -690,6 +697,39 @@
                 .catch(error => {
                     console.error('Error:', error);
                     alert('Ошибка при удалении файла');
+                });
+            });
+        });
+
+        // Удаление главной фотографии
+        document.querySelectorAll('.btn-delete-photo').forEach(function(button) {
+            button.addEventListener('click', function() {
+                if (!confirm('Удалить фотографию?')) {
+                    return;
+                }
+
+                const deleteUrl = this.getAttribute('data-delete-url');
+
+                fetch(deleteUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        _method: 'DELETE'
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Ошибка при удалении фото');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Ошибка при удалении фото');
                 });
             });
         });

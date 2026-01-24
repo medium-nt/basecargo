@@ -1,21 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Предпросмотр главной фотографии
     const photoInput = document.getElementById('photo');
-    const photoPreview = document.getElementById('photo-preview');
     const photoPreviewContainer = document.getElementById('photo-preview-container');
 
-    if (photoInput && photoPreview && photoPreviewContainer) {
+    if (photoInput && photoPreviewContainer) {
         photoInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    photoPreview.src = e.target.result;
-                    photoPreviewContainer.style.display = 'block';
+                    photoPreviewContainer.innerHTML = `<img id="photo-preview" src="${e.target.result}" alt="Предпросмотр" style="max-width: 100%; max-height: 200px; object-fit: contain;">`;
                 };
                 reader.readAsDataURL(file);
-            } else {
-                photoPreviewContainer.style.display = 'none';
             }
         });
     }

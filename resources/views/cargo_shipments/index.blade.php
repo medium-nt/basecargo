@@ -22,6 +22,7 @@
                     <thead class="thead-dark">
                         <tr>
                             <th style="width: 50px;">#</th>
+                            <th style="width: 80px;">Фото</th>
                             <th>Клиент 客户群</th>
                             <th>Ответственный 负责</th>
                             <th>Трек-номер по Китаю 中国的轨道号码</th>
@@ -34,6 +35,17 @@
                         @forelse ($shipments as $shipment)
                             <tr>
                                 <td>{{ $shipment->id }}</td>
+                                <td>
+                                    @if($shipment->photo_path)
+                                        <a href="{{ route('cargo_shipments.show', ['cargoShipment' => $shipment->id]) }}">
+                                            <img src="{{ \Illuminate\Support\Facades\Storage::url($shipment->photo_path) }}"
+                                                 alt="Фото"
+                                                 style="width: 60px; height: 60px; object-fit: contain; border-radius: 4px;">
+                                        </a>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
                                 <td>{{ $shipment->client?->name ?? '' }}</td>
                                 <td>{{ $shipment->agent?->name ?? '' }}</td>
                                 <td>{{ $shipment->china_tracking_number }}</td>
@@ -57,7 +69,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted">
+                                <td colspan="8" class="text-center text-muted">
                                     Нет грузов, соответствующих выбранным параметрам
                                 </td>
                             </tr>

@@ -42,4 +42,8 @@ Route::prefix('/cargo_shipments')->group(function () {
     Route::delete('/{cargoShipment}/files/{fileId}', [App\Http\Controllers\CargoShipmentController::class, 'destroyFile'])
         ->can('deleteFile', 'cargoShipment')
         ->name('cargo_shipments.files.destroy');
+
+    Route::delete('/{cargoShipment}/photo', [App\Http\Controllers\CargoShipmentController::class, 'destroyPhoto'])
+        ->can('update', 'cargoShipment')
+        ->name('cargo_shipments.photo.destroy');
 });

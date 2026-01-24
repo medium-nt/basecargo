@@ -168,6 +168,19 @@ class CargoShipmentController extends Controller
         return back()->with('success', 'Файл удален');
     }
 
+    /**
+     * Remove the main photo from storage.
+     */
+    public function destroyPhoto(CargoShipment $cargoShipment)
+    {
+        if ($cargoShipment->photo_path) {
+            Storage::disk('public')->delete($cargoShipment->photo_path);
+            $cargoShipment->update(['photo_path' => null]);
+        }
+
+        return back()->with('success', 'Фото удалено');
+    }
+
     public function showQr(CargoShipment $cargoShipment)
     {
         $result = Builder::create()
