@@ -492,6 +492,7 @@
         </div>
     </div>
 
+    <div class="table-responsive">
     <table class="table table-bordered" style="border-collapse: collapse; border: 2px solid #000;">
         <thead class="thead-dark">
             <tr>
@@ -516,6 +517,7 @@
             </tr>
         </tbody>
     </table>
+    </div>
 
     <div class="card">
         <div class="card-header">
