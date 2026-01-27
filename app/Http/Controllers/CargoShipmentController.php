@@ -187,7 +187,7 @@ class CargoShipmentController extends Controller
             ->data(route('cargo_shipments.qr', ['uuid' => $cargoShipment->public_id]))
             ->size(300)
             ->labelText($cargoShipment->cargo_number ?? '')
-            ->labelFont(new NotoSans(30))
+            ->labelFont(new NotoSans(20))
             ->build();
 
         $png = $result->getString();
