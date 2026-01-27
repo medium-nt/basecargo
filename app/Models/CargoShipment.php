@@ -91,6 +91,22 @@ class CargoShipment extends Model
         'total_per_kg',
     ];
 
+    public function getCargoStatusNameAttribute(): string
+    {
+        $cargoStatuses = [
+            'wait_payment' => 'Ожидает оплаты',
+            'shipping_supplier' => 'Отправка поставщиком',
+            'china_transit' => 'В пути по Китаю',
+            'china_warehouse' => 'На складе в Китае',
+            'china_russia_transit' => 'В пути Китай–Россия',
+            'russia_warehouse' => 'На складе в России',
+            'russia_transit' => 'В пути по России',
+            'received' => 'Получен',
+        ];
+
+        return $cargoStatuses[$this->cargo_status] ?? '---';
+    }
+
     public function getEstimatedValueCargoITSAttribute(): float
     {
         $result = ($this->net_weight_total ?? 0) * ($this->ITS ?? 0);

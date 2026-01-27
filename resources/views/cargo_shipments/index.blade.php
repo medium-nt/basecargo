@@ -25,8 +25,10 @@
                             <th style="width: 80px;">Фото</th>
                             <th>Клиент 客户群</th>
                             <th>Ответственный 负责</th>
-                            <th>Трек-номер по Китаю 中国的轨道号码</th>
                             <th>Номер груза 货物编号</th>
+                            <th>Количество мест 座位数目</th>
+                            <th>Общий вес брутто 总毛重</th>
+                            <th>Общий обьем кубов 立方体的总体积</th>
                             <th>Статус груза 货物状况</th>
                             <th style="width: 100px;"></th>
                         </tr>
@@ -48,9 +50,11 @@
                                 </td>
                                 <td>{{ $shipment->client?->name ?? '' }}</td>
                                 <td>{{ $shipment->agent?->name ?? '' }}</td>
-                                <td>{{ $shipment->china_tracking_number }}</td>
                                 <td>{{ $shipment->cargo_number }}</td>
-                                <td>{{ $shipment->cargo_status }}</td>
+                                <td>{{ $shipment->places_count }}</td>
+                                <td>{{ $shipment->gross_weight_total }}</td>
+                                <td>{{ $shipment->volume_total }}</td>
+                                <td>{{ $shipment->cargo_status_name }}</td>
                                 <td>
                                     <div class="row">
                                         <a href="{{ route('cargo_shipments.show', ['cargoShipment' => $shipment->id]) }}"
