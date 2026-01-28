@@ -114,7 +114,7 @@ class CargoShipmentSeeder extends Seeder
             'bank_account_name' => 'Смирнов Сергей Сергеевич',
         ]);
 
-        CargoShipment::factory()->create([
+        CargoShipment::factory()->count(200)->create([
             'responsible_user_id' => 3,
             'client_id' => 5,
             'delivery_address' => 'г. Владивосток, пр. Ленина, 2',

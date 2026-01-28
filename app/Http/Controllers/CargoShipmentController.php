@@ -31,7 +31,7 @@ class CargoShipmentController extends Controller
                 ->when(auth()->user()->isClient(), function ($query) use ($user) {
                     $query->where('client_id', $user->id);
                 })
-                ->paginate(10),
+                ->paginate(100),
         ]);
     }
 
