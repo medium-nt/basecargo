@@ -162,7 +162,24 @@ class CargoShipmentController extends Controller
      */
     public function destroy(CargoShipment $cargoShipment)
     {
-        //
+        if ($cargoShipment->cargo_status !== 'wait_payment' && $cargoShipment->cargo_status !== null) {
+            return back()->with('error', 'Невозможно удалить груз в текущем статусе');
+        }
+
+        if ($cargoShipment->photo_path) {
+            Storage::disk('public')->delete($cargoShipment->photo_path);
+        }
+
+        foreach ($cargoShipment->files as $file) {
+            Storage::disk('public')->delete($file->file_path);
+            $file->delete();
+        }
+
+        $cargoShipment->delete();
+
+        return redirect()
+            ->route('cargo_shipments.index')
+            ->with('success', 'Груз успешно удален из системы');
     }
 
     /**

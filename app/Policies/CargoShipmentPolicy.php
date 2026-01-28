@@ -61,7 +61,7 @@ class CargoShipmentPolicy
      */
     public function delete(User $user, CargoShipment $cargoShipment): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
