@@ -279,7 +279,7 @@
                                 <option value="china_russia_transit" {{ old('cargo_status', $shipment->cargo_status) == 'china_russia_transit' ? 'selected' : '' }}>В пути Китай–Россия</option>
                                 <option value="russia_warehouse" {{ old('cargo_status', $shipment->cargo_status) == 'russia_warehouse' ? 'selected' : '' }}>На складе в России</option>
                                 <option value="russia_transit" {{ old('cargo_status', $shipment->cargo_status) == 'russia_transit' ? 'selected' : '' }}>В пути по России</option>
-                                <option value="wait_receiving" {{ old('wait_receiving', $shipment->cargo_status) == 'wait_receiving' ? 'selected' : '' }}>Ожидает получения клиентом</option>
+                                <option value="wait_receiving" {{ old('cargo_status', $shipment->cargo_status) == 'wait_receiving' ? 'selected' : '' }}>Ожидает получения клиентом</option>
                                 <option value="received" {{ old('cargo_status', $shipment->cargo_status) == 'received' ? 'selected' : '' }}>Получен</option>
                             </select>
                         </div>
