@@ -101,6 +101,7 @@ class CargoShipment extends Model
             'china_russia_transit' => 'В пути Китай–Россия',
             'russia_warehouse' => 'На складе в России',
             'russia_transit' => 'В пути по России',
+            'wait_receiving' => 'Ожидает получение клиентом',
             'received' => 'Получен',
         ];
 

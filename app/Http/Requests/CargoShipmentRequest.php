@@ -47,7 +47,7 @@ class CargoShipmentRequest extends FormRequest
             'tare_weight_total' => ['nullable', 'numeric', 'min:0'],
             'tare_weight_per_box' => ['nullable', 'numeric', 'min:0'],
 
-            'cargo_status' => ['nullable', 'in:wait_payment,shipping_supplier,china_transit,china_warehouse,china_russia_transit,russia_warehouse,russia_transit,received'],
+            'cargo_status' => ['nullable', 'in:wait_payment,shipping_supplier,china_transit,china_warehouse,china_russia_transit,russia_warehouse,russia_transit,wait_receiving,received'],
             'payment_type' => ['nullable', 'in:cash,card,rs'],
             'payment_status' => ['nullable', 'in:not_paid,paid'],
 
