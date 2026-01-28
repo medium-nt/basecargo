@@ -11,10 +11,56 @@
         <div class="card-body">
 
             @if(auth()->user()->isAdmin() || auth()->user()->isAgent() || auth()->user()->isManager())
-            <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3">
-                <i class="fas fa-plus"></i>
-                Добавить груз
-            </a>
+            <div class="row mb-3">
+                <div class="col-md-2">
+                    <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3">
+                        <i class="fas fa-plus"></i>
+                        Добавить груз
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <select name="cargo_status" id="cargo_status"
+                            onchange="updatePageWithQueryParam(this)"
+                            class="form-control mb-3">
+                        <option value="all">Все статусы</option>
+                        <option value="wait_payment" {{ request('cargo_status') == 'wait_payment' ? 'selected' : '' }}>Ожидает оплаты</option>
+                        <option value="shipping_supplier" {{ request('cargo_status') == 'shipping_supplier' ? 'selected' : '' }}>Отправка поставщиком</option>
+                        <option value="china_transit" {{ request('cargo_status') == 'china_transit' ? 'selected' : '' }}>В пути по Китаю</option>
+                        <option value="china_warehouse" {{ request('cargo_status') == 'china_warehouse' ? 'selected' : '' }}>На складе в Китае</option>
+                        <option value="china_russia_transit" {{ request('cargo_status') == 'china_russia_transit' ? 'selected' : '' }}>В пути Китай–Россия</option>
+                        <option value="russia_warehouse" {{ request('cargo_status') == 'russia_warehouse' ? 'selected' : '' }}>На складе в России</option>
+                        <option value="russia_transit" {{ request('cargo_status') == 'russia_transit' ? 'selected' : '' }}>В пути по России</option>
+                        <option value="wait_receiving" {{ request('cargo_status') == 'wait_receiving' ? 'selected' : '' }}>Ожидает получения клиентом</option>
+                        <option value="received" {{ request('cargo_status') == 'received' ? 'selected' : '' }}>Получен</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="client_id" id="client_id"
+                            onchange="updatePageWithQueryParam(this)"
+                            class="form-control mb-3">
+                        <option value="all">Все клиенты</option>
+                        @foreach($clients as $client)
+                            <option value="{{ $client->id }}" {{ request('client_id') == $client->id ? 'selected' : '' }}>{{ $client->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="responsible_user_id" id="responsible_user_id"
+                            onchange="updatePageWithQueryParam(this)"
+                            class="form-control mb-3">
+                        <option value="all">Все ответственные</option>
+                        @foreach($responsibleUsers as $responsibleUser)
+                            <option value="{{ $responsibleUser->id }}" {{ request('responsible_user_id') == $responsibleUser->id ? 'selected' : '' }}>{{ $responsibleUser->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ route('cargo_shipments.index') }}" class="btn btn-default mb-3">
+                        <i class="fas fa-undo mr-1"></i>
+                        Сбросить фильтры
+                    </a>
+                </div>
+            </div>
             @endif
 
             <div class="table-responsive">
@@ -88,3 +134,7 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="{{ asset('js/PageQueryParam.js') }}"></script>
+@endpush

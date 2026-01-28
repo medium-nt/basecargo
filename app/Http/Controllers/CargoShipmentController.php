@@ -24,6 +24,8 @@ class CargoShipmentController extends Controller
 
         return view('cargo_shipments.index', [
             'title' => 'Грузы',
+            'responsibleUsers' => User::agents_and_managers(),
+            'clients' => User::clients(),
             'shipments' => CargoShipment::query()
                 ->when(auth()->user()->isAgent(), function ($query) use ($user) {
                     $query->where('responsible_user_id', $user->id);
@@ -31,7 +33,19 @@ class CargoShipmentController extends Controller
                 ->when(auth()->user()->isClient(), function ($query) use ($user) {
                     $query->where('client_id', $user->id);
                 })
-                ->paginate(100),
+                ->when(request('client_id'), function ($query) {
+                    $query->where('client_id', request('client_id'));
+                })
+                ->when(request('responsible_user_id'), function ($query) {
+                    $query->where('responsible_user_id', request('responsible_user_id'));
+                })
+                ->when(request('cargo_status'), function ($query) {
+                    $query->where('cargo_status', request('cargo_status'));
+                })
+                ->orderBy('created_at', 'asc')
+                ->orderBy('id', 'asc')
+                ->paginate(100)
+                ->withQueryString(),
         ]);
     }
 
