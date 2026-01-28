@@ -43,10 +43,12 @@
                                             @if(old('role_id') == 2) selected @endif>
                                         Агент
                                     </option>
+                                    @if(auth()->user()->isAdmin())
                                     <option value="4"
                                             @if(old('role_id') == 4) selected @endif>
                                         Менеджер
                                     </option>
+                                    @endif
                                 </select>
                             </div>
 

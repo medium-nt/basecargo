@@ -33,9 +33,14 @@ class UsersController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
+        $users = User::query()
+            ->when(auth()->user()->isManager(), function ($query) {
+                $query->whereIn('role_id', [1, 2]);
+            });
+
         return view('users.index', [
             'title' => 'Пользователи',
-            'users' => User::query()->paginate(10),
+            'users' => $users->paginate(10),
         ]);
     }
 

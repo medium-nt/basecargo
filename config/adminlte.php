@@ -313,7 +313,7 @@ return [
         [
             'text' => 'settings',
             'icon' => 'fas fa-fw fa-cog',
-            'can' => 'is-admin',
+            'can' => 'is-admin-or-manager',
             'submenu' => [
                 [
                     'text' => 'system_settings',
@@ -325,7 +325,7 @@ return [
                     'text' => 'users',
                     'url' => 'admin/users',
                     'icon' => 'fas fa-fw fa-user',
-                    'can' => 'is-admin',
+                    'can' => 'is-admin-or-manager',
                 ],
             ],
         ],

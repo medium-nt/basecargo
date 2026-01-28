@@ -28,7 +28,18 @@ class UsersRequest extends FormRequest
 
         // role_id только при создании
         if (!$isUpdating) {
-            $rules['role_id'] = ['required', 'integer', Rule::in([1, 2, 4])];
+            $user = auth()->user();
+
+            // менеджер может создавать только агентов и клиентов
+            $allowedRoles = $user->isAdmin()
+                ? [1, 2, 4]
+                : ($user->isManager() ? [1, 2] : []);
+
+            $rules['role_id'] = [
+                'required',
+                'integer',
+                Rule::in($allowedRoles)
+            ];
         } else {
             $rules['role_id'] = ['prohibited'];
         }
@@ -42,6 +53,7 @@ class UsersRequest extends FormRequest
             'role_id.required' => 'Поле роли обязательно для заполнения',
             'role_id.integer' => 'Роль должна быть числом',
             'role_id.exists' => 'Указанная роль не существует',
+            'role_id.in' => 'Вы не можете создать пользователя с такой ролью',
 
             'name.required' => 'Поле имени обязательно для заполнения',
             'name.string' => 'Имя должно быть строкой',

@@ -39,6 +39,7 @@
                             <td>{{ $user->created_at }}</td>
                             <td>
                                 <div class="btn-group" role="group">
+                                    @if(auth()->user()->isAdmin())
                                     <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-primary mr-1">
                                         <i class="fas fa-edit"></i>
                                     </a>
@@ -50,6 +51,7 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
