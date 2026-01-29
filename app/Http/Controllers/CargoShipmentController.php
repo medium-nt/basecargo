@@ -8,7 +8,6 @@ use App\Models\CargoShipmentFile;
 use App\Models\User;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Label\Font\NotoSans;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -32,6 +31,12 @@ class CargoShipmentController extends Controller
                 })
                 ->when(auth()->user()->isClient(), function ($query) use ($user) {
                     $query->where('client_id', $user->id);
+                })
+                ->when(request('archive') == '1', function ($query) {
+                    $query->where('cargo_status', 'received');
+                })
+                ->when(! request('archive') || request('archive') == '0', function ($query) {
+                    $query->where('cargo_status', '!=', 'received');
                 })
                 ->when(request('client_id'), function ($query) {
                     $query->where('client_id', request('client_id'));
@@ -233,7 +238,8 @@ class CargoShipmentController extends Controller
 
     private function uploadPhoto(UploadedFile $file, string $uuid): string
     {
-        $filename = $uuid . '.' . $file->getClientOriginalExtension();
+        $filename = $uuid.'.'.$file->getClientOriginalExtension();
+
         return $file->storeAs('cargo-photos', $filename, 'public');
     }
 
@@ -242,8 +248,8 @@ class CargoShipmentController extends Controller
         $user = auth()->user();
 
         foreach ($files as $file) {
-            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
-                . '.' . $file->getClientOriginalExtension();
+            $filename = time().'_'.Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
+                .'.'.$file->getClientOriginalExtension();
 
             $path = $file->storeAs("cargo-files/{$shipment->public_id}", $filename, 'public');
 
