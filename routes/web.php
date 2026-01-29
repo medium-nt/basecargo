@@ -29,5 +29,6 @@ Route::prefix('admin')
 
         require base_path('routes/cargo_shipments.php');
         require base_path('routes/users.php');
+        require base_path('routes/trips.php');
 
     });

@@ -6,6 +6,7 @@ use Database\Factories\CargoShipmentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -78,7 +79,7 @@ class CargoShipment extends Model
         'cost_truck',
         'revenue_per_kg',
         'dollar_rate',
-        'yuan_rate'
+        'yuan_rate',
     ];
 
     protected $appends = [
@@ -111,6 +112,7 @@ class CargoShipment extends Model
     public function getEstimatedValueCargoITSAttribute(): float
     {
         $result = ($this->net_weight_total ?? 0) * ($this->ITS ?? 0);
+
         return round($result, 2);
     }
 
@@ -120,6 +122,7 @@ class CargoShipment extends Model
         $duty = ($this->duty ?? 0) / 100;
         $vat = ($this->VAT ?? 0) / 100;
         $result = ($A * $duty) + ($A + ($A * $duty)) * $vat;
+
         return round($result, 2);
     }
 
@@ -131,8 +134,10 @@ class CargoShipment extends Model
 
         if ($volumeWeight > 0) {
             $result = ($volume / $volumeWeight) * $service;
+
             return round($result, 2);
         }
+
         return 0;
     }
 
@@ -144,14 +149,17 @@ class CargoShipment extends Model
 
         if ($volumeWeight > 0) {
             $result = ($costTruck / $volumeWeight) * $volume;
+
             return round($result, 2);
         }
+
         return 0;
     }
 
     public function getRevenueAttribute(): float
     {
         $result = ($this->revenue_per_kg ?? 0) * ($this->gross_weight_total ?? 0);
+
         return round($result, 2);
     }
 
@@ -164,6 +172,7 @@ class CargoShipment extends Model
         $dollarRate = $this->dollar_rate ?? 0;
 
         $result = (($B + $C) * $dollarRate) + $D + $E;
+
         return round($result, 2);
     }
 
@@ -175,8 +184,10 @@ class CargoShipment extends Model
 
         if ($grossWeight > 0 && $yuanRate > 0) {
             $result = $G / $grossWeight / $yuanRate;
+
             return round($result, 2);
         }
+
         return 0;
     }
 
@@ -202,6 +213,13 @@ class CargoShipment extends Model
     public function files(): HasMany
     {
         return $this->hasMany(CargoShipmentFile::class);
+    }
+
+    public function trips(): BelongsToMany
+    {
+        return $this->belongsToMany(Trip::class, 'cargo_shipment_trip')
+            ->withTimestamps()
+            ->withPivot('id');
     }
 
     public function getPhotoUrlAttribute(): ?string

@@ -260,7 +260,7 @@ return [
     'dashboard_url' => 'admin',
     'logout_url' => 'logout',
     'login_url' => 'login',
-//    'register_url' => 'register',
+    //    'register_url' => 'register',
     'register_url' => false,
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
@@ -311,6 +311,16 @@ return [
             'icon' => 'fas fa-fw fa-truck',
         ],
         [
+            'text' => 'trips_domestic',
+            'route' => 'trips.domestic',
+            'icon' => 'fas fa-fw fa-truck',
+        ],
+        [
+            'text' => 'trips_international',
+            'route' => 'trips.international',
+            'icon' => 'fas fa-fw fa-globe-asia',
+        ],
+        [
             'text' => 'settings',
             'icon' => 'fas fa-fw fa-cog',
             'can' => 'is-admin-or-manager',
@@ -330,7 +340,6 @@ return [
             ],
         ],
     ],
-
 
     /*
     |--------------------------------------------------------------------------
