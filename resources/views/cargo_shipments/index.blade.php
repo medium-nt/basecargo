@@ -117,7 +117,7 @@
                             <th>Общий вес брутто<br><span style="font-size: 0.85em;">总毛重</span></th>
                             <th>Общий обьем кубов<br><span style="font-size: 0.85em;">立方体的总体积</span></th>
                             <th>Статус груза<br><span style="font-size: 0.85em;">货物状况</span></th>
-                            @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                            @if(!auth()->user()->isClient())
                             <th>Рейс</th>
                             @endif
                             <th style="width: 100px;"></th>

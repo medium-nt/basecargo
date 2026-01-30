@@ -10,9 +10,13 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Информация о рейсе #{{ $trip->id }}</h3>
-            @if(auth()->user()->isAdmin() || auth()->user()->isManager())
-                <div class="card-tools">
-                    <a href="{{ route('trips.edit', ['trip' => $trip->id]) }}" class="btn btn-warning btn-sm">
+            <div class="card-tools">
+                <a href="{{ $trip->type === 'domestic' ? route('trips.domestic') : route('trips.international') }}" class="btn btn-secondary btn-sm mr-2">
+                    <i class="fas fa-arrow-left"></i>
+                    Вернуться к списку
+                </a>
+                @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                    <a href="{{ route('trips.edit', ['trip' => $trip->id]) }}" class="btn btn-warning btn-sm mr-2">
                         <i class="fas fa-edit"></i>
                         Редактировать
                     </a>
@@ -29,8 +33,8 @@
                             </button>
                         </form>
                     @endif
-                </div>
-            @endif
+                @endif
+            </div>
         </div>
 
         <div class="card-body">
@@ -130,23 +134,53 @@
                                 <th>Ответственный</th>
                                 <th>Количество мест</th>
                                 <th>Вес брутто</th>
+                                <th>Нетто</th>
                                 <th>Объём</th>
                                 <th>Статус</th>
+                                @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                                <th style="width: 50px;"></th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($trip->cargoShipments as $cargo)
                                 <tr>
-                                    <td>{{ $cargo->id }}</td>
+                                    <td><a href="{{ route('cargo_shipments.show', ['cargoShipment' => $cargo->id]) }}">{{ $cargo->id }}</a></td>
                                     <td>{{ $cargo->cargo_number ?? '-' }}</td>
                                     <td>{{ $cargo->client?->name ?? '-' }}</td>
                                     <td>{{ $cargo->agent?->name ?? '-' }}</td>
                                     <td>{{ $cargo->places_count ?? '-' }}</td>
                                     <td>{{ $cargo->gross_weight_total ?? '-' }}</td>
+                                    <td>{{ $cargo->net_weight_total ?? '-' }}</td>
                                     <td>{{ $cargo->volume_total ?? '-' }}</td>
                                     <td>{{ $cargo->cargo_status_name }}</td>
+                                    @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                                    <td>
+                                        <form action="{{ route('trips.detach_cargo', ['trip' => $trip->id, 'cargoShipment' => $cargo->id]) }}"
+                                              method="POST"
+                                              style="display: inline;"
+                                              onsubmit="return confirm('Вы уверены, что хотите открепить груз от рейса?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    @endif
                                 </tr>
                             @endforeach
+                            <tr class="font-weight-bold bg-light">
+                                <td colspan="4" class="text-right">ИТОГО:</td>
+                                <td>{{ $trip->cargoShipments->sum('places_count') }}</td>
+                                <td>{{ $trip->cargoShipments->sum('gross_weight_total') }}</td>
+                                <td>{{ $trip->cargoShipments->sum('net_weight_total') }}</td>
+                                <td>{{ $trip->cargoShipments->sum('volume_total') }}</td>
+                                <td></td>
+                                @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                                <td></td>
+                                @endif
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -154,12 +188,5 @@
                 <p class="text-muted">На этот рейс еще не добавлены грузы.</p>
             @endif
         </div>
-    </div>
-
-    <div class="mt-3">
-        <a href="{{ $trip->type === 'domestic' ? route('trips.domestic') : route('trips.international') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left mr-1"></i>
-            Вернуться к списку
-        </a>
     </div>
 @endsection

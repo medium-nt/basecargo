@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TripRequest;
+use App\Models\CargoShipment;
 use App\Models\Trip;
 
 class TripController extends Controller
@@ -63,7 +64,9 @@ class TripController extends Controller
      */
     public function show(Trip $trip)
     {
-        $trip->load('cargoShipments');
+        $trip->load(['cargoShipments' => function ($query) {
+            $query->orderBy('id');
+        }]);
 
         return view('trips.show', [
             'title' => 'Детали рейса',
@@ -99,11 +102,25 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip)
     {
+        if ($trip->cargoShipments()->count() > 0) {
+            return back()->with('error', 'Невозможно удалить рейс с прикреплёнными грузами');
+        }
+
         $type = $trip->type;
         $trip->delete();
 
         return redirect()
             ->route($type === 'domestic' ? 'trips.domestic' : 'trips.international')
             ->with('success', 'Рейс успешно удален');
+    }
+
+    /**
+     * Detach cargo from trip.
+     */
+    public function detachCargo(Trip $trip, CargoShipment $cargoShipment)
+    {
+        $trip->cargoShipments()->detach($cargoShipment->id);
+
+        return back()->with('success', 'Груз откреплён от рейса');
     }
 }

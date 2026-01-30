@@ -20,11 +20,7 @@ class TripPolicy
      */
     public function view(User $user, Trip $trip): bool
     {
-        if ($user->isAdmin() || $user->isManager()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -49,6 +45,14 @@ class TripPolicy
     public function delete(User $user, Trip $trip): bool
     {
         return $user->isAdmin();
+    }
+
+    /**
+     * Detach cargo from trip.
+     */
+    public function detachCargo(User $user): bool
+    {
+        return $user->isAdmin() || $user->isManager();
     }
 
     /**

@@ -37,4 +37,8 @@ Route::prefix('/trips')->group(function () {
     Route::delete('/{trip}', [TripController::class, 'destroy'])
         ->can('delete', 'trip')
         ->name('trips.destroy');
+
+    Route::delete('/{trip}/cargo/{cargoShipment}', [TripController::class, 'detachCargo'])
+        ->can('detachCargo', 'trip')
+        ->name('trips.detach_cargo');
 });
