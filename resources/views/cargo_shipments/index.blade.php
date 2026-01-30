@@ -90,7 +90,7 @@
 
                 @if(request('archive') != '1')
                     {{-- Кнопка добавления груза --}}
-                    @if(auth()->user()->isAdmin() || auth()->user()->isAgent())
+                    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
                         <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3">
                             <i class="fas fa-plus"></i>
                             Добавить груз
