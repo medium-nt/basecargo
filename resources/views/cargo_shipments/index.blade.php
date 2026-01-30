@@ -153,16 +153,16 @@
                                 <td>{{ $shipment->gross_weight_total }}</td>
                                 <td>{{ $shipment->volume_total }}</td>
                                 <td>{{ $shipment->cargo_status_name }}</td>
-                                @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                                @if(!auth()->user()->isClient())
                                 <td>
                                     @if($shipment->trips->count() > 0)
                                         @foreach($shipment->trips as $trip)
                                             @if($trip->type === 'domestic')
-                                                <span class="badge badge-success mr-1">{{ $trip->truck_number ?? 'Рейс #' . $trip->id }}</span>
+                                                <a href="{{ route('trips.show', ['trip' => $trip->id]) }}" class="badge badge-success mr-1">{{ $trip->truck_number ?? 'Рейс #' . $trip->id }}</a>
                                             @elseif($trip->type === 'international')
-                                                <span class="badge badge-danger mr-1">{{ $trip->truck_number ?? 'Рейс #' . $trip->id }}</span>
+                                                <a href="{{ route('trips.show', ['trip' => $trip->id]) }}" class="badge badge-danger mr-1">{{ $trip->truck_number ?? 'Рейс #' . $trip->id }}</a>
                                             @else
-                                                <span class="badge badge-info mr-1">{{ $trip->truck_number ?? 'Рейс #' . $trip->id }}</span>
+                                                <a href="{{ route('trips.show', ['trip' => $trip->id]) }}" class="badge badge-info mr-1">{{ $trip->truck_number ?? 'Рейс #' . $trip->id }}</a>
                                             @endif
                                         @endforeach
                                     @else
@@ -189,8 +189,10 @@
                         @empty
                             <tr>
                                 <td colspan="
-                                    @if(auth()->user()->isAgent())
-                                        9
+                                    @if(auth()->user()->isClient())
+                                        10
+                                    @elseif(auth()->user()->isAgent())
+                                        11
                                     @elseif(request('archive') == '1')
                                         10
                                     @else
