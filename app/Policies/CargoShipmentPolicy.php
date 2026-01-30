@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\CargoShipment;
 use App\Models\User;
 
@@ -21,11 +20,11 @@ class CargoShipmentPolicy
      */
     public function view(User $user, CargoShipment $cargoShipment): bool
     {
-        if($user->isAgent()) {
+        if ($user->isAgent()) {
             return $user->id === $cargoShipment->responsible_user_id;
         }
 
-        if($user->isClient()) {
+        if ($user->isClient()) {
             return $user->id === $cargoShipment->client_id;
         }
 
@@ -100,6 +99,14 @@ class CargoShipmentPolicy
      * Удаление файлов из груза
      */
     public function deleteFile(User $user, CargoShipment $cargoShipment): bool
+    {
+        return $user->isAdmin() || $user->isManager();
+    }
+
+    /**
+     * Прикрепление груза к рейсу
+     */
+    public function attachToTrip(User $user): bool
     {
         return $user->isAdmin() || $user->isManager();
     }

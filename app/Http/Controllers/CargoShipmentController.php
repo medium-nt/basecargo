@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AttachToTripRequest;
 use App\Http\Requests\CargoShipmentRequest;
 use App\Models\CargoShipment;
 use App\Models\CargoShipmentFile;
+use App\Models\Trip;
 use App\Models\User;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Label\Font\NotoSans;
@@ -25,6 +27,10 @@ class CargoShipmentController extends Controller
             'title' => 'Грузы',
             'responsibleUsers' => User::agents_and_managers(),
             'clients' => User::clients(),
+            'trips' => Trip::query()
+                ->orderBy('loading_date', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->get(),
             'shipments' => CargoShipment::query()
                 ->when(auth()->user()->isAgent(), function ($query) use ($user) {
                     $query->where('responsible_user_id', $user->id);
@@ -47,8 +53,15 @@ class CargoShipmentController extends Controller
                 ->when(request('cargo_status'), function ($query) {
                     $query->where('cargo_status', request('cargo_status'));
                 })
+                ->when(request('trip_status') == 'with_trip', function ($query) {
+                    $query->whereHas('trips');
+                })
+                ->when(request('trip_status') == 'without_trip', function ($query) {
+                    $query->whereDoesntHave('trips');
+                })
                 ->orderBy('created_at', 'asc')
                 ->orderBy('id', 'asc')
+                ->with('trips')
                 ->paginate(100)
                 ->withQueryString(),
         ]);
@@ -215,6 +228,35 @@ class CargoShipmentController extends Controller
         }
 
         return back()->with('success', 'Фото удалено');
+    }
+
+    public function attachToTrip(AttachToTripRequest $request)
+    {
+        $validated = $request->validated();
+
+        $trip = Trip::query()->findOrFail($validated['trip_id']);
+        $cargoIds = $validated['cargo_ids'];
+
+        $result = $trip->cargoShipments()->syncWithoutDetaching(array_fill_keys($cargoIds, [
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]));
+
+        $attachedCount = count($result['attached'] ?? []);
+
+        $message = $attachedCount > 0
+            ? "Добавлено {$attachedCount} грузов в рейс"
+            : 'Грузы уже добавлены в этот рейс';
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => $attachedCount > 0,
+                'reload' => true,
+                'message' => $message,
+            ]);
+        }
+
+        return back()->with('success', $message);
     }
 
     public function showQr(CargoShipment $cargoShipment)

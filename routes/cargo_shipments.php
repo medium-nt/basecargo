@@ -23,10 +23,6 @@ Route::prefix('/cargo_shipments')->group(function () {
         ->can('view', 'cargoShipment')
         ->name('cargo_shipments.show_qr');
 
-//    Route::get('edit/{uuid}', [App\Http\Controllers\CargoShipmentController::class, 'edit'])
-//        ->can('update', 'cargoShipment')
-//        ->name('cargo_shipments.edit');
-
     Route::get('edit/{cargoShipment}', [App\Http\Controllers\CargoShipmentController::class, 'edit'])
         ->can('update', 'cargoShipment')
         ->name('cargo_shipments.edit');
@@ -46,4 +42,8 @@ Route::prefix('/cargo_shipments')->group(function () {
     Route::delete('/{cargoShipment}/photo', [App\Http\Controllers\CargoShipmentController::class, 'destroyPhoto'])
         ->can('update', 'cargoShipment')
         ->name('cargo_shipments.photo.destroy');
+
+    Route::post('/attach-to-trip', [App\Http\Controllers\CargoShipmentController::class, 'attachToTrip'])
+        ->can('attachToTrip', CargoShipment::class)
+        ->name('cargo_shipments.attach_to_trip');
 });
