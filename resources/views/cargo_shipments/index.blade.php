@@ -71,6 +71,21 @@
                         Сбросить фильтры
                     </a>
                 </div>
+            </div>
+
+                @if(request('archive') != '1')
+                    {{-- Кнопка добавления груза --}}
+                    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
+                        <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3">
+                            <i class="fas fa-plus"></i>
+                            Добавить груз
+                        </a>
+                    @endif
+                @endif
+            @endif
+
+            <div class="row">
+                <div class="col-md-11"></div>
                 <div class="ml-auto mr-2">
                     @if(request('archive') == '1')
                         {{-- Кнопка возврата к активным --}}
@@ -87,17 +102,6 @@
                     @endif
                 </div>
             </div>
-
-                @if(request('archive') != '1')
-                    {{-- Кнопка добавления груза --}}
-                    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
-                        <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3">
-                            <i class="fas fa-plus"></i>
-                            Добавить груз
-                        </a>
-                    @endif
-                @endif
-            @endif
 
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">
