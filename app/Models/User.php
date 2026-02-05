@@ -66,6 +66,13 @@ class User extends Authenticatable
             ->users;
     }
 
+    public static function clients_and_agents(): Collection
+    {
+        return User::whereHas('role', function ($q) {
+            $q->whereIn('name', ['agent', 'client']);
+        })->get();
+    }
+
     public static function agents_and_managers(): Collection
     {
         return User::whereHas('role', function ($q) {
