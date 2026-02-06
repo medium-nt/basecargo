@@ -18,6 +18,7 @@ return [
     'information' => 'Информация',
     'dashboard' => 'Панель',
     'cargo_shipments' => 'Грузы',
+    'cargo_rate_requests' => 'Заявки на расчет',
     'trips_menu' => 'Рейсы',
     'trips_domestic' => 'Рейсы по России',
     'trips_international' => 'Рейсы Китай-Россия',

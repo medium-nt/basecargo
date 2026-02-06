@@ -311,6 +311,11 @@ return [
             'icon' => 'fas fa-fw fa-truck',
         ],
         [
+            'text' => 'cargo_rate_requests',
+            'route' => 'cargo_rate_requests.index',
+            'icon' => 'fas fa-fw fa-calculator',
+        ],
+        [
             'text' => 'trips_domestic',
             'route' => 'trips.domestic',
             'icon' => 'fas fa-fw fa-truck',

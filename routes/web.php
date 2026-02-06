@@ -28,6 +28,7 @@ Route::prefix('admin')
         })->name('dashboard');
 
         require base_path('routes/cargo_shipments.php');
+        require base_path('routes/cargo_rate_requests.php');
         require base_path('routes/users.php');
         require base_path('routes/trips.php');
 
