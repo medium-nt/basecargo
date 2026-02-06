@@ -52,7 +52,7 @@ class CargoShipmentPolicy
      */
     public function update(User $user, CargoShipment $cargoShipment): bool
     {
-        return $user->isAdmin() || $user->isManager();
+        return $user->isAdmin() || $user->isManager() || ($user->isAgent() && $user->id === $cargoShipment->client_id);
     }
 
     /**
