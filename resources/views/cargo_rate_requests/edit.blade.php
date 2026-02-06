@@ -82,7 +82,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="calculated_rate">Рассчитанная ставка (₽)</label>
+                                        <label for="calculated_rate">Рассчитанная ставка (¥)</label>
                                         <input type="number" step="0.01" name="calculated_rate" id="calculated_rate" class="form-control" value="{{ old('calculated_rate', $request->calculated_rate) }}">
                                     </div>
                                 </div>

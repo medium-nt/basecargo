@@ -196,7 +196,7 @@
                                 <td>{{ $request->volume_total ?? '-' }}</td>
                                 <td>{{ Str::limit($request->delivery_address ?? '-', 30) }}</td>
                                 <td>@include('cargo_rate_requests._status_badge', ['status' => $request->request_status])</td>
-                                <td>{{ $request->calculated_rate ?? '-' }}</td>
+                                <td>{{ $request->calculated_rate ? number_format($request->calculated_rate, 2, '.', ' ') . ' ¥' : '-' }}</td>
                                 <td>
                                     <a href="{{ route('cargo_rate_requests.show', ['cargoRateRequest' => $request->id]) }}" class="btn btn-primary btn-sm">
                                         <i class="fas fa-eye"></i>

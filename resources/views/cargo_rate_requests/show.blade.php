@@ -64,7 +64,7 @@
                                     <th>Рассчитанная ставка:</th>
                                     <td>
                                         @if($request->calculated_rate)
-                                            <strong>{{ number_format($request->calculated_rate, 2, '.', ' ') }} ₽</strong>
+                                            <strong>{{ number_format($request->calculated_rate, 2, '.', ' ') }} ¥</strong>
                                         @else
                                             -
                                         @endif
