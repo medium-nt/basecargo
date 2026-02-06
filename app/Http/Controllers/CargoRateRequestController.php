@@ -126,6 +126,7 @@ class CargoRateRequestController extends Controller
         // Если менеджер указал ставку и заявка в статусе "pending" - автоматически на согласование
         if (isset($data['calculated_rate']) && $data['calculated_rate'] && $cargoRateRequest->isPending() && (auth()->user()->isAdmin() || auth()->user()->isManager())) {
             $data['request_status'] = 'awaiting_approval';
+            $data['responsible_user_id'] = auth()->id();
             $data['calculated_at'] = now();
         }
 

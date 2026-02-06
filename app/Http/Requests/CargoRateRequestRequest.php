@@ -22,7 +22,7 @@ class CargoRateRequestRequest extends FormRequest
             'delivery_address' => ['nullable', 'string', 'max:1000'],
 
             // Менеджерские поля
-            'calculated_rate' => ['nullable', 'numeric', 'min:0'],
+            'calculated_rate' => ['nullable', 'numeric', 'min:0.01'],
             'manager_notes' => ['nullable', 'string', 'max:2000'],
 
             // Файлы
