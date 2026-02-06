@@ -45,7 +45,7 @@ class CargoRateRequestController extends Controller
                     $query->where('client_id', request('client_id'));
                 })
                 ->orderBy('created_at', 'desc')
-                ->with('client', 'agent', 'files')
+                ->with('client', 'responsible', 'files')
                 ->paginate(50)
                 ->withQueryString(),
         ]);

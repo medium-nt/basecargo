@@ -52,7 +52,7 @@ class CargoRateRequest extends Model
         return $this->belongsTo(User::class, 'client_id');
     }
 
-    public function agent(): BelongsTo
+    public function responsible(): BelongsTo
     {
         return $this->belongsTo(User::class, 'responsible_user_id');
     }

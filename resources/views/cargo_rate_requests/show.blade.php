@@ -28,7 +28,11 @@
                                 </tr>
                                 <tr>
                                     <th>Ответственный:</th>
-                                    <td>{{ $request->agent?->name ?? '-' }}</td>
+                                    <td>{{ $request->responsible?->name ?? '-' }}
+                                        @if($request->responsible?->messenger_number)
+                                            ({{ $request->responsible?->messenger }}: {{ $request->responsible?->messenger_number }})
+                                        @endif
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Статус:</th>
