@@ -29,13 +29,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="product_name">Наименование товара</label>
+                                <label for="product_name">Наименование товара <small>商品名称</small></label>
                                 <input type="text" name="product_name" id="product_name" class="form-control" value="{{ old('product_name') }}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="material">Материал</label>
+                                <label for="material">Материал <small>材质</small></label>
                                 <input type="text" name="material" id="material" class="form-control" value="{{ old('material') }}">
                             </div>
                         </div>
@@ -44,40 +44,40 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="gross_weight_total">Вес брутто (кг)</label>
+                                <label for="gross_weight_total">Вес брутто (кг) <small>毛重 (公斤)</small></label>
                                 <input type="number" step="0.001" name="gross_weight_total" id="gross_weight_total" class="form-control" value="{{ old('gross_weight_total') }}">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="volume_total">Объём (м³)</label>
+                                <label for="volume_total">Объём (м³) <small>体积 (立方米)</small></label>
                                 <input type="number" step="0.001" name="volume_total" id="volume_total" class="form-control" value="{{ old('volume_total') }}">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="net_weight_total">Вес нетто (кг)</label>
+                                <label for="net_weight_total">Вес нетто (кг) <small>净重 (公斤)</small></label>
                                 <input type="number" step="0.001" name="net_weight_total" id="net_weight_total" class="form-control" value="{{ old('net_weight_total') }}">
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="delivery_address">Адрес доставки</label>
+                        <label for="delivery_address">Адрес доставки <small>交货地址</small></label>
                         <textarea name="delivery_address" id="delivery_address" rows="2" class="form-control">{{ old('delivery_address') }}</textarea>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="photo">Фото</label>
+                                <label for="photo">Фото <small>照片</small></label>
                                 <input type="file" name="photo" id="photo" class="form-control-file" accept="image/jpeg,image/png,image/webp">
                                 <small class="form-text text-muted">JPG, PNG, WebP. Макс. 5MB</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="files">Файлы (включая Excel)</label>
+                                <label for="files">Файлы (включая Excel) <small>文件（含Excel）</small></label>
                                 <input type="file" name="files[]" id="files" class="form-control-file" multiple accept=".xlsx,.xls,.csv">
                                 <small class="form-text text-muted">XLS, XLSX, CSV. Максимум 10 файлов, до 10MB каждый</small>
                             </div>
@@ -166,14 +166,14 @@
                     <thead class="thead-dark">
                         <tr>
                             <th style="width: 50px;">#</th>
-                            <th style="width: 80px;">Фото</th>
-                            <th>Клиент</th>
-                            <th>Наименование</th>
-                            <th>Вес брутто</th>
-                            <th>Объём</th>
-                            <th>Адрес доставки</th>
-                            <th>Статус</th>
-                            <th>Ставка</th>
+                            <th style="width: 80px;">Фото<br><span style="font-size: 0.85em;">照片</span></th>
+                            <th>Клиент<br><span style="font-size: 0.85em;">客户</span></th>
+                            <th>Наименование<br><span style="font-size: 0.85em;">名称</span></th>
+                            <th>Вес брутто<br><span style="font-size: 0.85em;">毛重</span></th>
+                            <th>Объём<br><span style="font-size: 0.85em;">体积</span></th>
+                            <th>Адрес доставки<br><span style="font-size: 0.85em;">交货地址</span></th>
+                            <th>Статус<br><span style="font-size: 0.85em;">状态</span></th>
+                            <th>Ставка<br><span style="font-size: 0.85em;">费率</span></th>
                             <th style="width: 100px;"></th>
                         </tr>
                     </thead>

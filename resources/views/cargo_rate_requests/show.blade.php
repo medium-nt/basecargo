@@ -11,7 +11,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Информация о заявке</h3>
+                    <h3 class="card-title">Информация о заявке <small>申请信息</small></h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -23,11 +23,11 @@
                         <div class="col-md-{{ $request->photo_path ? '8' : '12' }}">
                             <table class="table table-bordered">
                                 <tr>
-                                    <th style="width: 30%;">Клиент:</th>
+                                    <th style="width: 30%;">Клиент:<br><span style="font-size: 0.85em;">客户：</span></th>
                                     <td>{{ $request->client?->name ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Ответственный:</th>
+                                    <th>Ответственный:<br><span style="font-size: 0.85em;">负责人：</span></th>
                                     <td>{{ $request->responsible?->name ?? '-' }}
                                         @if($request->responsible?->messenger_number)
                                             ({{ $request->responsible?->messenger }}: {{ $request->responsible?->messenger_number }})
@@ -35,37 +35,37 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Статус:</th>
+                                    <th>Статус:<br><span style="font-size: 0.85em;">状态：</span></th>
                                     <td>
                                         @include('cargo_rate_requests._status_badge', ['status' => $request->request_status])
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Наименование:</th>
+                                    <th>Наименование:<br><span style="font-size: 0.85em;">名称：</span></th>
                                     <td>{{ $request->product_name ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Материал:</th>
+                                    <th>Материал:<br><span style="font-size: 0.85em;">材质：</span></th>
                                     <td>{{ $request->material ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Вес брутто:</th>
+                                    <th>Вес брутто:<br><span style="font-size: 0.85em;">毛重：</span></th>
                                     <td>{{ $request->gross_weight_total ?? '-' }} кг</td>
                                 </tr>
                                 <tr>
-                                    <th>Объём:</th>
+                                    <th>Объём:<br><span style="font-size: 0.85em;">体积：</span></th>
                                     <td>{{ $request->volume_total ?? '-' }} м³</td>
                                 </tr>
                                 <tr>
-                                    <th>Вес нетто:</th>
+                                    <th>Вес нетто:<br><span style="font-size: 0.85em;">净重：</span></th>
                                     <td>{{ $request->net_weight_total ?? '-' }} кг</td>
                                 </tr>
                                 <tr>
-                                    <th>Адрес доставки:</th>
+                                    <th>Адрес доставки:<br><span style="font-size: 0.85em;">交货地址：</span></th>
                                     <td>{{ $request->delivery_address ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Рассчитанная ставка:</th>
+                                    <th>Рассчитанная ставка:<br><span style="font-size: 0.85em;">计算费率：</span></th>
                                     <td>
                                         @if($request->calculated_rate)
                                             <strong>{{ number_format($request->calculated_rate, 2, '.', ' ') }} ¥</strong>
@@ -76,7 +76,7 @@
                                 </tr>
                                 @if($request->manager_notes)
                                     <tr>
-                                        <th>Заметки менеджера:</th>
+                                        <th>Заметки менеджера:<br><span style="font-size: 0.85em;">经理备注：</span></th>
                                         <td>{{ $request->manager_notes }}</td>
                                     </tr>
                                 @endif
@@ -90,15 +90,15 @@
             @if($request->files->count() > 0)
                 <div class="card mt-3">
                     <div class="card-header">
-                        <h3 class="card-title">Файлы</h3>
+                        <h3 class="card-title">Файлы <small>文件</small></h3>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Название</th>
-                                    <th>Размер</th>
-                                    <th>Загружен</th>
+                                    <th>Название<br><span style="font-size: 0.85em;">名称</span></th>
+                                    <th>Размер<br><span style="font-size: 0.85em;">大小</span></th>
+                                    <th>Загружен<br><span style="font-size: 0.85em;">上传者</span></th>
                                     @if(auth()->user()->isAdmin() || auth()->user()->isManager() || ((auth()->user()->isClient() || auth()->user()->isAgent()) && auth()->id() === $request->client_id && $request->isPending()))
                                         <th style="width: 50px;"></th>
                                     @endif
@@ -138,7 +138,7 @@
             {{-- Действия --}}
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Действия</h3>
+                    <h3 class="card-title">Действия <small>操作</small></h3>
                 </div>
                 <div class="card-body">
                     {{-- Для менеджера --}}

@@ -26,47 +26,47 @@
                 {{-- Основные поля --}}
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Информация о заявке</h3>
+                        <h3 class="card-title">Информация о заявке <small>申请信息</small></h3>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Клиент</label>
+                            <label>Клиент <small>客户</small></label>
                             <input type="text" class="form-control" value="{{ $request->client?->name ?? '-' }}" disabled>
                         </div>
 
                         <div class="form-group">
-                            <label for="product_name">Наименование товара</label>
+                            <label for="product_name">Наименование товара <small>商品名称</small></label>
                             <input type="text" name="product_name" id="product_name" class="form-control" value="{{ old('product_name', $request->product_name) }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="material">Материал</label>
+                            <label for="material">Материал <small>材质</small></label>
                             <input type="text" name="material" id="material" class="form-control" value="{{ old('material', $request->material) }}">
                         </div>
 
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="gross_weight_total">Вес брутто (кг)</label>
+                                    <label for="gross_weight_total">Вес брутто (кг) <small>毛重 (公斤)</small></label>
                                     <input type="number" step="0.001" name="gross_weight_total" id="gross_weight_total" class="form-control" value="{{ old('gross_weight_total', $request->gross_weight_total) }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="volume_total">Объём (м³)</label>
+                                    <label for="volume_total">Объём (м³) <small>体积 (立方米)</small></label>
                                     <input type="number" step="0.001" name="volume_total" id="volume_total" class="form-control" value="{{ old('volume_total', $request->volume_total) }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="net_weight_total">Вес нетто (кг)</label>
+                                    <label for="net_weight_total">Вес нетто (кг) <small>净重 (公斤)</small></label>
                                     <input type="number" step="0.001" name="net_weight_total" id="net_weight_total" class="form-control" value="{{ old('net_weight_total', $request->net_weight_total) }}">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="delivery_address">Адрес доставки</label>
+                            <label for="delivery_address">Адрес доставки <small>交货地址</small></label>
                             <textarea name="delivery_address" id="delivery_address" rows="2" class="form-control">{{ old('delivery_address', $request->delivery_address) }}</textarea>
                         </div>
                     </div>
@@ -76,20 +76,20 @@
                 @if(auth()->user()->isAdmin() || auth()->user()->isManager())
                     <div class="card card-success mt-3">
                         <div class="card-header">
-                            <h3 class="card-title">Расчёт ставки</h3>
+                            <h3 class="card-title">Расчёт ставки <small>费率计算</small></h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="calculated_rate">Рассчитанная ставка (¥)</label>
+                                        <label for="calculated_rate">Рассчитанная ставка (¥) <small>计算费率 (¥)</small></label>
                                         <input type="number" step="0.01" min="0.01" name="calculated_rate" id="calculated_rate" class="form-control" value="{{ old('calculated_rate', $request->calculated_rate) }}">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="manager_notes">Заметки менеджера</label>
+                                <label for="manager_notes">Заметки менеджера <small>经理备注</small></label>
                                 <textarea name="manager_notes" id="manager_notes" rows="3" class="form-control">{{ old('manager_notes', $request->manager_notes) }}</textarea>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                 {{-- Фото и файлы --}}
                 <div class="card mt-3">
                     <div class="card-header">
-                        <h3 class="card-title">Фото и файлы</h3>
+                        <h3 class="card-title">Фото и файлы <small>照片和文件</small></h3>
                     </div>
                     <div class="card-body">
                         @if($request->photo_path)
@@ -108,11 +108,11 @@
                                     <img src="{{ $request->photo_url }}" alt="Фото" style="max-width: 150px; border-radius: 4px;">
                                 </div>
                                 <div class="col-md-9">
-                                    <p class="form-text text-muted">Текущее фото</p>
+                                    <p class="form-text text-muted">Текущее фото <small>当前照片</small></p>
                                 </div>
                             </div>
                         @else
-                            <p class="text-muted">Фото не загружено</p>
+                            <p class="text-muted">Фото не загружено <small>照片未上传</small></p>
                         @endif
 
                         {{-- Для клиента - можно редактировать фото и файлы --}}
@@ -134,8 +134,8 @@
                             <table class="table table-sm table-bordered mt-3">
                                 <thead>
                                     <tr>
-                                        <th>Файл</th>
-                                        <th>Размер</th>
+                                        <th>Файл<br><span style="font-size: 0.85em;">文件</span></th>
+                                        <th>Размер<br><span style="font-size: 0.85em;">大小</span></th>
                                         @if((auth()->user()->isClient() || auth()->user()->isAgent()) && auth()->id() === $request->client_id && $request->isPending())
                                             <th style="width: 50px;"></th>
                                         @endif
@@ -165,7 +165,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Действия</h3>
+                        <h3 class="card-title">Действия <small>操作</small></h3>
                     </div>
                     <div class="card-body">
                         <button type="submit" class="btn btn-primary btn-block mb-2">
