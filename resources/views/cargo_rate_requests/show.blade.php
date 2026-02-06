@@ -76,7 +76,7 @@
                                 </tr>
                                 @if($request->manager_notes)
                                     <tr>
-                                        <th>Заметки менеджера:<br><span style="font-size: 0.85em;">经理备注：</span></th>
+                                        <th>Комментарий:<br><span style="font-size: 0.85em;">评论：</span></th>
                                         <td>{{ $request->manager_notes }}</td>
                                     </tr>
                                 @endif

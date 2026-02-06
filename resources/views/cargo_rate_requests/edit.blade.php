@@ -89,7 +89,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="manager_notes">Заметки менеджера <small>经理备注</small></label>
+                                <label for="manager_notes">Комментарий <small>评论</small></label>
                                 <textarea name="manager_notes" id="manager_notes" rows="3" class="form-control">{{ old('manager_notes', $request->manager_notes) }}</textarea>
                             </div>
                         </div>
