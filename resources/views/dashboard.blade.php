@@ -7,6 +7,42 @@
 @endsection
 
 @section('content')
+    {{-- Статистика по грузам --}}
+    <div class="row">
+        {{-- Всего --}}
+        <div class="col-md-4">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fas fa-boxes"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Всего грузов</span>
+                    <span class="info-box-number">{{ $stats['total_count'] }} / {{ number_format($stats['total_weight'], 2, ',', ' ') }} кг</span>
+                </div>
+            </div>
+        </div>
+
+        {{-- В пути --}}
+        <div class="col-md-4">
+            <div class="info-box">
+                <span class="info-box-icon bg-warning"><i class="fas fa-truck"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">В пути</span>
+                    <span class="info-box-number">{{ $stats['in_transit_count'] }} / {{ number_format($stats['in_transit_weight'], 2, ',', ' ') }} кг</span>
+                </div>
+            </div>
+        </div>
+
+        {{-- Доставлено --}}
+        <div class="col-md-4">
+            <div class="info-box">
+                <span class="info-box-icon bg-success"><i class="fas fa-check-circle"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Доставлено</span>
+                    <span class="info-box-number">{{ $stats['delivered_count'] }} / {{ number_format($stats['delivered_weight'], 2, ',', ' ') }} кг</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body">
             @if(auth()->user()->isAdmin())
