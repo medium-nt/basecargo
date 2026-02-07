@@ -30,7 +30,7 @@
                                     <th>Ответственный:<br><span style="font-size: 0.85em;">负责人：</span></th>
                                     <td>{{ $request->responsible?->name ?? '-' }}
                                         @if($request->responsible?->messenger_number)
-                                            ({{ $request->responsible?->messenger }}: {{ $request->responsible?->messenger_number }})
+                                            ({{ $request->responsible?->messenger }}: "{{ $request->responsible?->messenger_number }}")
                                         @endif
                                     </td>
                                 </tr>
