@@ -45,7 +45,10 @@ class CargoShipmentController extends Controller
                     $query->where('cargo_status', 'received');
                 })
                 ->when(! request('archive') || request('archive') == '0', function ($query) {
-                    $query->where('cargo_status', '!=', 'received');
+                    $query->where(function ($q) {
+                        $q->where('cargo_status', '!=', 'received')
+                            ->orWhereNull('cargo_status');
+                    });
                 })
                 ->when(request('client_id'), function ($query) {
                     $query->where('client_id', request('client_id'));
