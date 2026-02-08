@@ -19,15 +19,18 @@ class DashboardController extends Controller
                 $q->where('responsible_user_id', $user->id);
             })
             ->when($user->isAgent(), function ($q) use ($user) {
-                $q->where('responsible_user_id', $user->id)
-                    ->orWhere('client_id', $user->id);
+                $q->where(function ($sub) use ($user) {
+                    $sub->where('responsible_user_id', $user->id)
+                        ->orWhere('client_id', $user->id);
+                });
             })
             ->when($user->isClient(), function ($q) use ($user) {
                 $q->where('client_id', $user->id);
             });
 
-        // Статусы для "В пути" (все кроме wait_payment и received)
+        // Статусы для "В пути" (все кроме received)
         $inTransitStatuses = [
+            'wait_payment',
             'shipping_supplier',
             'china_transit',
             'china_warehouse',

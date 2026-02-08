@@ -33,8 +33,10 @@ class CargoShipmentController extends Controller
                 ->get(),
             'shipments' => CargoShipment::query()
                 ->when(auth()->user()->isAgent(), function ($query) use ($user) {
-                    $query->where('responsible_user_id', $user->id)
-                        ->orWhere('client_id', $user->id);
+                    $query->where(function ($q) use ($user) {
+                        $q->where('responsible_user_id', $user->id)
+                            ->orWhere('client_id', $user->id);
+                    });
                 })
                 ->when(auth()->user()->isClient(), function ($query) use ($user) {
                     $query->where('client_id', $user->id);
