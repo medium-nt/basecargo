@@ -76,9 +76,13 @@
                 @if(request('archive') != '1')
                     {{-- Кнопка добавления груза --}}
                     @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
-                        <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3">
+                        <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3 mr-1">
                             <i class="fas fa-plus"></i>
                             Добавить груз
+                        </a>
+                        <a href="{{ route('cargo_shipments.download_template') }}" class="btn btn-success mb-3">
+                            <i class="fas fa-file-excel mr-1"></i>
+                            Скачать шаблон
                         </a>
                     @endif
                 @endif
@@ -327,7 +331,7 @@
                     const formData = new FormData();
                     selectedCargoIds.forEach(id => formData.append('cargo_ids[]', id));
                     formData.append('trip_id', tripId);
-                    formData.append('_token', '{{ csrf_token() }}');
+                    {{--formData.append('_token', '{{ csrf_token() }}');--}}
 
                     attachToTripBtn.disabled = true;
                     attachToTripBtn.textContent = 'Добавление...';

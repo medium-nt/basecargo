@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CargoShipmentTemplateExport;
 use App\Http\Requests\AttachToTripRequest;
 use App\Http\Requests\CargoShipmentRequest;
 use App\Models\CargoShipment;
@@ -13,6 +14,7 @@ use Endroid\QrCode\Label\Font\NotoSans;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CargoShipmentController extends Controller
 {
@@ -122,6 +124,11 @@ class CargoShipmentController extends Controller
             'title' => 'Детали груза',
             'shipment' => $cargoShipment,
         ]);
+    }
+
+    public function downloadTemplate(CargoShipmentTemplateExport $export): BinaryFileResponse
+    {
+        return $export->download();
     }
 
     public function qr($uuid)

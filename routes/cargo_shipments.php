@@ -16,6 +16,10 @@ Route::prefix('/cargo_shipments')->group(function () {
         ->can('create', CargoShipment::class)
         ->name('cargo_shipments.store');
 
+    Route::get('/download-template', [CargoShipmentController::class, 'downloadTemplate'])
+        ->can('create', CargoShipment::class)
+        ->name('cargo_shipments.download_template');
+
     Route::get('/{cargoShipment}', [CargoShipmentController::class, 'show'])
         ->can('view', 'cargoShipment')
         ->name('cargo_shipments.show');
