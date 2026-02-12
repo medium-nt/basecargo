@@ -200,6 +200,47 @@ class CargoShipment extends Model
         });
     }
 
+    public function scopeForUser($query, User $user)
+    {
+        return $query->when($user->isAgent(), function ($q) use ($user) {
+            $q->where(function ($query) use ($user) {
+                $query->where('responsible_user_id', $user->id)
+                    ->orWhere('client_id', $user->id);
+            });
+        })
+            ->when($user->isClient(), function ($q) use ($user) {
+                $q->where('client_id', $user->id);
+            });
+    }
+
+    public function scopeApplyFilters($query)
+    {
+        return $query->when(request('archive') == '1', function ($query) {
+            $query->where('cargo_status', 'received');
+        })
+            ->when(! request('archive') || request('archive') == '0', function ($query) {
+                $query->where(function ($q) {
+                    $q->where('cargo_status', '!=', 'received')
+                        ->orWhereNull('cargo_status');
+                });
+            })
+            ->when(request('client_id'), function ($query) {
+                $query->where('client_id', request('client_id'));
+            })
+            ->when(request('responsible_user_id'), function ($query) {
+                $query->where('responsible_user_id', request('responsible_user_id'));
+            })
+            ->when(request('cargo_status'), function ($query) {
+                $query->where('cargo_status', request('cargo_status'));
+            })
+            ->when(request('trip_status') == 'with_trip', function ($query) {
+                $query->whereHas('trips');
+            })
+            ->when(request('trip_status') == 'without_trip', function ($query) {
+                $query->whereDoesntHave('trips');
+            });
+    }
+
     public function agent(): BelongsTo
     {
         return $this->belongsTo(User::class, 'responsible_user_id');

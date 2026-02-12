@@ -20,6 +20,10 @@ Route::prefix('/cargo_shipments')->group(function () {
         ->can('create', CargoShipment::class)
         ->name('cargo_shipments.download_template');
 
+    Route::get('/export-all', [CargoShipmentController::class, 'exportAll'])
+        ->can('exportAll', CargoShipment::class)
+        ->name('cargo_shipments.export_all');
+
     Route::get('/{cargoShipment}', [CargoShipmentController::class, 'show'])
         ->can('view', 'cargoShipment')
         ->name('cargo_shipments.show');
@@ -51,4 +55,8 @@ Route::prefix('/cargo_shipments')->group(function () {
     Route::post('/attach-to-trip', [CargoShipmentController::class, 'attachToTrip'])
         ->can('attachToTrip', CargoShipment::class)
         ->name('cargo_shipments.attach_to_trip');
+
+    Route::post('/export-selected', [CargoShipmentController::class, 'exportSelected'])
+        ->can('exportSelected', CargoShipment::class)
+        ->name('cargo_shipments.export_selected');
 });

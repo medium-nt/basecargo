@@ -80,12 +80,28 @@
                             <i class="fas fa-plus"></i>
                             Добавить груз
                         </a>
-                        <a href="{{ route('cargo_shipments.download_template') }}" class="btn btn-success mb-3">
+                    @endif
+                    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
+                        <a href="{{ route('cargo_shipments.download_template') }}" class="btn btn-success mb-3 mr-1">
                             <i class="fas fa-file-excel mr-1"></i>
                             Скачать шаблон
                         </a>
                     @endif
                 @endif
+
+                {{-- Кнопка экспорта - для всех, включая клиентов --}}
+                <a href="{{ route('cargo_shipments.export_all', request()->query()) }}" class="btn btn-info mb-3">
+                    <i class="fas fa-download mr-1"></i>
+                    Скачать все грузы
+                </a>
+            @endif
+
+            {{-- Кнопка экспорта для клиентов --}}
+            @if(auth()->user()->isClient())
+                <a href="{{ route('cargo_shipments.export_all', request()->query()) }}" class="btn btn-info mb-3">
+                    <i class="fas fa-download mr-1"></i>
+                    Скачать все грузы
+                </a>
             @endif
 
             <div class="row">
@@ -111,7 +127,7 @@
                 <table class="table table-hover table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            @if((auth()->user()->isAdmin() || auth()->user()->isManager()) && request('archive') != '1')
+                            @if((auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent() || auth()->user()->isClient()) && request('archive') != '1')
                             <th style="width: 40px; text-align: center; vertical-align: middle;">
                                 <input type="checkbox" id="select-all-cargos" class="form-check-input" style="margin-left: 1px;">
                             </th>
@@ -134,7 +150,7 @@
                     <tbody>
                         @forelse ($shipments as $shipment)
                             <tr>
-                                @if((auth()->user()->isAdmin() || auth()->user()->isManager()) && request('archive') != '1')
+                                @if((auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent() || auth()->user()->isClient()) && request('archive') != '1')
                                 <td style="text-align: center; vertical-align: middle; cursor: pointer;"
                                     onclick="this.querySelector('.cargo-checkbox').click()">
                                     <input type="checkbox" class="cargo-checkbox form-check-input"
@@ -221,37 +237,97 @@
         </div>
     </div>
 
-    {{-- Bulk actions panel --}}
+    {{-- Bulk actions panel для admin/manager --}}
     @if((auth()->user()->isAdmin() || auth()->user()->isManager()) && request('archive') != '1')
-    <div id="bulk-actions-panel" class="card card-primary card-outline fixed-bottom"
-         style="display: none; max-width: 600px; left: 50%; transform: translateX(-50%); bottom: 20px; z-index: 1000;">
+    <div id="bulk-actions-panel" class="card fixed-bottom"
+         style="display: none; max-width: 700px; left: 50%; transform: translateX(-50%); bottom: 20px; z-index: 1000;">
         <div class="card-body">
-            <div class="form-row align-items-center">
-                <div class="col-auto">
+            {{-- Счётчик --}}
+            <div class="row mb-2">
+                <div class="col-12">
                     <span class="selected-count font-weight-bold">Выбрано: 0 грузов</span>
                 </div>
-                <div class="col">
-                    <select name="trip_id" id="bulk-trip-select" class="form-control">
-                        <option value="">Выберите рейс</option>
-                        <optgroup label="По России">
-                            @foreach($trips->where('type', 'domestic') as $trip)
-                                <option value="{{ $trip->id }}">
-                                    {{ $trip->truck_number ?: 'Рейс #' . $trip->id }} ({{ $trip->status_name }})
-                                </option>
-                            @endforeach
-                        </optgroup>
-                        <optgroup label="Китай-Россия">
-                            @foreach($trips->where('type', 'international') as $trip)
-                                <option value="{{ $trip->id }}">
-                                    {{ $trip->truck_number ?: 'Рейс #' . $trip->id }} ({{ $trip->status_name }})
-                                </option>
-                            @endforeach
-                        </optgroup>
-                    </select>
+            </div>
+
+            {{-- Две группы действий --}}
+            <div class="row">
+                {{-- Группа: Прикрепление к рейсу --}}
+                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                    <div class="card card-outline card-primary mb-md-0">
+                        <div class="card-header py-1 px-2">
+                            <h6 class="card-title mb-0 small">
+                                <i class="fas fa-truck mr-1"></i>
+                                Прикрепить к рейсу
+                            </h6>
+                        </div>
+                        <div class="card-body py-2">
+                            <div class="form-row">
+                                <div class="col">
+                                    <select name="trip_id" id="bulk-trip-select" class="form-control form-control-sm">
+                                        <option value="">Выберите рейс</option>
+                                        <optgroup label="По России">
+                                            @foreach($trips->where('type', 'domestic') as $trip)
+                                                <option value="{{ $trip->id }}">
+                                                    {{ $trip->truck_number ?: 'Рейс #' . $trip->id }} ({{ $trip->status_name }})
+                                                </option>
+                                            @endforeach
+                                        </optgroup>
+                                        <optgroup label="Китай-Россия">
+                                            @foreach($trips->where('type', 'international') as $trip)
+                                                <option value="{{ $trip->id }}">
+                                                    {{ $trip->truck_number ?: 'Рейс #' . $trip->id }} ({{ $trip->status_name }})
+                                                </option>
+                                            @endforeach
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="col-auto col-md-auto">
+                                    <button type="button" id="attach-to-trip-btn" class="btn btn-primary btn-sm btn-block-md" disabled>
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <button type="button" id="attach-to-trip-btn" class="btn btn-primary" disabled>
-                        Добавить
+
+                {{-- Группа: Экспорт --}}
+                <div class="col-12 col-md-6">
+                    <div class="card card-outline card-success">
+                        <div class="card-header py-1 px-2">
+                            <h6 class="card-title mb-0 small">
+                                <i class="fas fa-file-excel mr-1"></i>
+                                Экспорт данных
+                            </h6>
+                        </div>
+                        <div class="card-body py-2">
+                            <button type="button" id="export-selected-btn" class="btn btn-success btn-sm w-100">
+                                <i class="fas fa-download mr-1"></i>
+                                Экспорт
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    {{-- Bulk actions panel для agent/client (только экспорт) --}}
+    @if((auth()->user()->isAgent() || auth()->user()->isClient()) && request('archive') != '1')
+    <div id="bulk-actions-panel" class="card card-outline card-success fixed-bottom"
+         style="display: none; max-width: 400px; left: 50%; transform: translateX(-50%); bottom: 20px; z-index: 1000;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <span class="selected-count font-weight-bold">Выбрано: 0 грузов</span>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <button type="button" id="export-selected-btn" class="btn btn-success btn-sm w-100">
+                        <i class="fas fa-download mr-1"></i>
+                        Экспорт выбранных
                     </button>
                 </div>
             </div>
@@ -331,7 +407,7 @@
                     const formData = new FormData();
                     selectedCargoIds.forEach(id => formData.append('cargo_ids[]', id));
                     formData.append('trip_id', tripId);
-                    {{--formData.append('_token', '{{ csrf_token() }}');--}}
+                    formData.append('_token', '{{ csrf_token() }}');
 
                     attachToTripBtn.disabled = true;
                     attachToTripBtn.textContent = 'Добавление...';
@@ -369,6 +445,46 @@
                         attachToTripBtn.textContent = 'Добавить';
                         loadingOverlay.style.display = 'none';
                     });
+                });
+            }
+
+            // Кнопка экспорта
+            const exportSelectedBtn = document.getElementById('export-selected-btn');
+            if (exportSelectedBtn) {
+                exportSelectedBtn.addEventListener('click', function() {
+                    const selectedCargoIds = Array.from(cargoCheckboxes)
+                        .filter(cb => cb.checked)
+                        .map(cb => cb.dataset.cargoId);
+
+                    if (selectedCargoIds.length === 0) {
+                        toastr.warning('Выберите хотя бы один груз');
+                        return;
+                    }
+
+                    // Создаем форму для POST запроса
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '{{ route('cargo_shipments.export_selected') }}';
+
+                    // CSRF token
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = '{{ csrf_token() }}';
+                    form.appendChild(csrfInput);
+
+                    // cargo_ids array
+                    selectedCargoIds.forEach(id => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'cargo_ids[]';
+                        input.value = id;
+                        form.appendChild(input);
+                    });
+
+                    document.body.appendChild(form);
+                    form.submit();
+                    document.body.removeChild(form);
                 });
             }
         });

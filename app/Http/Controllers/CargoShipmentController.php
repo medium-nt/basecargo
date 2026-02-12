@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CargoShipmentDataExport;
 use App\Exports\CargoShipmentTemplateExport;
 use App\Http\Requests\AttachToTripRequest;
 use App\Http\Requests\CargoShipmentRequest;
+use App\Http\Requests\ExportSelectedRequest;
 use App\Models\CargoShipment;
 use App\Models\CargoShipmentFile;
 use App\Models\Trip;
@@ -34,39 +36,8 @@ class CargoShipmentController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get(),
             'shipments' => CargoShipment::query()
-                ->when(auth()->user()->isAgent(), function ($query) use ($user) {
-                    $query->where(function ($q) use ($user) {
-                        $q->where('responsible_user_id', $user->id)
-                            ->orWhere('client_id', $user->id);
-                    });
-                })
-                ->when(auth()->user()->isClient(), function ($query) use ($user) {
-                    $query->where('client_id', $user->id);
-                })
-                ->when(request('archive') == '1', function ($query) {
-                    $query->where('cargo_status', 'received');
-                })
-                ->when(! request('archive') || request('archive') == '0', function ($query) {
-                    $query->where(function ($q) {
-                        $q->where('cargo_status', '!=', 'received')
-                            ->orWhereNull('cargo_status');
-                    });
-                })
-                ->when(request('client_id'), function ($query) {
-                    $query->where('client_id', request('client_id'));
-                })
-                ->when(request('responsible_user_id'), function ($query) {
-                    $query->where('responsible_user_id', request('responsible_user_id'));
-                })
-                ->when(request('cargo_status'), function ($query) {
-                    $query->where('cargo_status', request('cargo_status'));
-                })
-                ->when(request('trip_status') == 'with_trip', function ($query) {
-                    $query->whereHas('trips');
-                })
-                ->when(request('trip_status') == 'without_trip', function ($query) {
-                    $query->whereDoesntHave('trips');
-                })
+                ->forUser($user)
+                ->applyFilters()
                 ->orderBy('created_at', 'asc')
                 ->orderBy('id', 'asc')
                 ->with('trips')
@@ -270,6 +241,54 @@ class CargoShipmentController extends Controller
         }
 
         return back()->with('success', $message);
+    }
+
+    public function exportSelected(ExportSelectedRequest $request): BinaryFileResponse
+    {
+        $this->authorize('exportSelected', CargoShipment::class);
+
+        $user = auth()->user();
+        $cargoIds = $request->input('cargo_ids');
+
+        // Для клиентов и агентов - фильтруем только их грузы
+        if ($user->isClient() || $user->isAgent()) {
+            $allowedIds = CargoShipment::query()
+                ->forUser($user)
+                ->whereIn('id', $cargoIds)
+                ->pluck('id')
+                ->toArray();
+
+            $cargoIds = $allowedIds;
+        }
+
+        if (empty($cargoIds)) {
+            return back()->with('error', 'Нет грузов для экспорта');
+        }
+
+        $export = new CargoShipmentDataExport($cargoIds);
+
+        return $export->download();
+    }
+
+    public function exportAll(): BinaryFileResponse
+    {
+        $this->authorize('exportAll', CargoShipment::class);
+
+        $user = auth()->user();
+
+        $query = CargoShipment::query()
+            ->forUser($user)
+            ->applyFilters();
+
+        $cargoIds = $query->pluck('id')->toArray();
+
+        if (empty($cargoIds)) {
+            return back()->with('error', 'Нет грузов для экспорта');
+        }
+
+        $export = new CargoShipmentDataExport($cargoIds);
+
+        return $export->download();
     }
 
     public function showQr(CargoShipment $cargoShipment)

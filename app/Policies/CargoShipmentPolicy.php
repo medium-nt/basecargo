@@ -110,4 +110,20 @@ class CargoShipmentPolicy
     {
         return $user->isAdmin() || $user->isManager();
     }
+
+    /**
+     * Экспорт выбранных грузов
+     */
+    public function exportSelected(User $user): bool
+    {
+        return $user->isAdmin() || $user->isManager() || $user->isAgent() || $user->isClient();
+    }
+
+    /**
+     * Экспорт всех грузов
+     */
+    public function exportAll(User $user): bool
+    {
+        return $user->isAdmin() || $user->isManager() || $user->isAgent() || $user->isClient();
+    }
 }
