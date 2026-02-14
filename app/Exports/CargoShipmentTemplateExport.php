@@ -92,14 +92,14 @@ class CargoShipmentTemplateExport
         $sheet->getParent()->getDefaultStyle()->getProtection()->setLocked(false);
 
         // Формулы для вычисляемых полей (строки 2-100)
-        // Проверка на пустые значения: если делитель или делимое пустые - возвращаем пустоту
+        // Проверка на пустые значения + округление до 3 знаков
         foreach (range(2, 100) as $row) {
             $formulas = [
-                'H' => "=IF(OR(E{$row}=\"\", I{$row}=\"\"), \"\", I{$row}/E{$row})",  // gross_weight_per_place
-                'M' => "=IF(OR(E{$row}=\"\", N{$row}=\"\"), \"\", N{$row}/E{$row})",  // volume_per_item
-                'Q' => "=IF(OR(E{$row}=\"\", R{$row}=\"\"), \"\", R{$row}/E{$row})",  // net_weight_per_box
-                'O' => "=IF(OR(H{$row}=\"\", Q{$row}=\"\"), \"\", H{$row}-Q{$row})",  // tare_weight_per_box
-                'P' => "=IF(OR(I{$row}=\"\", R{$row}=\"\"), \"\", I{$row}-R{$row})",  // tare_weight_total
+                'H' => "=IF(OR(E{$row}=\"\", I{$row}=\"\"), \"\", ROUND(I{$row}/E{$row}, 3))",  // gross_weight_per_place
+                'M' => "=IF(OR(E{$row}=\"\", N{$row}=\"\"), \"\", ROUND(N{$row}/E{$row}, 3))",  // volume_per_item
+                'Q' => "=IF(OR(E{$row}=\"\", R{$row}=\"\"), \"\", ROUND(R{$row}/E{$row}, 3))",  // net_weight_per_box
+                'O' => "=IF(OR(H{$row}=\"\", Q{$row}=\"\"), \"\", ROUND(H{$row}-Q{$row}, 3))",  // tare_weight_per_box
+                'P' => "=IF(OR(I{$row}=\"\", R{$row}=\"\"), \"\", ROUND(I{$row}-R{$row}, 3))",  // tare_weight_total
             ];
 
             foreach ($formulas as $col => $formula) {
