@@ -364,6 +364,7 @@
         </div>
     </div>
 
+    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Калькулятор</h3>
@@ -519,6 +520,7 @@
         </tbody>
     </table>
     </div>
+    @endif
 
     <div class="card">
         <div class="card-header">
@@ -578,6 +580,7 @@
         </div>
     </div>
 
+    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
     <div class="card">
         <div class="card-body">
             <a href="{{ route('cargo_shipments.edit', $shipment) }}" class="btn btn-primary">Редактировать</a>
@@ -588,4 +591,5 @@
             </form>
         </div>
     </div>
+    @endif
 @endsection
