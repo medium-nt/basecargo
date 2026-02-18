@@ -126,4 +126,12 @@ class CargoShipmentPolicy
     {
         return $user->isAdmin() || $user->isManager() || $user->isAgent() || $user->isClient();
     }
+
+    /**
+     * Импорт грузов из Excel
+     */
+    public function import(User $user): bool
+    {
+        return $user->isAdmin() || $user->isAgent() || $user->isManager();
+    }
 }

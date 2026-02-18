@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CargoShipmentController;
+use App\Http\Controllers\CargoShipmentImportController;
 use App\Models\CargoShipment;
 
 Route::prefix('/cargo_shipments')->group(function () {
@@ -23,6 +24,41 @@ Route::prefix('/cargo_shipments')->group(function () {
     Route::get('/export-all', [CargoShipmentController::class, 'exportAll'])
         ->can('exportAll', CargoShipment::class)
         ->name('cargo_shipments.export_all');
+
+    // Импорт из Excel - ДОЛЖНО БЫТЬ ПЕРЕД /{cargoShipment}!
+    Route::prefix('/import')->group(function () {
+        Route::get('', [CargoShipmentImportController::class, 'create'])
+            ->can('import', CargoShipment::class)
+            ->middleware('throttle:10,1')
+            ->name('cargo_shipments.import.create');
+
+        Route::post('/upload', [CargoShipmentImportController::class, 'upload'])
+            ->can('import', CargoShipment::class)
+            ->middleware('throttle:5,1')
+            ->name('cargo_shipments.import.upload');
+
+        Route::get('/mapping', [CargoShipmentImportController::class, 'mapping'])
+            ->can('import', CargoShipment::class)
+            ->name('cargo_shipments.import.mapping');
+
+        Route::post('/validate', [CargoShipmentImportController::class, 'validateMapping'])
+            ->can('import', CargoShipment::class)
+            ->middleware('throttle:10,1')
+            ->name('cargo_shipments.import.validate');
+
+        Route::get('/preview', [CargoShipmentImportController::class, 'preview'])
+            ->can('import', CargoShipment::class)
+            ->name('cargo_shipments.import.preview');
+
+        Route::post('/store', [CargoShipmentImportController::class, 'store'])
+            ->can('import', CargoShipment::class)
+            ->middleware('throttle:5,1')
+            ->name('cargo_shipments.import.store');
+
+        Route::get('/cancel', [CargoShipmentImportController::class, 'cancel'])
+            ->can('import', CargoShipment::class)
+            ->name('cargo_shipments.import.cancel');
+    });
 
     Route::get('/{cargoShipment}', [CargoShipmentController::class, 'show'])
         ->can('view', 'cargoShipment')

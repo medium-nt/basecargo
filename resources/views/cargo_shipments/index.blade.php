@@ -86,6 +86,10 @@
                             <i class="fas fa-file-excel mr-1"></i>
                             Скачать шаблон
                         </a>
+                        <a href="{{ route('cargo_shipments.import.create') }}" class="btn btn-primary mb-3 mr-1">
+                            <i class="fas fa-file-import mr-1"></i>
+                            Импорт из Excel
+                        </a>
                     @endif
                 @endif
 
