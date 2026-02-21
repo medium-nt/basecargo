@@ -97,8 +97,10 @@ class CargoShipmentController extends Controller
         ]);
     }
 
-    public function downloadTemplate(CargoShipmentTemplateExport $export): BinaryFileResponse
+    public function downloadTemplate(): BinaryFileResponse
     {
+        $export = new CargoShipmentTemplateExport(auth()->user());
+
         return $export->download();
     }
 
@@ -265,7 +267,7 @@ class CargoShipmentController extends Controller
             return back()->with('error', 'Нет грузов для экспорта');
         }
 
-        $export = new CargoShipmentDataExport($cargoIds);
+        $export = new CargoShipmentDataExport($cargoIds, $user);
 
         return $export->download();
     }
@@ -286,7 +288,7 @@ class CargoShipmentController extends Controller
             return back()->with('error', 'Нет грузов для экспорта');
         }
 
-        $export = new CargoShipmentDataExport($cargoIds);
+        $export = new CargoShipmentDataExport($cargoIds, $user);
 
         return $export->download();
     }

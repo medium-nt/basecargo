@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\CargoShipment;
+use App\Models\User;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
@@ -14,9 +15,12 @@ class CargoShipmentDataExport
 {
     private array $cargoIds;
 
-    public function __construct(array $cargoIds)
+    private User $user;
+
+    public function __construct(array $cargoIds, User $user)
     {
         $this->cargoIds = $cargoIds;
+        $this->user = $user;
     }
 
     public function download(): BinaryFileResponse
@@ -60,6 +64,11 @@ class CargoShipmentDataExport
             'AG' => ['field' => 'total', 'label' => 'Итого ₽'],
             'AH' => ['field' => 'total_per_kg', 'label' => 'Итого за КГ ¥'],
         ];
+
+        // Добавляем public_id для админов и менеджеров
+        if ($this->user->isAdmin() || $this->user->isManager()) {
+            $headers['AI'] = ['field' => 'public_id', 'label' => 'Public ID'];
+        }
 
         // Заголовки
         $row = 1;

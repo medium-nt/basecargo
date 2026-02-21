@@ -21,12 +21,13 @@
             @forelse($mappedData as $index => $row)
                 @php
                     $hasErrors = isset($validationResult->errors[$index]);
+                    $hasWarning = !$hasErrors && $validationResult->hasWarningForRow($index);
                     $rowNumber = $row['_row_index'] ?? ($index + 2);
 
                     // Фильтрация по режиму
                     $shouldShow = match($filterMode) {
                         'errors' => $hasErrors,
-                        'valid' => !$hasErrors,
+                        'valid' => !$hasErrors && !$hasWarning,
                         default => true,
                     };
                 @endphp
@@ -35,7 +36,7 @@
                     @continue
                 @endif
 
-                <tr class="{{ $hasErrors ? 'table-danger' : '' }}">
+                <tr class="{{ $hasErrors ? 'table-danger' : ($hasWarning ? 'table-warning' : '') }}">
                     <td>{{ $rowNumber }}</td>
                     @foreach($mainFields as $field)
                         @php
@@ -54,6 +55,8 @@
                     <td>
                         @if($hasErrors)
                             <span class="badge badge-danger">Ошибка</span>
+                        @elseif($hasWarning)
+                            <span class="badge badge-warning">Предупреждение</span>
                         @else
                             <span class="badge badge-success">ОК</span>
                         @endif
@@ -73,6 +76,16 @@
                                     </li>
                                 @endforeach
                             </ul>
+                        </td>
+                    </tr>
+                @endif
+
+                {{-- Показать предупреждение для строки с предупреждением (только в режиме "Все") --}}
+                @if($hasWarning && $filterMode === 'all')
+                    <tr>
+                        <td colspan="{{ count($mainFields) + 2 }}" class="bg-light">
+                            <strong class="text-warning"><i class="fas fa-exclamation-triangle mr-1"></i>Предупреждение для строки {{ $rowNumber }}:</strong>
+                            <span class="text-warning">{{ $validationResult->getWarningForRow($index) }}</span>
                         </td>
                     </tr>
                 @endif

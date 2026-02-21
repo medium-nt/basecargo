@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\User;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
@@ -11,6 +12,13 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CargoShipmentTemplateExport
 {
+    private User $user;
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
     public function download(): BinaryFileResponse
     {
         $spreadsheet = new Spreadsheet;
@@ -52,6 +60,11 @@ class CargoShipmentTemplateExport
             'AG' => ['field' => 'total', 'label' => 'Итого ₽', 'required' => false],
             'AH' => ['field' => 'total_per_kg', 'label' => 'Итого за КГ ¥', 'required' => false],
         ];
+
+        // Для админов и менеджеров добавляем public_id последней колонкой
+        if ($this->user->isAdmin() || $this->user->isManager()) {
+            $headers['AI'] = ['field' => 'public_id', 'label' => 'Public ID', 'required' => false];
+        }
 
         // Цвета для обозначения обязательности
         $requiredBg = 'FFC7CE';    // Светло-красный для обязательных

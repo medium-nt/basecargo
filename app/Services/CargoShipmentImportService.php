@@ -225,6 +225,22 @@ class CargoShipmentImportService
         $rules = $request->rules();
         $messages = $request->messages();
 
+        // Собираем все public_id для проверки существующих грузов
+        $publicIds = [];
+        foreach ($mappedData as $row) {
+            if (! empty($row['public_id'])) {
+                $publicIds[] = $row['public_id'];
+            }
+        }
+
+        // Загружаем существующие грузы
+        $existingShipments = [];
+        if (! empty($publicIds)) {
+            $existingShipments = CargoShipment::whereIn('public_id', $publicIds)
+                ->get()
+                ->keyBy('public_id');
+        }
+
         foreach ($mappedData as $index => $row) {
             // Убираем временный поле _row_index из валидации
             $dataForValidation = array_diff_key($row, ['_row_index' => true]);
@@ -235,6 +251,18 @@ class CargoShipmentImportService
                 $result->errors[$index] = $validator->errors()->toArray();
             } else {
                 $result->validRows[] = $row;
+
+                // Проверяем public_id для warnings
+                if (! empty($row['public_id']) && isset($existingShipments[$row['public_id']])) {
+                    $shipment = $existingShipments[$row['public_id']];
+                    $rowIndex = $row['_row_index'] ?? '?';
+
+                    // Если статус не позволяет обновление
+                    $status = $shipment->cargo_status ?? '(не указан)';
+                    if (empty($shipment->cargo_status) || ! in_array($shipment->cargo_status, ['wait_payment', 'shipping_supplier'])) {
+                        $result->warnings[$index] = "Груз '{$shipment->cargo_number}' (статус: {$status}) не может быть обновлён. Строка будет пропущена.";
+                    }
+                }
             }
         }
 
@@ -247,6 +275,22 @@ class CargoShipmentImportService
     public function saveShipments(array $validRows, User $user): ImportResult
     {
         $result = new ImportResult;
+
+        // Для агентов - игнорируем public_id, всегда создаем новые грузы
+        if ($user->isAgent()) {
+            foreach ($validRows as $row) {
+                try {
+                    $rowIndex = $row['_row_index'] ?? '?';
+                    unset($row['_row_index'], $row['public_id']);
+                    $this->createNewShipment($row, $user);
+                    $result->createdCount++;
+                } catch (\Exception $e) {
+                    $result->errors[] = "Строка {$rowIndex}: ".$e->getMessage();
+                }
+            }
+
+            return $result;
+        }
 
         // Собираем все public_id для поиска одним запросом (избегаем N+1)
         $publicIds = [];
@@ -273,8 +317,8 @@ class CargoShipmentImportService
                     $shipment = $existingShipments[$row['public_id']] ?? null;
 
                     if ($shipment) {
-                        // Проверяем статус для обновления
-                        if (in_array($shipment->cargo_status, ['wait_payment', 'shipping_supplier'])) {
+                        // Проверяем статус для обновления (пустой статус не позволяет обновление)
+                        if (! empty($shipment->cargo_status) && in_array($shipment->cargo_status, ['wait_payment', 'shipping_supplier'])) {
                             // Проверка прав на обновление через Policy
                             if (! \Gate::forUser($user)->allows('update', $shipment)) {
                                 $result->errors[] = "Строка {$rowIndex}: нет прав для обновления груза {$shipment->cargo_number}";
@@ -282,11 +326,14 @@ class CargoShipmentImportService
                                 continue;
                             }
 
-                            unset($row['public_id']);
+                            // При обновлении никогда не меняем responsible_user_id
+                            unset($row['public_id'], $row['responsible_user_id']);
                             $shipment->update($row);
                             $result->updatedCount++;
+                        } else {
+                            // Статус не позволяет обновление - пропускаем (предупреждение уже есть на preview)
+                            continue;
                         }
-                        // Иначе пропускаем - статус не позволяет обновление
                     } else {
                         // public_id указан, но груз не найден - создаем новый
                         $this->createNewShipment($row, $user);
@@ -327,7 +374,7 @@ class CargoShipmentImportService
     public function getColumnDefinitions(): array
     {
         return [
-            'public_id' => 'public_id (ID груза)',
+            'public_id' => 'Public ID',
             'cargo_number' => 'номер груза (货物编号)',
             'product_name' => 'наименование товара (产品名称)',
             'material' => 'материал (材料)',

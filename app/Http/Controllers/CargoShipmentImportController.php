@@ -70,6 +70,11 @@ class CargoShipmentImportController extends Controller
         // Получаем определения колонок
         $columnDefinitions = $this->service->getColumnDefinitions();
 
+        // Для агентов скрываем public_id из списка сопоставления
+        if (auth()->user()->isAgent()) {
+            unset($columnDefinitions['public_id']);
+        }
+
         // Определяем колонки, которые есть в файле
         $fileColumns = array_keys($headers);
 

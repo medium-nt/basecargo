@@ -44,22 +44,39 @@
         <div class="card-body">
             {{-- Статистика --}}
             <div class="row mb-3">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="alert alert-info mb-0">
                         <strong>Всего строк:</strong> {{ $totalRows }}
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="alert alert-success mb-0">
                         <strong>Валидных:</strong> {{ $validRowsCount }}
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="alert alert-{{ $hasErrors ? 'danger' : 'success' }} mb-0">
                         <strong>С ошибками:</strong> {{ $errorsCount }}
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="alert alert-warning mb-0">
+                        <strong>Предупреждений:</strong> {{ $validationResult->getWarningsCount() }}
+                    </div>
+                </div>
             </div>
+
+            {{-- Предупреждения --}}
+            @if($validationResult->hasWarnings())
+                <div class="alert alert-warning">
+                    <strong><i class="fas fa-exclamation-triangle mr-1"></i> Внимание:</strong>
+                    <ul class="mb-0 mt-2">
+                        @foreach($validationResult->warnings as $index => $warning)
+                            <li>Строка {{ $mappedData[$index]['_row_index'] ?? ($index + 2) }}: {{ $warning }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             {{-- Табы --}}
             <div class="tabs-container">
