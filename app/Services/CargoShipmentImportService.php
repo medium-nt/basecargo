@@ -182,8 +182,8 @@ class CargoShipmentImportService
             return null;
         }
 
-        // cargo_number всегда как строка
-        if ($field === 'cargo_number') {
+        // Строковые поля (конвертируем число в строку)
+        if ($field === 'cargo_number' || $field === 'TN_VED_code') {
             return (string) $value;
         }
 
