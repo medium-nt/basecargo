@@ -74,7 +74,7 @@ class CargoShipmentRequest extends FormRequest
             'label_number' => ['nullable', 'string', 'max:100'],
             'marking' => ['nullable', 'string', 'max:255'],
             'manufacturer' => ['nullable', 'string', 'max:255'],
-            'SS_DS' => ['nullable', 'string', 'max:50'],
+            'SS_DS' => ['nullable', 'string', 'max:255'],
             'bet' => ['nullable', 'string', 'max:50'],
 
             // Калькулятор - numeric поля
