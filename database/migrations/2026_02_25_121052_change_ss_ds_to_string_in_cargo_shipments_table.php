@@ -106,9 +106,12 @@ return new class extends Migration
             Schema::drop('cargo_shipments_temp');
 
         } else {
-            // MySQL/PostgreSQL — просто меняем тип
+            // MySQL/PostgreSQL — сначала конвертируем данные, потом меняем тип
+            DB::statement("UPDATE cargo_shipments SET SS_DS = NULL WHERE SS_DS = 0");
+            DB::statement("UPDATE cargo_shipments SET SS_DS = CAST(SS_DS AS CHAR) WHERE SS_DS IS NOT NULL");
+
             Schema::table('cargo_shipments', function (Blueprint $table) {
-                $table->string('SS_DS', 255)->change();
+                $table->string('SS_DS', 255)->nullable()->change();
             });
         }
     }
@@ -179,7 +182,7 @@ return new class extends Migration
                 $table->string('label_number')->nullable();
                 $table->string('marking')->nullable();
                 $table->string('manufacturer')->nullable();
-                $table->decimal('SS_DS')->nullable(); // ВОССТАНОВЛИНО: decimal
+                $table->decimal('SS_DS')->nullable(); // ВОССТАНОВЛЕНО: decimal
                 $table->decimal('bet')->nullable();
                 $table->decimal('duty')->nullable();
                 $table->decimal('volume_weight')->nullable();
@@ -196,7 +199,7 @@ return new class extends Migration
 
         } else {
             Schema::table('cargo_shipments', function (Blueprint $table) {
-                $table->decimal('SS_DS')->change();
+                $table->decimal('SS_DS')->nullable()->change();
             });
         }
     }
