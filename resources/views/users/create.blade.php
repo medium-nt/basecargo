@@ -48,6 +48,10 @@
                                             @if(old('role_id') == 4) selected @endif>
                                         Менеджер
                                     </option>
+                                    <option value="5"
+                                            @if(old('role_id') == 5) selected @endif>
+                                        Зав.склада
+                                    </option>
                                     @endif
                                 </select>
                             </div>

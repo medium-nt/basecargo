@@ -15,7 +15,7 @@
                     <i class="fas fa-arrow-left"></i>
                     Вернуться к списку
                 </a>
-                @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isWarehouseManager())
                     <a href="{{ route('trips.edit', ['trip' => $trip->id]) }}" class="btn btn-warning btn-sm mr-2">
                         <i class="fas fa-edit"></i>
                         Редактировать

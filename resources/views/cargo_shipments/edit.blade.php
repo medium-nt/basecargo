@@ -7,6 +7,15 @@
 @endsection
 
 @section('content')
+    @php
+        $user = auth()->user();
+        $isWarehouseManager = $user?->isWarehouseManager();
+        $isOwnCargo = $isWarehouseManager && $shipment->responsible_user_id === $user->id;
+        $canEditFinances = !$isWarehouseManager;
+        // Для warehouse_manager на чужих грузах: основные поля readonly, только даты и статус редактируемые
+        $isForeignCargoForReadonly = $isWarehouseManager && !$isOwnCargo;
+    @endphp
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -20,6 +29,7 @@
     <form action="{{ route('cargo_shipments.update', $shipment) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        @if(!$isWarehouseManager)
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card">
@@ -52,6 +62,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
         <div class="card">
             <div class="card-header">
@@ -108,13 +119,13 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="contact_phone">телефон получателя <small>电话号码</small></label>
-                            <input type="text" name="contact_phone" id="contact_phone" class="form-control @error('contact_phone') is-invalid @enderror" value="{{ old('contact_phone', $shipment->contact_phone) }}">
+                            <input type="text" name="contact_phone" id="contact_phone" class="form-control @error('contact_phone') is-invalid @enderror" value="{{ old('contact_phone', $shipment->contact_phone) }}" {{ $isForeignCargoForReadonly ? 'readonly' : '' }}>
                         </div>
                     </div>
                     <div class="col-12 col-md-8">
                         <div class="form-group">
                             <label for="delivery_address">Адрес <small>收件人地址</small></label>
-                            <textarea name="delivery_address" id="delivery_address" rows="2" class="form-control @error('delivery_address') is-invalid @enderror">{{ old('delivery_address', $shipment->delivery_address) }}</textarea>
+                            <textarea name="delivery_address" id="delivery_address" rows="2" class="form-control @error('delivery_address') is-invalid @enderror" {{ $isForeignCargoForReadonly ? 'readonly' : '' }}>{{ old('delivery_address', $shipment->delivery_address) }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -125,19 +136,21 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="china_tracking_number">трек-номер по Китаю <small>中国的轨道号码</small></label>
-                            <input type="text" name="china_tracking_number" id="china_tracking_number" class="form-control @error('china_tracking_number') is-invalid @enderror" value="{{ old('china_tracking_number', $shipment->china_tracking_number) }}">
+                            <input type="text" name="china_tracking_number" id="china_tracking_number" class="form-control @error('china_tracking_number') is-invalid @enderror" value="{{ old('china_tracking_number', $shipment->china_tracking_number) }}" {{ $isForeignCargoForReadonly ? 'readonly' : '' }}>
                         </div>
                     </div>
+                    @if($canEditFinances)
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="china_cost">стоимость по Китаю <small>中国的成本</small></label>
                             <input type="number" step="0.01" name="china_cost" id="china_cost" class="form-control @error('china_cost') is-invalid @enderror" value="{{ old('china_cost', $shipment->china_cost) }}">
                         </div>
                     </div>
+                    @endif
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="crate">Обрешетка <small>箱子</small></label>
-                            <input type="number" step="0.01" name="crate" id="crate" class="form-control @error('crate') is-invalid @enderror" value="{{ old('crate', $shipment->crate) }}">
+                            <input type="number" step="0.01" name="crate" id="crate" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('crate') is-invalid @enderror" value="{{ old('crate', $shipment->crate) }}">
                         </div>
                     </div>
                 </div>
@@ -148,25 +161,25 @@
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="cargo_number">номер груза <small>货物编号</small></label>
-                            <input type="text" name="cargo_number" id="cargo_number" class="form-control @error('cargo_number') is-invalid @enderror" value="{{ old('cargo_number', $shipment->cargo_number) }}">
+                            <input type="text" name="cargo_number" id="cargo_number" class="form-control @error('cargo_number') is-invalid @enderror" value="{{ old('cargo_number', $shipment->cargo_number) }}" {{ $isForeignCargoForReadonly ? 'readonly' : '' }}>
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="product_name">наименование товара <small>产品名称</small></label>
-                            <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" value="{{ old('product_name', $shipment->product_name) }}">
+                            <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" value="{{ old('product_name', $shipment->product_name) }}" {{ $isForeignCargoForReadonly ? 'readonly' : '' }}>
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="material">материал <small>材料</small></label>
-                            <input type="text" name="material" id="material" class="form-control @error('material') is-invalid @enderror" value="{{ old('material', $shipment->material) }}">
+                            <input type="text" name="material" id="material" class="form-control @error('material') is-invalid @enderror" value="{{ old('material', $shipment->material) }}" {{ $isForeignCargoForReadonly ? 'readonly' : '' }}>
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="packaging">упаковка <small>包装</small></label>
-                            <input type="text" name="packaging" id="packaging" class="form-control @error('packaging') is-invalid @enderror" value="{{ old('packaging', $shipment->packaging) }}">
+                            <input type="text" name="packaging" id="packaging" class="form-control @error('packaging') is-invalid @enderror" value="{{ old('packaging', $shipment->packaging) }}" {{ $isForeignCargoForReadonly ? 'readonly' : '' }}>
                         </div>
                     </div>
                 </div>
@@ -175,19 +188,19 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="places_count">количество мест <small>座位数目</small></label>
-                            <input type="number" min="1" step="1" name="places_count" id="places_count" class="form-control @error('places_count') is-invalid @enderror" value="{{ old('places_count', $shipment->places_count) }}">
+                            <input type="number" min="1" step="1" name="places_count" id="places_count" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('places_count') is-invalid @enderror" value="{{ old('places_count', $shipment->places_count) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="items_per_place">количество товары/мест <small>产品/地点数目</small></label>
-                            <input type="number" min="1" step="1" name="items_per_place" id="items_per_place" class="form-control @error('items_per_place') is-invalid @enderror" value="{{ old('items_per_place', $shipment->items_per_place) }}">
+                            <input type="number" min="1" step="1" name="items_per_place" id="items_per_place" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('items_per_place') is-invalid @enderror" value="{{ old('items_per_place', $shipment->items_per_place) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="total_items_count">общее количество штук <small>件总数</small></label>
-                            <input type="number" min="1" step="1" name="total_items_count" id="total_items_count" class="form-control @error('total_items_count') is-invalid @enderror" value="{{ old('total_items_count', $shipment->total_items_count) }}">
+                            <input type="number" min="1" step="1" name="total_items_count" id="total_items_count" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('total_items_count') is-invalid @enderror" value="{{ old('total_items_count', $shipment->total_items_count) }}">
                         </div>
                     </div>
                 </div>
@@ -196,7 +209,7 @@
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="volume_total">общий обьем кубов <small>立方体的总体积</small></label>
-                            <input type="number" step="0.01" name="volume_total" id="volume_total" class="form-control @error('volume_total') is-invalid @enderror" value="{{ old('volume_total', $shipment->volume_total) }}">
+                            <input type="number" step="0.01" name="volume_total" id="volume_total" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('volume_total') is-invalid @enderror" value="{{ old('volume_total', $shipment->volume_total) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
@@ -208,19 +221,19 @@
                     <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="length">длина <small>长度</small></label>
-                            <input type="number" step="0.01" name="length" id="length" class="form-control @error('length') is-invalid @enderror" value="{{ old('length', $shipment->length) }}">
+                            <input type="number" step="0.01" name="length" id="length" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('length') is-invalid @enderror" value="{{ old('length', $shipment->length) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="width">ширина <small>阔度</small></label>
-                            <input type="number" step="0.01" name="width" id="width" class="form-control @error('width') is-invalid @enderror" value="{{ old('width', $shipment->width) }}">
+                            <input type="number" step="0.01" name="width" id="width" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('width') is-invalid @enderror" value="{{ old('width', $shipment->width) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-1">
                         <div class="form-group">
                             <label for="height">высота <small>身高</small></label>
-                            <input type="number" step="0.01" name="height" id="height" class="form-control @error('height') is-invalid @enderror" value="{{ old('height', $shipment->height) }}">
+                            <input type="number" step="0.01" name="height" id="height" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('height') is-invalid @enderror" value="{{ old('height', $shipment->height) }}">
                         </div>
                     </div>
                 </div>
@@ -229,7 +242,7 @@
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="gross_weight_total">Общий вес брутто <small>总毛重</small></label>
-                            <input type="number" step="0.01" name="gross_weight_total" id="gross_weight_total" class="form-control @error('gross_weight_total') is-invalid @enderror" value="{{ old('gross_weight_total', $shipment->gross_weight_total) }}">
+                            <input type="number" step="0.01" name="gross_weight_total" id="gross_weight_total" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('gross_weight_total') is-invalid @enderror" value="{{ old('gross_weight_total', $shipment->gross_weight_total) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
@@ -241,7 +254,7 @@
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="net_weight_total">Общий вес нетто <small>总净重</small></label>
-                            <input type="number" step="0.01" name="net_weight_total" id="net_weight_total" class="form-control @error('net_weight_total') is-invalid @enderror" value="{{ old('net_weight_total', $shipment->net_weight_total) }}">
+                            <input type="number" step="0.01" name="net_weight_total" id="net_weight_total" {{ $isForeignCargoForReadonly ? 'readonly' : '' }} class="form-control @error('net_weight_total') is-invalid @enderror" value="{{ old('net_weight_total', $shipment->net_weight_total) }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
@@ -284,6 +297,7 @@
                             </select>
                         </div>
                     </div>
+                    @if($canEditFinances)
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="payment_type">Оплата</label>
@@ -295,6 +309,8 @@
                             </select>
                         </div>
                     </div>
+                    @endif
+                    @if($canEditFinances)
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="payment_status">статус оплаты</label>
@@ -305,10 +321,12 @@
                             </select>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
 
+        @if($canEditFinances)
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Страховка</h3>
@@ -336,7 +354,9 @@
                 </div>
             </div>
         </div>
+        @endif
 
+        @if($canEditFinances)
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Оплата</h3>
@@ -370,6 +390,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Даты</h3>
@@ -415,7 +436,7 @@
                 </div>
             </div>
         </div>
-        @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+        @if($canEditFinances)
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Калькулятор</h3>

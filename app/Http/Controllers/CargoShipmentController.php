@@ -29,7 +29,7 @@ class CargoShipmentController extends Controller
 
         return view('cargo_shipments.index', [
             'title' => 'Грузы',
-            'responsibleUsers' => User::agents_and_managers(),
+            'responsibleUsers' => User::agents_managers_and_warehouse_managers(),
             'clients' => User::clients(),
             'trips' => Trip::query()
                 ->orderBy('loading_date', 'desc')
@@ -53,7 +53,7 @@ class CargoShipmentController extends Controller
     {
         return view('cargo_shipments.create', [
             'title' => 'Создание груза',
-            'agents' => User::agents_and_managers(),
+            'agents' => User::agents_managers_and_warehouse_managers(),
             'clients' => User::clients_and_agents(),
         ]);
     }
@@ -64,6 +64,11 @@ class CargoShipmentController extends Controller
     public function store(CargoShipmentRequest $request)
     {
         $data = $request->validated();
+
+        // Для warehouse_manager устанавливаем ответственного
+        if (auth()->user()->isWarehouseManager()) {
+            $data['responsible_user_id'] = auth()->id();
+        }
 
         // Обработка главной фотографии
         if ($request->hasFile('photo')) {
@@ -125,7 +130,7 @@ class CargoShipmentController extends Controller
             'title' => 'Редактирование груза',
             'shipment' => $cargoShipment,
             'clients' => User::clients_and_agents(),
-            'agents' => User::agents_and_managers(),
+            'agents' => User::agents_managers_and_warehouse_managers(),
         ]);
     }
 

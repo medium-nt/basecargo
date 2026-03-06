@@ -319,13 +319,13 @@ return [
             'text' => 'trips_domestic',
             'route' => 'trips.domestic',
             'icon' => 'fas fa-fw fa-truck',
-            'can' => 'is-admin-or-manager',
+            'can' => 'is-admin-or-manager-or-warehouse',
         ],
         [
             'text' => 'trips_international',
             'route' => 'trips.international',
             'icon' => 'fas fa-fw fa-globe-asia',
-            'can' => 'is-admin-or-manager',
+            'can' => 'is-admin-or-manager-or-warehouse',
         ],
         [
             'text' => 'settings',

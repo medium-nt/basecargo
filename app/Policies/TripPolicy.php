@@ -28,7 +28,7 @@ class TripPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isAgent() || $user->isManager();
+        return $user->isAdmin() || $user->isAgent() || $user->isManager() || $user->isWarehouseManager();
     }
 
     /**
@@ -36,7 +36,7 @@ class TripPolicy
      */
     public function update(User $user, Trip $trip): bool
     {
-        return $user->isAdmin() || $user->isManager();
+        return $user->isAdmin() || $user->isManager() || $user->isWarehouseManager();
     }
 
     /**

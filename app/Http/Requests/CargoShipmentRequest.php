@@ -11,8 +11,23 @@ class CargoShipmentRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $user = auth()->user();
+
+        // Для warehouse_manager устанавливаем responsible_user_id при создании
+        if ($user?->isWarehouseManager() && $this->isMethod('post')) {
+            $this->merge([
+                'responsible_user_id' => $user->id,
+            ]);
+        }
+    }
+
     public function rules(): array
     {
+        $user = auth()->user();
+        $isWarehouseManager = $user?->isWarehouseManager();
+
         return [
             'client_id' => ['nullable', 'integer', 'exists:users,id'],
             'responsible_user_id' => ['nullable', 'integer', 'exists:users,id'],
@@ -20,8 +35,8 @@ class CargoShipmentRequest extends FormRequest
             'contact_phone' => ['nullable', 'string', 'max:255'],
             'delivery_address' => ['nullable', 'string', 'max:1000'],
 
-            'china_tracking_number' => ['nullable', 'string', 'max:255'],
-            'china_cost' => ['nullable', 'numeric', 'min:0'],
+            'china_tracking_number' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'string', 'max:255'],
+            'china_cost' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric', 'min:0'],
             'crate' => ['nullable', 'string', 'max:255'],
 
             'cargo_number' => ['required', 'string', 'max:255'],
@@ -48,17 +63,17 @@ class CargoShipmentRequest extends FormRequest
             'tare_weight_per_box' => ['nullable', 'numeric', 'min:0'],
 
             'cargo_status' => ['in:wait_payment,shipping_supplier,china_transit,china_warehouse,china_russia_transit,russia_warehouse,russia_transit,wait_receiving,received'],
-            'payment_type' => ['nullable', 'in:cash,card,rs'],
-            'payment_status' => ['nullable', 'in:not_paid,paid'],
+            'payment_type' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'in:cash,card,rs'],
+            'payment_status' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'in:not_paid,paid'],
 
-            'insurance_amount' => ['nullable', 'numeric', 'min:0'],
-            'insurance_cost' => ['nullable', 'numeric', 'min:0'],
-            'rate_rub' => ['nullable', 'numeric', 'min:0'],
-            'total_cost' => ['nullable', 'numeric', 'min:0'],
+            'insurance_amount' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric', 'min:0'],
+            'insurance_cost' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric', 'min:0'],
+            'rate_rub' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric', 'min:0'],
+            'total_cost' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric', 'min:0'],
 
-            'contact_phone_payment' => ['nullable', 'string', 'max:255'],
-            'bank_name' => ['nullable', 'string', 'max:255'],
-            'bank_account_name' => ['nullable', 'string', 'max:255'],
+            'contact_phone_payment' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'string', 'max:255'],
+            'bank_name' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'string', 'max:255'],
+            'bank_account_name' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'string', 'max:255'],
 
             'factory_shipping_date' => ['nullable', 'date'],
             'sunfuihe_warehouse_received_date' => ['nullable', 'date'],
@@ -74,20 +89,20 @@ class CargoShipmentRequest extends FormRequest
             'label_number' => ['nullable', 'string', 'max:100'],
             'marking' => ['nullable', 'string', 'max:255'],
             'manufacturer' => ['nullable', 'string', 'max:255'],
-            'SS_DS' => ['nullable', 'string', 'max:255'],
-            'bet' => ['nullable', 'string', 'max:50'],
+            'SS_DS' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'string', 'max:255'],
+            'bet' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'string', 'max:50'],
 
             // Калькулятор - numeric поля
             'payment' => ['nullable', 'numeric'],
-            'ITS' => ['nullable', 'numeric'],
-            'duty' => ['nullable', 'numeric'],
-            'VAT' => ['nullable', 'numeric'],
-            'volume_weight' => ['nullable', 'numeric'],
-            'customs_clearance_service' => ['nullable', 'numeric'],
-            'cost_truck' => ['nullable', 'numeric'],
-            'revenue_per_kg' => ['nullable', 'numeric'],
-            'dollar_rate' => ['nullable', 'numeric'],
-            'yuan_rate' => ['nullable', 'numeric'],
+            'ITS' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric'],
+            'duty' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric'],
+            'VAT' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric'],
+            'volume_weight' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric'],
+            'customs_clearance_service' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric'],
+            'cost_truck' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric'],
+            'revenue_per_kg' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric'],
+            'dollar_rate' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric'],
+            'yuan_rate' => $isWarehouseManager ? ['prohibited'] : ['nullable', 'numeric'],
 
             // Файлы
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],

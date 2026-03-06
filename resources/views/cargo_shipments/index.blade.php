@@ -11,7 +11,7 @@
         <div class="card-body" style="position: relative;">
             <div id="loading-overlay" style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 999; border-radius: 0.25rem;"></div>
 
-            @if(auth()->user()->isAdmin() || auth()->user()->isAgent() || auth()->user()->isManager())
+            @if(auth()->user()->isAdmin() || auth()->user()->isAgent() || auth()->user()->isManager() || auth()->user()->isWarehouseManager())
             <div class="row">
                 @if(request('archive') != '1')
                     {{-- Фильтр по статусу только для активных грузов --}}
@@ -75,13 +75,13 @@
 
                 @if(request('archive') != '1')
                     {{-- Кнопка добавления груза --}}
-                    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
+                    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent() || auth()->user()->isWarehouseManager())
                         <a href="{{ route('cargo_shipments.create') }}" class="btn btn-primary mb-3 mr-1">
                             <i class="fas fa-plus"></i>
                             Добавить груз
                         </a>
                     @endif
-                    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
+                    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent() || auth()->user()->isWarehouseManager())
                         <a href="{{ route('cargo_shipments.download_template') }}" class="btn btn-success mb-3 mr-1">
                             <i class="fas fa-file-excel mr-1"></i>
                             Скачать шаблон
@@ -131,7 +131,7 @@
                 <table class="table table-hover table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            @if((auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent() || auth()->user()->isClient()) && request('archive') != '1')
+                            @if((auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent() || auth()->user()->isClient() || auth()->user()->isWarehouseManager()) && request('archive') != '1')
                             <th style="width: 40px; text-align: center; vertical-align: middle;">
                                 <input type="checkbox" id="select-all-cargos" class="form-check-input" style="margin-left: 1px;">
                             </th>
@@ -154,7 +154,7 @@
                     <tbody>
                         @forelse ($shipments as $shipment)
                             <tr>
-                                @if((auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent() || auth()->user()->isClient()) && request('archive') != '1')
+                                @if((auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent() || auth()->user()->isClient() || auth()->user()->isWarehouseManager()) && request('archive') != '1')
                                 <td style="text-align: center; vertical-align: middle; cursor: pointer;"
                                     onclick="this.querySelector('.cargo-checkbox').click()">
                                     <input type="checkbox" class="cargo-checkbox form-check-input"
@@ -241,8 +241,8 @@
         </div>
     </div>
 
-    {{-- Bulk actions panel для admin/manager --}}
-    @if((auth()->user()->isAdmin() || auth()->user()->isManager()) && request('archive') != '1')
+    {{-- Bulk actions panel для admin/manager/warehouse_manager --}}
+    @if((auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isWarehouseManager()) && request('archive') != '1')
     <div id="bulk-actions-panel" class="card fixed-bottom"
          style="display: none; max-width: 700px; left: 50%; transform: translateX(-50%); bottom: 20px; z-index: 1000;">
         <div class="card-body">

@@ -44,7 +44,7 @@ class CargoShipmentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isAgent() || $user->isManager();
+        return $user->isAdmin() || $user->isAgent() || $user->isManager() || $user->isWarehouseManager();
     }
 
     /**
@@ -52,7 +52,19 @@ class CargoShipmentPolicy
      */
     public function update(User $user, CargoShipment $cargoShipment): bool
     {
-        return $user->isAdmin() || $user->isManager() || ($user->isAgent() && $user->id === $cargoShipment->client_id);
+        if ($user->isAdmin() || $user->isManager()) {
+            return true;
+        }
+
+        if ($user->isWarehouseManager()) {
+            return true; // Валидация полей на уровне Request
+        }
+
+        if ($user->isAgent() && $user->id === $cargoShipment->client_id) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -108,7 +120,7 @@ class CargoShipmentPolicy
      */
     public function attachToTrip(User $user): bool
     {
-        return $user->isAdmin() || $user->isManager();
+        return $user->isAdmin() || $user->isManager() || $user->isWarehouseManager();
     }
 
     /**
@@ -132,6 +144,6 @@ class CargoShipmentPolicy
      */
     public function import(User $user): bool
     {
-        return $user->isAdmin() || $user->isAgent() || $user->isManager();
+        return $user->isAdmin() || $user->isAgent() || $user->isManager() || $user->isWarehouseManager();
     }
 }

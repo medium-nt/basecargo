@@ -27,18 +27,18 @@ class UsersRequest extends FormRequest
         ];
 
         // role_id только при создании
-        if (!$isUpdating) {
+        if (! $isUpdating) {
             $user = auth()->user();
 
             // менеджер может создавать только агентов и клиентов
             $allowedRoles = $user->isAdmin()
-                ? [1, 2, 4]
+                ? [1, 2, 4, 5]
                 : ($user->isManager() ? [1, 2] : []);
 
             $rules['role_id'] = [
                 'required',
                 'integer',
-                Rule::in($allowedRoles)
+                Rule::in($allowedRoles),
             ];
         } else {
             $rules['role_id'] = ['prohibited'];

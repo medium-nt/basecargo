@@ -7,6 +7,12 @@
 @endsection
 
 @section('content')
+    @php
+        $user = auth()->user();
+        $isWarehouseManager = $user?->isWarehouseManager();
+        $canEditFinances = !$isWarehouseManager;
+    @endphp
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -19,6 +25,7 @@
 
     <form action="{{ route('cargo_shipments.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @if(!$isWarehouseManager)
         <div class="row">
             <div class="col-12 col-md-6">
                 <div class="card">
@@ -51,6 +58,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
         <div class="card">
             <div class="card-header">
@@ -116,12 +124,14 @@
                             <input type="text" name="china_tracking_number" id="china_tracking_number" class="form-control @error('china_tracking_number') is-invalid @enderror" value="{{ old('china_tracking_number') }}">
                         </div>
                     </div>
+                    @if($canEditFinances)
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="china_cost">стоимость по Китаю <small>中国的成本</small></label>
                             <input type="number" name="china_cost" id="china_cost" class="form-control @error('china_cost') is-invalid @enderror" value="{{ old('china_cost') }}">
                         </div>
                     </div>
+                    @endif
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="crate">Обрешетка <small>箱子</small></label>
@@ -273,6 +283,7 @@
                             </select>
                         </div>
                     </div>
+                    @if($canEditFinances)
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="payment_type">Оплата</label>
@@ -284,6 +295,8 @@
                             </select>
                         </div>
                     </div>
+                    @endif
+                    @if($canEditFinances)
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="payment_status">статус оплаты</label>
@@ -294,10 +307,12 @@
                             </select>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
 
+        @if($canEditFinances)
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Страховка</h3>
@@ -325,7 +340,9 @@
                 </div>
             </div>
         </div>
+        @endif
 
+        @if($canEditFinances)
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Оплата</h3>
@@ -359,6 +376,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Даты</h3>
@@ -404,7 +422,7 @@
                 </div>
             </div>
         </div>
-        @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+        @if($canEditFinances)
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Калькулятор</h3>

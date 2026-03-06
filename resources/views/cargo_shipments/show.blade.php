@@ -7,6 +7,12 @@
 @endsection
 
 @section('content')
+    @php
+        $user = auth()->user();
+        $isWarehouseManager = $user?->isWarehouseManager();
+        $canEditFinances = !$isWarehouseManager;
+    @endphp
+
     <div class="row">
         <div class="col-12 col-md-6">
             <div class="card">
@@ -75,12 +81,14 @@
                         <input type="text" id="china_tracking_number" class="form-control" value="{{ $shipment->china_tracking_number ?? '' }}" readonly>
                     </div>
                 </div>
+                @if($canEditFinances)
                 <div class="col-12 col-md-4">
                     <div class="form-group">
                         <label for="china_cost">стоимость по Китаю <small>中国的成本</small></label>
                         <input type="number" id="china_cost" class="form-control" value="{{ $shipment->china_cost ?? '' }}" readonly>
                     </div>
                 </div>
+                @endif
                 <div class="col-12 col-md-4">
                     <div class="form-group">
                         <label for="crate">Обрешетка <small>箱子</small></label>
@@ -231,6 +239,7 @@
                         </select>
                     </div>
                 </div>
+                @if($canEditFinances)
                 <div class="col-12 col-md-4">
                     <div class="form-group">
                         <label for="payment_type">Оплата</label>
@@ -242,6 +251,8 @@
                         </select>
                     </div>
                 </div>
+                @endif
+                @if($canEditFinances)
                 <div class="col-12 col-md-4">
                     <div class="form-group">
                         <label for="payment_status">статус оплаты</label>
@@ -252,10 +263,12 @@
                         </select>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
 
+    @if($canEditFinances)
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Страховка</h3>
@@ -283,7 +296,9 @@
             </div>
         </div>
     </div>
+    @endif
 
+    @if($canEditFinances)
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Оплата</h3>
@@ -317,6 +332,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <div class="card">
         <div class="card-header">
@@ -364,7 +380,7 @@
         </div>
     </div>
 
-    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
+    @if($canEditFinances)
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Калькулятор</h3>
@@ -580,15 +596,17 @@
         </div>
     </div>
 
-    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent())
+    @if(auth()->user()->isAdmin() || auth()->user()->isManager() || auth()->user()->isAgent() || auth()->user()->isWarehouseManager())
     <div class="card">
         <div class="card-body">
             <a href="{{ route('cargo_shipments.edit', $shipment) }}" class="btn btn-primary">Редактировать</a>
+            @if(auth()->user()->isAdmin())
             <form action="{{ route('cargo_shipments.destroy', $shipment) }}" method="POST" style="display: inline;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger" onclick="return confirm('Удалить груз?')">Удалить</button>
             </form>
+            @endif
         </div>
     </div>
     @endif

@@ -73,10 +73,10 @@ class User extends Authenticatable
         })->get();
     }
 
-    public static function agents_and_managers(): Collection
+    public static function agents_managers_and_warehouse_managers(): Collection
     {
         return User::whereHas('role', function ($q) {
-            $q->whereIn('name', ['agent', 'manager']);
+            $q->whereIn('name', ['agent', 'manager', 'warehouse_manager']);
         })->get();
     }
 
@@ -107,6 +107,11 @@ class User extends Authenticatable
         return $this->role?->name === 'manager';
     }
 
+    public function isWarehouseManager(): bool
+    {
+        return $this->role?->name === 'warehouse_manager';
+    }
+
     public function isStaff(): bool
     {
         return in_array($this->role?->name, ['admin', 'manager'], true);
@@ -120,6 +125,7 @@ class User extends Authenticatable
                 'agent' => 'Агент',
                 'admin' => 'Админ',
                 'manager' => 'Менеджер',
+                'warehouse_manager' => 'Зав.склада',
                 default => '---',
             };
         });

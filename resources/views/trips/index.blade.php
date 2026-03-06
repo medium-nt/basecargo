@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-body">
 
-            @if(auth()->user()->isAdmin() || auth()->user()->isAgent() || auth()->user()->isManager())
+            @if(auth()->user()->isAdmin() || auth()->user()->isAgent() || auth()->user()->isManager() || auth()->user()->isWarehouseManager())
             <div class="row">
                 {{-- Фильтр по статусу --}}
                 <div class="col-md-3">
@@ -36,7 +36,7 @@
 
                 <div class="ml-auto mr-2">
                     {{-- Кнопка добавления рейса --}}
-                    @if(auth()->user()->isAdmin() || auth()->user()->isAgent())
+                    @if(auth()->user()->isAdmin() || auth()->user()->isAgent() || auth()->user()->isWarehouseManager())
                         <a href="{{ route('trips.create') }}" class="btn btn-primary mb-3">
                             <i class="fas fa-plus"></i>
                             Добавить рейс
