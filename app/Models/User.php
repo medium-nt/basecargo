@@ -130,4 +130,17 @@ class User extends Authenticatable
             };
         });
     }
+
+    public function messengerName(): Attribute
+    {
+        return Attribute::get(function () {
+            return match ($this->messenger) {
+                'telegram' => 'ТГ',
+                'whatsapp' => 'WA',
+                'wechat' => 'Wechat',
+                'viber' => 'Viber',
+                default => '---',
+            };
+        });
+    }
 }

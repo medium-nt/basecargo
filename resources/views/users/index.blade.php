@@ -25,6 +25,7 @@
                         <th scope="col">Имя</th>
                         <th scope="col">Роль</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Мессенджер</th>
                         <th scope="col">Создан</th>
                         <th scope="col">Действия</th>
                     </tr>
@@ -36,7 +37,12 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->roleName }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->created_at }}</td>
+                            <td>
+                                @if($user->messenger_number != null)
+                                    <b>{{ $user->messenger_name }}:</b> {{ $user->messenger_number }}
+                                @endif
+                            </td>
+                            <td>{{ $user->created_at->format('d/m/Y H:i:s') }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     @if(auth()->user()->isAdmin())
